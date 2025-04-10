@@ -5,7 +5,7 @@ import { Theme } from "@/types";
 import { Button } from "~/components/ui/button";
 import { Message, addMessageListener, sendMessageToBackground } from "~/lib/messaging";
 import { cn } from "~/lib/utils";
-import TriggerLogo from "~/assets/trigger-logo.svg?react";
+import Logo from "~/assets/logo.svg?react";
 import { useTranslation } from "~/i18n/hooks";
 import { TFunction } from "i18next";
 
@@ -39,7 +39,7 @@ const Question = ({ onClick, t }: { onClick: () => void; t: TFunction }) => {
       className="w-full gap-2"
       onClick={onClick}
     >
-      <TriggerLogo className="size-4" />
+      <Logo className="size-4" />
       <span className="text-sm text-muted-foreground">{t("contentScript.question")}</span>
     </Button>
   );
