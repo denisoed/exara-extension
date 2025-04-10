@@ -1,11 +1,12 @@
 import { useTranslation } from '~/i18n/hooks';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/components/ui/select";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
+import { Button } from "~/components/ui/button";
+import { ChevronDown } from "lucide-react";
 
 const LANGUAGES = [
   { value: "en", label: "English" },
@@ -19,23 +20,34 @@ export function LanguageSwitcher() {
     changeLanguage(value);
   };
 
+  const currentLanguageLabel = LANGUAGES.find(lang => lang.value === currentLanguage)?.label || "Select language";
+
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 w-full">
       <label htmlFor="language" className="text-sm font-medium">
         {t("optionsPage.appLanguageLabel")}
       </label>
-      <Select value={currentLanguage} onValueChange={handleLanguageChange}>
-        <SelectTrigger id="language">
-          <SelectValue placeholder="Select language" />
-        </SelectTrigger>
-        <SelectContent>
-          {LANGUAGES.map((lang) => (
-            <SelectItem key={lang.value} value={lang.value}>
-              {lang.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="w-full">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="w-full justify-between" id="language">
+              {currentLanguageLabel}
+              <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-[--radix-popper-anchor-width]">
+            {LANGUAGES.map((lang) => (
+              <DropdownMenuItem
+                key={lang.value}
+                onClick={() => handleLanguageChange(lang.value)}
+                className="w-full"
+              >
+                {lang.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </div>
   );
 }
