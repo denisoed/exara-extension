@@ -15,9 +15,9 @@ const openai = new OpenAI({
   apiKey: env.VITE_OPEN_AI_API_KEY,
 });
 
-const getAnswer = async (selectedText: string) => {
+const getAnswer = async (data: { question: string, context: string }) => {
   const language = await get<Language>(StorageKey.LANGUAGE);
-  const prompt = `Briefly explain (maximum 100 words) what "${selectedText}" means. If it's an abbreviation, expand it. Answer in ${language.label}.`;
+  const prompt = `Briefly explain (maximum 100 words) what "${data.question}" means. If it's an abbreviation, expand it. Answer in ${language.label} language. Context: ${data.context}`;
   const response = await openai.responses.create({
     model: "gpt-3.5-turbo",
     input: prompt,

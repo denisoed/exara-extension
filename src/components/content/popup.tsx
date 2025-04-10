@@ -11,6 +11,7 @@ import { TFunction } from "i18next";
 
 interface ContentPopupProps {
   question: string;
+  context: string;
   x: number;
   y: number;
   onClose: () => void;
@@ -65,7 +66,7 @@ const Answer = ({
 };
 
 export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
-  ({ question, x, y, onClose }, ref) => {
+  ({ question, context, x, y, onClose }, ref) => {
     const { data: theme } = useStorage(StorageKey.THEME);
     const [state, setState] = useState<PopupState>(PopupState.Question);
     const [answer, setAnswer] = useState<string>("");
@@ -73,7 +74,7 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
 
     const handleQuestionClick = async () => {
       setState(PopupState.Loading);
-      sendMessageToBackground(Message.GET_SELECTION_TEXT, question);
+      sendMessageToBackground(Message.GET_SELECTION_TEXT, { question, context });
     };
 
     useEffect(() => {

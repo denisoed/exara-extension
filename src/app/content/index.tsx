@@ -14,6 +14,7 @@ import { Language } from "@/types";
 
 interface PopupState {
   text: string;
+  context: string;
   x: number;
   y: number;
 }
@@ -21,6 +22,12 @@ interface PopupState {
 function getSelection() {
   const selectedText = window.getSelection()?.toString().trim();
   return selectedText;
+}
+
+function getContext() {
+  const pageTitle = document.title;
+  const pageDescription = document.querySelector('meta[name="description"]')?.getAttribute("content");
+  return { pageTitle, pageDescription };
 }
 
 function isPopup(target: EventTarget | null) {
@@ -56,9 +63,12 @@ const ContentScriptUI = () => {
     }
 
     const selectedText = getSelection();
+    const context = getContext();
+
     if (selectedText) {
       setPopupState({
         text: selectedText,
+        context: `${context.pageTitle} - ${context.pageDescription}`,
         x: event.clientX,
         y: event.clientY,
       });
@@ -84,6 +94,7 @@ const ContentScriptUI = () => {
     <I18nextProvider i18n={i18n}>
       <ContentPopup
         question={popupState.text}
+        context={popupState.context}
         x={popupState.x}
         y={popupState.y}
         onClose={() => setPopupState(null)}
