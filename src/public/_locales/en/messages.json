@@ -63,5 +63,11 @@
   },
   "dontHaveAccount": {
     "message": "Don't have an account?"
+  },
+  "optionsPageTitle": {
+    "message": "Options"
+  },
+  "optionsPageLanguageLabel": {
+    "message": "Language"
   }
 }
