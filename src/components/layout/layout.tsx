@@ -8,6 +8,8 @@ import { Header } from "~/components/layout/header";
 import { Toaster } from "~/components/ui/sonner";
 import { cn } from "~/lib/utils";
 import "~/assets/styles/globals.css";
+import { I18nextProvider } from "react-i18next";
+import i18n from "~/i18n";
 
 interface LayoutProps {
   readonly children: React.ReactNode;
@@ -28,7 +30,9 @@ export const Layout = ({
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary fallback={errorFallback}>
         <Suspense fallback={loadingFallback}>
-          <LayoutContent className={className}>{children}</LayoutContent>
+          <I18nextProvider i18n={i18n}>
+            <LayoutContent className={className}>{children}</LayoutContent>
+          </I18nextProvider>
         </Suspense>
       </ErrorBoundary>
     </QueryClientProvider>
