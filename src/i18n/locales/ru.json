@@ -3,5 +3,13 @@
     "title": "Настройки",
     "appLanguageLabel": "Язык приложения",
     "answerLanguageLabel": "Язык ответов"
+  },
+  "contentScript": {
+    "question": "Что это?",
+    "loading": "Получаем ответ...",
+    "close": "Закрыть"
+  },
+  "popup": {
+    "hello": "Привет от"
   }
 }

@@ -3,8 +3,14 @@ import ReactDOM from "react-dom/client";
 import { createShadowRootUi } from "wxt/client";
 import { defineContentScript } from "wxt/sandbox";
 import { ContentPopup } from "~/components/content/popup";
+import { I18nextProvider } from "react-i18next";
+import i18n from "~/i18n";
+import { useTranslation } from "~/i18n/hooks";
+
+import { get, StorageKey, watch, unwatch } from "~/lib/localStorage";
 
 import "~/assets/styles/globals.css";
+import { Language } from "@/types";
 
 interface PopupState {
   text: string;
@@ -21,8 +27,17 @@ function isPopup(target: EventTarget | null) {
   return target instanceof HTMLElement && target.tagName === "EXTRO-UI";
 }
 
+
 const ContentScriptUI = () => {
   const [popupState, setPopupState] = useState<PopupState | null>(null);
+  const { changeLanguage } = useTranslation();
+  
+  async function getLanguage() {
+    const language = await get<Language>(StorageKey.LANGUAGE);
+    if (language) {
+      changeLanguage(language.value);
+    }
+  }
 
   function onClick(event: MouseEvent) {
     if (isPopup(event.target)) {
@@ -51,23 +66,29 @@ const ContentScriptUI = () => {
   }
 
   useEffect(() => {
+    getLanguage();
+    watch(StorageKey.LANGUAGE, getLanguage);
+
     document.addEventListener("mouseup", onMouseUp);
     document.addEventListener("click", onClick);
     return () => {
       document.removeEventListener("mouseup", onMouseUp);
       document.removeEventListener("click", onClick);
+      unwatch(StorageKey.LANGUAGE, getLanguage);
     };
   }, []);
 
   if (!popupState) return null;
 
   return (
-    <ContentPopup
-      question={popupState.text}
-      x={popupState.x}
-      y={popupState.y}
-      onClose={() => setPopupState(null)}
-    />
+    <I18nextProvider i18n={i18n}>
+      <ContentPopup
+        question={popupState.text}
+        x={popupState.x}
+        y={popupState.y}
+        onClose={() => setPopupState(null)}
+      />
+    </I18nextProvider>
   );
 };
 

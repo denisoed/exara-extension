@@ -7,8 +7,10 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { Button } from "~/components/ui/button";
 import { ChevronDown } from "lucide-react";
+import { Language } from "~/types";
+import { set, StorageKey } from "~/lib/localStorage";
 
-const LANGUAGES = [
+const LANGUAGES: Language[] = [
   { value: "en", label: "English" },
   { value: "ru", label: "Русский" },
 ];
@@ -16,8 +18,9 @@ const LANGUAGES = [
 export function LanguageSwitcher() {
   const { changeLanguage, currentLanguage, t } = useTranslation();
 
-  const handleLanguageChange = (value: string) => {
-    changeLanguage(value);
+  const handleLanguageChange = (lang: Language) => {
+    changeLanguage(lang.value);
+    set(StorageKey.LANGUAGE, lang);
   };
 
   const currentLanguageLabel = LANGUAGES.find(lang => lang.value === currentLanguage)?.label || "Select language";
@@ -39,7 +42,7 @@ export function LanguageSwitcher() {
             {LANGUAGES.map((lang) => (
               <DropdownMenuItem
                 key={lang.value}
-                onClick={() => handleLanguageChange(lang.value)}
+                onClick={() => handleLanguageChange(lang)}
                 className="w-full"
               >
                 {lang.label}

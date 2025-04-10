@@ -1,4 +1,5 @@
 import { browser } from "wxt/browser";
+import { useTranslation } from "~/i18n/hooks";
 
 import Logo from "~/assets/logo.svg?react";
 import { cn } from "~/lib/utils";
@@ -9,6 +10,8 @@ interface MainProps {
 }
 
 export const Main = ({ className, filename }: MainProps) => {
+  const { t } = useTranslation();
+
   return (
     <main
       className={cn(
@@ -18,7 +21,7 @@ export const Main = ({ className, filename }: MainProps) => {
     >
       <Logo className="w-24 animate-pulse text-primary" />
       <p className="text-pretty text-center leading-tight">
-        {browser.i18n.getMessage("hello")}{" "}
+        {t("popup.hello")}{" "}
         <code className="inline-block rounded-sm bg-muted px-1.5 text-sm text-muted-foreground">
           {filename}
         </code>{" "}

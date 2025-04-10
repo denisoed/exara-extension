@@ -11,3 +11,8 @@ export const NodeEnv = {
 
 export type Theme = (typeof Theme)[keyof typeof Theme];
 export type NodeEnv = (typeof NodeEnv)[keyof typeof NodeEnv];
+
+export type Language = {
+  value: string;
+  label: string;
+};

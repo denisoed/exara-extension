@@ -1,5 +1,4 @@
 import { defineExtensionMessaging } from "@webext-core/messaging";
-import type { User } from "~/types";
 
 export const Message = {
   USER: "user",
@@ -10,8 +9,7 @@ export const Message = {
 export type Message = (typeof Message)[keyof typeof Message];
 
 interface Messages {
-  [Message.USER]: () => User | null;
-  [Message.GET_SELECTION_TEXT]: (text: string) => void;
+  [Message.GET_SELECTION_TEXT]: (text: string, language: string) => void;
   [Message.GET_ANSWER]: (text: string) => void;
 }
 
@@ -25,6 +23,13 @@ export function sendMessageToActiveTab(message: Message, data: any) {
         });
       }
     });
+  });
+}
+
+export function sendMessageToBackground(message: Message, data: any) {  
+  chrome.runtime.sendMessage({
+    type: message,
+    data: data,
   });
 }
 

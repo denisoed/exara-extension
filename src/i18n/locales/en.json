@@ -3,5 +3,13 @@
     "title": "Options",
     "appLanguageLabel": "App language",
     "answerLanguageLabel": "Answer language"
+  },
+  "contentScript": {
+    "question": "What's this?",
+    "loading": "Getting answer...",
+    "close": "Close"
+  },
+  "popup": {
+    "hello": "Hello from"
   }
 }

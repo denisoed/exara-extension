@@ -1,8 +1,9 @@
-import { StorageKey, getStorage } from "@/lib/storage";
 import OpenAI from "openai";
 import { defineBackground } from "wxt/sandbox";
-import { Message, onMessage, sendMessageToActiveTab } from "~/lib/messaging";
+import { Message, addMessageListener, sendMessageToActiveTab } from "~/lib/messaging";
 import { env } from "~/lib/env";
+import { get, StorageKey } from "~/lib/localStorage";
+import { Language } from "@/types";
 
 const main = () => {
   console.log(
@@ -15,22 +16,18 @@ const openai = new OpenAI({
 });
 
 const getAnswer = async (selectedText: string) => {
-  const prompt = `Briefly explain (maximum 100 words) what "${selectedText}" means. If it's an abbreviation, expand it. Answer in Russian.`;
+  const language = await get<Language>(StorageKey.LANGUAGE);
+  const prompt = `Briefly explain (maximum 100 words) what "${selectedText}" means. If it's an abbreviation, expand it. Answer in ${language.label}.`;
   const response = await openai.responses.create({
-    model: "gpt-4o",
+    model: "gpt-3.5-turbo",
     input: prompt,
     max_output_tokens: 150,
   });
   sendMessageToActiveTab(Message.GET_ANSWER, response.output_text);
 };
 
-onMessage(Message.USER, () => {
-  const storage = getStorage(StorageKey.USER);
-  return storage.getValue();
-});
-
-onMessage(Message.GET_SELECTION_TEXT, (response) => {
-  getAnswer(response.data);
+addMessageListener(Message.GET_SELECTION_TEXT, (data) => {
+  getAnswer(data);
 });
 
 export default defineBackground(main);
