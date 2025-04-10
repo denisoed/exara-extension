@@ -1,8 +1,11 @@
-import { HelpCircle, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { forwardRef, useEffect, useState } from "react";
+import { StorageKey, useStorage } from "@/lib/storage";
+import { Theme } from "@/types";
 import { Button } from "~/components/ui/button";
 import { Message, addMessageListener, sendMessage } from "~/lib/messaging";
 import { cn } from "~/lib/utils";
+import TriggerLogo from "~/assets/trigger-logo.svg?react";
 
 interface ContentPopupProps {
   question: string;
@@ -20,7 +23,7 @@ enum PopupState {
 const Loading = () => {
   return (
     <div className="flex items-center justify-center gap-2 py-2">
-      <Loader2 className="size-4 animate-spin" />
+      <Loader2 className="size-4 animate-spin text-muted-foreground" />
       <span className="text-sm text-muted-foreground">Getting answer...</span>
     </div>
   );
@@ -34,8 +37,8 @@ const Question = ({ onClick }: { onClick: () => void }) => {
       className="w-full gap-2"
       onClick={onClick}
     >
-      <HelpCircle className="size-4" />
-      What is this?
+      <TriggerLogo className="size-4" />
+      <span className="text-sm text-muted-foreground">What's this?</span>
     </Button>
   );
 };
@@ -46,7 +49,7 @@ const Answer = ({
   onClose,
 }: { question: string; answer: string; onClose: () => void }) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 text-muted-foreground">
       <p className="text-sm">{question}</p>
       <div className="rounded-md bg-muted p-3">
         <p className="text-sm">{answer}</p>
@@ -60,6 +63,7 @@ const Answer = ({
 
 export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
   ({ question, x, y, onClose }, ref) => {
+    const { data: theme } = useStorage(StorageKey.THEME);
     const [state, setState] = useState<PopupState>(PopupState.Question);
     const [answer, setAnswer] = useState<string>("");
 
@@ -79,7 +83,13 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
       <div
         ref={ref}
         className={cn(
-          "fixed z-50 flex flex-col gap-2 rounded-md border bg-background p-4 shadow-lg",
+          "fixed z-50 flex max-w-[500px] flex-col gap-2 rounded-md border bg-background p-3 shadow-lg",
+          {
+            dark:
+              theme === Theme.DARK ||
+              (theme === Theme.SYSTEM &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches),
+          },
         )}
         style={{
           left: `${x}px`,
