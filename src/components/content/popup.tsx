@@ -54,7 +54,6 @@ const Answer = ({
 }: { question: string; answer: string; onClose: () => void; t: TFunction }) => {
   return (
     <div className="flex flex-col gap-2 text-muted-foreground">
-      <p className="text-sm">{question}</p>
       <div className="rounded-md bg-muted p-3">
         <p className="text-sm">{answer}</p>
       </div>

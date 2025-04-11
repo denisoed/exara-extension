@@ -10,5 +10,9 @@
     "quickfix.biome": "explicit",
     "source.organizeImports.biome": "explicit"
   },
-  "tailwindCSS.experimental.configFile": "./tailwind.config.ts"
+  "tailwindCSS.experimental.configFile": "./tailwind.config.ts",
+  "i18n-ally.localesPaths": [
+    "src/i18n",
+    "src/i18n/locales"
+  ]
 }
