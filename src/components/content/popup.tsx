@@ -1,4 +1,4 @@
-import { Loader2 } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { forwardRef, useEffect, useState } from "react";
 import { StorageKey, useStorage } from "@/lib/storage";
 import { Theme } from "@/types";
@@ -23,9 +23,9 @@ enum PopupState {
 
 const Loading = ({ t }: { t: TFunction }) => {
   return (
-    <div className="flex items-center justify-center gap-2 py-2">
-      <Loader2 className="size-4 animate-spin text-muted-foreground" />
-      <span className="text-sm text-muted-foreground">{t("contentScript.loading")}</span>
+    <div className="flex items-center justify-center gap-2 py-2 bg-muted">
+      <Loader2 className="size-4 animate-spin text-black dark:text-white" />
+      <span className="text-sm text-black dark:text-white">{t("contentScript.loading")}</span>
     </div>
   );
 };
@@ -37,12 +37,12 @@ const Answer = ({
   t,
 }: { question: string; answer: string; onClose: () => void; t: TFunction }) => {
   return (
-    <div className="flex flex-col gap-2 text-muted-foreground">
+    <div className="flex flex-col gap-2 text-black dark:text-white">
       <div className="rounded-md bg-muted p-3">
         <p className="text-sm">{answer}</p>
       </div>
-      <Button variant="outline" size="sm" className="w-full" onClick={onClose}>
-        {t("contentScript.close")}
+      <Button variant="outline" size="xs" className="absolute right-2 top-2 rounded-full" onClick={onClose}>
+        <X className="size-3" />
       </Button>
     </div>
   );
@@ -67,7 +67,7 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
       <div
         ref={ref}
         className={cn(
-          "fixed z-50 flex w-[400px] max-w-[400px] flex-col gap-2 rounded-md border bg-background p-3 shadow-lg",
+          "fixed z-50 flex w-[400px] max-w-[400px] flex-col gap-2 rounded-md bg-background p-3 shadow-lg",
           {
             dark:
               theme === Theme.DARK ||
