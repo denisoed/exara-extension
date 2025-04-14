@@ -23,7 +23,7 @@ enum PopupState {
 
 const Loading = ({ t }: { t: TFunction }) => {
   return (
-    <div className="flex items-center justify-center gap-2 py-2 bg-muted">
+    <div className="flex items-center justify-center gap-2 py-2 bg-muted rounded-[8px]">
       <Loader2 className="size-4 animate-spin text-black dark:text-white" />
       <span className="text-sm text-black dark:text-white">{t("contentScript.loading")}</span>
     </div>
@@ -36,10 +36,8 @@ const Answer = ({
   answer: string; 
 }) => {
   return (
-    <div className="flex flex-col gap-2 text-black dark:text-white">
-      <div className="rounded-md bg-muted p-3">
-        <p className="text-sm">{answer}</p>
-      </div>
+    <div className="flex flex-col gap-2 text-black dark:text-white rounded-[8px] bg-muted p-3">
+      <p className="text-sm">{answer}</p>
     </div>
   );
 };
@@ -116,7 +114,7 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
       <div
         ref={ref}
         className={cn(
-          "fixed z-50 flex w-[400px] max-w-[400px] flex-col gap-2 rounded-md bg-background p-3 pt-10 shadow-lg",
+          "fixed z-50 flex w-[400px] max-w-[400px] flex-col gap-2 rounded-md bg-background p-3 pt-10 shadow-lg rounded-[16px]",
           "transition-transform duration-300 ease-out",
           "transform origin-center",
           {
