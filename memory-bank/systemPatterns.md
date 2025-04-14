@@ -22,6 +22,13 @@ The extension follows a modular architecture with clear separation of concerns:
    - Internationalization
    - Analytics
 
+3. **UI Components**
+   - Floating button
+   - Draggable popup
+   - Content display
+   - Control buttons
+   - Drag handle
+
 ## Design Patterns
 1. **Service Worker Pattern**
    - Background script as service worker
@@ -32,6 +39,8 @@ The extension follows a modular architecture with clear separation of concerns:
    - React functional components
    - Hooks for state management
    - Custom hooks for extension-specific logic
+   - Forward refs for DOM manipulation
+   - Callback memoization for performance
 
 3. **Message Passing**
    - Type-safe message interfaces
@@ -42,6 +51,13 @@ The extension follows a modular architecture with clear separation of concerns:
    - Type-safe storage interfaces
    - Encrypted storage for sensitive data
    - Synchronized storage across components
+
+5. **UI Interaction Patterns**
+   - Fixed positioning for floating elements
+   - Smooth drag and drop operations
+   - Viewport-aware positioning
+   - Dedicated drag handles
+   - Responsive layout adjustments
 
 ## Component Relationships
 ```mermaid
@@ -56,6 +72,13 @@ graph TD
     D --> A
     E --> A
     F --> A
+    
+    subgraph UI Components
+        H[Floating Button] --> I[Popup]
+        I --> J[Drag Handle]
+        I --> K[Content Display]
+        I --> L[Control Buttons]
+    end
 ```
 
 ## Key Technical Decisions
@@ -73,8 +96,16 @@ graph TD
    - shadcn/ui for components
    - Tailwind for styling
    - Custom theme support
+   - Fixed positioning strategy
+   - Drag and drop implementation
 
 4. **Development Tools**
    - Biome for linting
    - Husky for git hooks
-   - GitHub Actions for CI/CD 
+   - GitHub Actions for CI/CD
+
+5. **Interaction Patterns**
+   - Mouse event-based drag operations
+   - Position-based offset calculations
+   - Viewport boundary constraints
+   - Smooth movement transitions 

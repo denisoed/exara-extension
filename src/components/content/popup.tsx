@@ -53,6 +53,14 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
     const [position, setPosition] = useState({ x, y });
     const [isDragging, setIsDragging] = useState(false);
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+      // Trigger animation after component mount
+      requestAnimationFrame(() => {
+        setIsVisible(true);
+      });
+    }, []);
 
     useEffect(() => {
       sendMessageToBackground(Message.GET_SELECTION_TEXT, { question, context });
@@ -109,7 +117,11 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
         ref={ref}
         className={cn(
           "fixed z-50 flex w-[400px] max-w-[400px] flex-col gap-2 rounded-md bg-background p-3 pt-10 shadow-lg",
+          "transition-transform duration-300 ease-out",
+          "transform origin-center",
           {
+            "scale-90 opacity-0": !isVisible,
+            "scale-100 opacity-100": isVisible,
             dark:
               theme === Theme.DARK ||
               (theme === Theme.SYSTEM &&
@@ -128,10 +140,10 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
             className="rounded-full cursor-move"
             onMouseDown={handleDragStart}
           >
-            <Move className="size-3" />
+            <Move className="size-2 text-muted-foreground" />
           </Button>
           <Button variant="outline" size="xs" className="rounded-full" onClick={onClose}>
-            <X className="size-3" />
+            <X className="size-3 text-muted-foreground" />
           </Button>
         </div>
   

@@ -1,22 +1,23 @@
 # Active Context
 
 ## Current Focus
-- Initial project setup and memory bank initialization
-- Documentation and project structure establishment
-- Core extension functionality implementation
+- Popup component implementation and enhancement
+- Drag and drop functionality refinement
+- UI/UX improvements for extension components
 
 ## Recent Changes
-- Project initialization with WXT framework
-- Basic extension structure setup
-- Development environment configuration
-- CI/CD pipeline setup
+- Implemented floating button component
+- Added drag and drop functionality to popup
+- Fixed drag handle positioning and smooth movement
+- Improved popup positioning and viewport constraints
+- Enhanced UI with dedicated drag handle button
 
 ## Next Steps
-1. Complete memory bank initialization
-2. Review and document current codebase
-3. Establish development workflow
-4. Set up testing infrastructure
-5. Implement core extension features
+1. Test and refine popup positioning behavior
+2. Implement additional popup features
+3. Enhance user interaction patterns
+4. Optimize performance of drag operations
+5. Add accessibility features
 
 ## Active Decisions
 - Using WXT as the extension framework
@@ -26,6 +27,8 @@
 - shadcn/ui for component library
 - Tailwind for styling
 - Biome for linting and formatting
+- Fixed positioning for popup components
+- Dedicated drag handle for better UX
 
 ## Considerations
 - Browser compatibility (Chrome and Firefox)
@@ -34,4 +37,6 @@
 - Security best practices
 - Development workflow efficiency
 - Testing strategy
-- Documentation needs 
+- Documentation needs
+- User interaction patterns
+- Accessibility requirements 
