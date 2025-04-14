@@ -5,7 +5,6 @@ import { Theme } from "@/types";
 import { Button } from "~/components/ui/button";
 import { Message, addMessageListener, sendMessageToBackground } from "~/lib/messaging";
 import { cn } from "~/lib/utils";
-import Logo from "~/assets/logo.svg?react";
 import { useTranslation } from "~/i18n/hooks";
 import { TFunction } from "i18next";
 
@@ -18,7 +17,6 @@ interface ContentPopupProps {
 }
 
 enum PopupState {
-  Question = "question",
   Loading = "loading",
   Answer = "answer",
 }
@@ -29,20 +27,6 @@ const Loading = ({ t }: { t: TFunction }) => {
       <Loader2 className="size-4 animate-spin text-muted-foreground" />
       <span className="text-sm text-muted-foreground">{t("contentScript.loading")}</span>
     </div>
-  );
-};
-
-const Question = ({ onClick, t }: { onClick: () => void; t: TFunction }) => {
-  return (
-    <Button
-      variant="outline"
-      size="sm"
-      className="w-full gap-2"
-      onClick={onClick}
-    >
-      <Logo className="size-4" />
-      <span className="text-sm text-muted-foreground">{t("contentScript.question")}</span>
-    </Button>
   );
 };
 
@@ -67,16 +51,12 @@ const Answer = ({
 export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
   ({ question, context, x, y, onClose }, ref) => {
     const { data: theme } = useStorage(StorageKey.THEME);
-    const [state, setState] = useState<PopupState>(PopupState.Question);
+    const [state, setState] = useState<PopupState>(PopupState.Loading);
     const [answer, setAnswer] = useState<string>("");
     const { t } = useTranslation();
 
-    const handleQuestionClick = async () => {
-      setState(PopupState.Loading);
-      sendMessageToBackground(Message.GET_SELECTION_TEXT, { question, context });
-    };
-
     useEffect(() => {
+      sendMessageToBackground(Message.GET_SELECTION_TEXT, { question, context });
       addMessageListener(Message.GET_ANSWER, (data) => {
         setAnswer(data);
         setState(PopupState.Answer);
@@ -87,7 +67,7 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
       <div
         ref={ref}
         className={cn(
-          "fixed z-50 flex max-w-[500px] flex-col gap-2 rounded-md border bg-background p-3 shadow-lg",
+          "fixed z-50 flex w-[400px] max-w-[400px] flex-col gap-2 rounded-md border bg-background p-3 shadow-lg",
           {
             dark:
               theme === Theme.DARK ||
@@ -100,10 +80,6 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
           top: `${y}px`,
         }}
       >
-        {state === PopupState.Question && (
-          <Question onClick={handleQuestionClick} t={t} />
-        )}
-
         {state === PopupState.Loading && <Loading t={t} />}
 
         {state === PopupState.Answer && (
