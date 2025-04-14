@@ -9,11 +9,7 @@ import { Button } from "~/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { Language } from "~/types";
 import { set, StorageKey } from "~/lib/localStorage";
-
-const LANGUAGES: Language[] = [
-  { value: "en", label: "English" },
-  { value: "ru", label: "Русский" },
-];
+import { LANGUAGES } from "~/data/languages";
 
 export function LanguageSwitcher() {
   const { changeLanguage, currentLanguage, t } = useTranslation();

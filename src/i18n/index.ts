@@ -15,6 +15,11 @@ const resources = {
   },
 };
 
+// Set default language if not set
+if (!localStorage.getItem('i18nextLng')) {
+  localStorage.setItem('i18nextLng', 'en');
+}
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
