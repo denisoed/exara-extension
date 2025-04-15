@@ -2,7 +2,8 @@
   "optionsPage": {
     "title": "Настройки",
     "appLanguageLabel": "Язык приложения",
-    "answerLanguageLabel": "Язык ответов"
+    "answerLanguageLabel": "Язык ответов",
+    "scrollCloseLabel": "Закрывать попап при скролле"
   },
   "contentScript": {
     "question": "Что это?",

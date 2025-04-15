@@ -2,7 +2,8 @@
   "optionsPage": {
     "title": "Options",
     "appLanguageLabel": "App language",
-    "answerLanguageLabel": "Answer language"
+    "answerLanguageLabel": "Answer language",
+    "scrollCloseLabel": "Close popup on scroll"
   },
   "contentScript": {
     "question": "What's this?",
