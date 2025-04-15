@@ -24,10 +24,13 @@ The extension follows a modular architecture with clear separation of concerns:
 
 3. **UI Components**
    - Floating button
-   - Draggable popup
+   - Multi-state popup
+   - Action button
    - Content display
    - Control buttons
    - Drag handle
+   - Loading states
+   - Preview states
 
 ## Design Patterns
 1. **Service Worker Pattern**
@@ -41,6 +44,8 @@ The extension follows a modular architecture with clear separation of concerns:
    - Custom hooks for extension-specific logic
    - Forward refs for DOM manipulation
    - Callback memoization for performance
+   - Component composition
+   - State machine pattern for UI states
 
 3. **Message Passing**
    - Type-safe message interfaces
@@ -58,6 +63,15 @@ The extension follows a modular architecture with clear separation of concerns:
    - Viewport-aware positioning
    - Dedicated drag handles
    - Responsive layout adjustments
+   - State-based transitions
+   - Smooth animations
+
+6. **State Management**
+   - Enum-based state machine
+   - State transition handlers
+   - Loading state management
+   - Preview state handling
+   - Error state handling
 
 ## Component Relationships
 ```mermaid
@@ -75,9 +89,12 @@ graph TD
     
     subgraph UI Components
         H[Floating Button] --> I[Popup]
-        I --> J[Drag Handle]
-        I --> K[Content Display]
-        I --> L[Control Buttons]
+        I --> J[Preview State]
+        I --> K[Loading State]
+        I --> L[Answer State]
+        I --> M[Drag Handle]
+        I --> N[Control Buttons]
+        I --> O[Action Button]
     end
 ```
 
@@ -98,6 +115,7 @@ graph TD
    - Custom theme support
    - Fixed positioning strategy
    - Drag and drop implementation
+   - Animation system
 
 4. **Development Tools**
    - Biome for linting
@@ -108,4 +126,13 @@ graph TD
    - Mouse event-based drag operations
    - Position-based offset calculations
    - Viewport boundary constraints
-   - Smooth movement transitions 
+   - Smooth movement transitions
+   - State-based animations
+   - Component composition
+
+6. **State Management**
+   - Enum-based state machine
+   - React hooks for state
+   - Event-driven state transitions
+   - Loading state handling
+   - Error state management 
