@@ -33,7 +33,7 @@ const ActionBtn = ({ onClick }: { onClick: () => void }) => {
 const Loading = () => {
   const { t } = useTranslation();
   return (
-    <div className="flex items-center justify-center gap-2 py-2 bg-muted rounded-[8px]">
+    <div className="flex items-center justify-center gap-2 py-2 bg-popover rounded-[8px]">
       <Loader2 className="size-4 animate-spin text-black dark:text-white" />
       <span className="text-sm text-black dark:text-white">{t("contentScript.loading")}</span>
     </div>
@@ -46,7 +46,7 @@ const Answer = ({
   answer: string; 
 }) => {
   return (
-    <div className="flex flex-col gap-2 text-black dark:text-white rounded-[8px] bg-muted p-3">
+    <div className="flex flex-col gap-2 text-black dark:text-white rounded-[8px] bg-popover p-3">
       <p className="text-sm">{answer}</p>
     </div>
   );

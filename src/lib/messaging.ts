@@ -4,6 +4,7 @@ export const Message = {
   USER: "user",
   GET_SELECTION_TEXT: "get-selection-text",
   GET_ANSWER: "get-answer",
+  OPEN_CUSTOM_POPUP: "open-custom-popup",
 } as const;
 
 export type Message = (typeof Message)[keyof typeof Message];
@@ -11,6 +12,7 @@ export type Message = (typeof Message)[keyof typeof Message];
 interface Messages {
   [Message.GET_SELECTION_TEXT]: (text: string, language: string) => void;
   [Message.GET_ANSWER]: (text: string) => void;
+  [Message.OPEN_CUSTOM_POPUP]: () => void;
 }
 
 export function sendMessageToActiveTab(message: Message, data: any) {

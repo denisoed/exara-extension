@@ -5,6 +5,7 @@ import { env } from "~/lib/env";
 import { get, set, StorageKey } from "~/lib/localStorage";
 import { Language } from "@/types";
 import { LANGUAGES } from "~/data/languages";
+import { browser } from "wxt/browser";
 
 async function setDefaultLanguage() {
   const language = await get<Language>(StorageKey.LANGUAGE);
@@ -18,6 +19,10 @@ const main = () => {
     "Background service worker is running! Edit `src/app/background` and save to reload.",
   );
   setDefaultLanguage();
+  
+  browser.action.onClicked.addListener(() => {
+    sendMessageToActiveTab(Message.OPEN_CUSTOM_POPUP, '');
+  });
 };
 
 const openai = new OpenAI({

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Layout } from "~/components/layout/layout";
-import { LanguageSwitcher } from "@/components/options/language-switcher";
+import { LanguageSwitcher } from "@/components/content/language-switcher";
 import { useTranslation } from "~/i18n/hooks";
 
 const Options = () => {

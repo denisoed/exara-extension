@@ -3,13 +3,14 @@ import ReactDOM from "react-dom/client";
 import { createShadowRootUi } from "wxt/client";
 import { defineContentScript } from "wxt/sandbox";
 import { ContentPopup } from "~/components/content/popup";
+import { CustomPopup } from "~/components/content/custom-popup";
 import { I18nextProvider } from "react-i18next";
 import i18n from "~/i18n";
 import { useTranslation } from "~/i18n/hooks";
 import { getSelection, getPageContext, isPopup } from "~/lib/utils";
 import { get, StorageKey, watch, unwatch } from "~/lib/localStorage";
 import { Language } from "@/types";
-
+import { addMessageListener, Message } from "~/lib/messaging";
 import "~/assets/styles/globals.css";
 
 interface PopupState {
@@ -19,10 +20,16 @@ interface PopupState {
   y: number;
 }
 
+interface CustomPopupState {
+  x: number;
+  y: number;
+}
+
 const ContentScriptUI = () => {
   const SCROLL_THRESHOLD = 50; // pixels
   let lastScrollY = window.scrollY;
   const [popupState, setPopupState] = useState<PopupState | null>(null);
+  const [customPopupState, setCustomPopupState] = useState<CustomPopupState | null>(null);
   const { changeLanguage } = useTranslation();
   
   async function getLanguage() {
@@ -59,7 +66,13 @@ const ContentScriptUI = () => {
   }
 
 
-  function onScroll() {
+  async function onScroll() {    
+    const isScrollCloseEnabled = await get<boolean>(StorageKey.SCROLL_CLOSE) || true;
+    
+    if (!isScrollCloseEnabled) {
+      return;
+    }
+
     const currentScrollY = window.scrollY;
     const scrollDiff = Math.abs(currentScrollY - lastScrollY);
     
@@ -69,32 +82,51 @@ const ContentScriptUI = () => {
     }
   }
 
+  function onOpenCustomPopup() {
+    const windowWidth = window.innerWidth;
+    const customPopupWidth = 400;
+    const x = windowWidth - customPopupWidth - 16;
+    const y = 16;
+    setCustomPopupState({
+      x,
+      y,
+    });
+  }
+
   useEffect(() => {
     getLanguage();
     watch(StorageKey.LANGUAGE, getLanguage);
+    addMessageListener(Message.OPEN_CUSTOM_POPUP, onOpenCustomPopup);
 
+    window.addEventListener("scroll", onScroll);
     document.addEventListener("mouseup", onMouseUp);
     document.addEventListener("mousedown", onMouseDown);
-    window.addEventListener("scroll", onScroll);
+
     return () => {
+      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("mouseup", onMouseUp);
       document.removeEventListener("mousedown", onMouseDown);
-      window.removeEventListener("scroll", onScroll);
       unwatch(StorageKey.LANGUAGE, getLanguage);
     };
   }, []);
 
-  if (!popupState) return null;
-
   return (
     <I18nextProvider i18n={i18n}>
-      <ContentPopup
+      {popupState && (<ContentPopup
         question={popupState.text}
         context={popupState.context}
         x={popupState.x}
         y={popupState.y}
-        onClose={() => setPopupState(null)}
-      />
+          onClose={() => setPopupState(null)}
+        />
+      )}
+      {customPopupState && (
+        <CustomPopup
+          x={customPopupState.x}
+          y={customPopupState.y}
+          onClose={() => setCustomPopupState(null)}
+        />
+      )}
     </I18nextProvider>
   );
 };

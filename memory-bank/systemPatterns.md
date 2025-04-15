@@ -5,6 +5,7 @@ The extension follows a modular architecture with clear separation of concerns:
 
 1. **Entry Points**
    - Background service worker
+   - Browser action
    - Content scripts
    - DevTools integration
    - New tab page
@@ -14,6 +15,7 @@ The extension follows a modular architecture with clear separation of concerns:
    - Custom pages
 
 2. **Core Components**
+   - Browser action handler
    - Authentication system
    - Storage management
    - Message passing
@@ -23,6 +25,7 @@ The extension follows a modular architecture with clear separation of concerns:
    - Analytics
 
 3. **UI Components**
+   - Browser action popup
    - Floating button
    - Multi-state popup
    - Action button
@@ -37,6 +40,7 @@ The extension follows a modular architecture with clear separation of concerns:
    - Background script as service worker
    - Event-driven architecture
    - Message passing between components
+   - Browser action event handling
 
 2. **Component Architecture**
    - React functional components
@@ -51,6 +55,7 @@ The extension follows a modular architecture with clear separation of concerns:
    - Type-safe message interfaces
    - Centralized message handling
    - Cross-component communication
+   - Browser action event propagation
 
 4. **Storage Management**
    - Type-safe storage interfaces
@@ -58,6 +63,7 @@ The extension follows a modular architecture with clear separation of concerns:
    - Synchronized storage across components
 
 5. **UI Interaction Patterns**
+   - Browser action click handling
    - Fixed positioning for floating elements
    - Smooth drag and drop operations
    - Viewport-aware positioning
@@ -72,29 +78,30 @@ The extension follows a modular architecture with clear separation of concerns:
    - Loading state management
    - Preview state handling
    - Error state handling
+   - Browser action state management
 
 ## Component Relationships
 ```mermaid
 graph TD
     A[Background Service Worker] --> B[Content Scripts]
-    A --> C[Popup]
-    A --> D[Options]
-    A --> E[New Tab]
-    A --> F[Side Panel]
-    B --> G[Web Page]
+    A --> C[Browser Action]
+    A --> D[Popup]
+    A --> E[Options]
+    A --> F[New Tab]
+    A --> G[Side Panel]
+    B --> H[Web Page]
     C --> A
     D --> A
     E --> A
     F --> A
+    G --> A
     
     subgraph UI Components
-        H[Floating Button] --> I[Popup]
-        I --> J[Preview State]
+        I[Browser Action Popup] --> J[Preview State]
         I --> K[Loading State]
         I --> L[Answer State]
-        I --> M[Drag Handle]
-        I --> N[Control Buttons]
-        I --> O[Action Button]
+        I --> M[Control Buttons]
+        I --> N[Action Button]
     end
 ```
 

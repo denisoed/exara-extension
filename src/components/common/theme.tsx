@@ -27,11 +27,11 @@ export const ThemeSwitch = memo<ThemeSwitchProps>(({ className }) => {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          size="icon"
+          size="xs"
           className={cn("rounded-full", className)}
         >
-          <Sun className="size-5 scale-100 dark:scale-0" />
-          <Moon className="absolute size-5 scale-0 dark:scale-100" />
+          <Sun className="size-2 text-muted-foreground scale-100 dark:scale-0" />
+          <Moon className="absolute size-2 text-muted-foreground scale-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
