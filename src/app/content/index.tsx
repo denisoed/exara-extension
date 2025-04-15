@@ -34,7 +34,6 @@ function isPopup(target: EventTarget | null) {
   return target instanceof HTMLElement && target.tagName === "EXTRO-UI";
 }
 
-
 const ContentScriptUI = () => {
   const [popupState, setPopupState] = useState<PopupState | null>(null);
   const { changeLanguage } = useTranslation();

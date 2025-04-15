@@ -2,6 +2,7 @@ import typography from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
 import animate from "tailwindcss-animate";
 import { fontFamily } from "tailwindcss/defaultTheme";
+import remToPx from "tailwindcss-rem-to-px";
 
 export default {
   darkMode: ["class"],
@@ -75,5 +76,5 @@ export default {
       },
     },
   },
-  plugins: [animate, typography],
+  plugins: [animate, typography, remToPx],
 } satisfies Config;
