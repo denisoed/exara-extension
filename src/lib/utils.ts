@@ -29,3 +29,18 @@ export const getAvatar = (user: User) => {
 
   return typeof avatar === "string" ? avatar : undefined;
 };
+
+export function getSelection() {
+  const selectedText = window.getSelection()?.toString().trim();
+  return selectedText;
+}
+
+export function getPageContext() {
+  const pageTitle = document.title;
+  const pageDescription = document.querySelector('meta[name="description"]')?.getAttribute("content");
+  return { pageTitle, pageDescription };
+}
+
+export function isPopup(target: EventTarget | null) {
+  return target instanceof HTMLElement && target.tagName === "EXTRO-UI";
+}

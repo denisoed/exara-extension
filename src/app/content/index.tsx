@@ -6,11 +6,11 @@ import { ContentPopup } from "~/components/content/popup";
 import { I18nextProvider } from "react-i18next";
 import i18n from "~/i18n";
 import { useTranslation } from "~/i18n/hooks";
-
+import { getSelection, getPageContext, isPopup } from "~/lib/utils";
 import { get, StorageKey, watch, unwatch } from "~/lib/localStorage";
+import { Language } from "@/types";
 
 import "~/assets/styles/globals.css";
-import { Language } from "@/types";
 
 interface PopupState {
   text: string;
@@ -19,22 +19,9 @@ interface PopupState {
   y: number;
 }
 
-function getSelection() {
-  const selectedText = window.getSelection()?.toString().trim();
-  return selectedText;
-}
-
-function getContext() {
-  const pageTitle = document.title;
-  const pageDescription = document.querySelector('meta[name="description"]')?.getAttribute("content");
-  return { pageTitle, pageDescription };
-}
-
-function isPopup(target: EventTarget | null) {
-  return target instanceof HTMLElement && target.tagName === "EXTRO-UI";
-}
-
 const ContentScriptUI = () => {
+  const SCROLL_THRESHOLD = 50; // pixels
+  let lastScrollY = window.scrollY;
   const [popupState, setPopupState] = useState<PopupState | null>(null);
   const { changeLanguage } = useTranslation();
   
@@ -51,7 +38,7 @@ const ContentScriptUI = () => {
     }
 
     const selectedText = getSelection();
-    const context = getContext();
+    const context = getPageContext();
 
     if (selectedText) {
       setPopupState({
@@ -71,15 +58,28 @@ const ContentScriptUI = () => {
     setPopupState(null);
   }
 
+
+  function onScroll() {
+    const currentScrollY = window.scrollY;
+    const scrollDiff = Math.abs(currentScrollY - lastScrollY);
+    
+    if (scrollDiff > SCROLL_THRESHOLD) {
+      setPopupState(null);
+      lastScrollY = currentScrollY;
+    }
+  }
+
   useEffect(() => {
     getLanguage();
     watch(StorageKey.LANGUAGE, getLanguage);
 
     document.addEventListener("mouseup", onMouseUp);
     document.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("scroll", onScroll);
     return () => {
       document.removeEventListener("mouseup", onMouseUp);
       document.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("scroll", onScroll);
       unwatch(StorageKey.LANGUAGE, getLanguage);
     };
   }, []);

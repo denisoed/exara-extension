@@ -57,8 +57,6 @@ const Popup = ({ state, answer, onClose, handleDragStart }: { state: PopupState,
     <div
       className={cn(
         "flex w-[400px] max-w-[400px] flex-col gap-2 rounded-md bg-background p-3 pt-10 shadow-lg rounded-[16px]",
-        "transition-transform duration-300 ease-out",
-        "transform origin-center",
       )}
     >
       <div className="absolute right-2 top-2 flex gap-1">
@@ -146,16 +144,13 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
     }, [isDragging, handleMouseMove, handleMouseUp]);
 
     useEffect(() => {
-      // Trigger animation after component mount
-      requestAnimationFrame(() => {
-        setIsVisible(true);
-      });
-    }, []);
-
-    useEffect(() => {
       addMessageListener(Message.GET_ANSWER, (data) => {
         setAnswer(data);
         setState(PopupState.Answer);
+      });
+      // Trigger animation after component mount
+      requestAnimationFrame(() => {
+        setIsVisible(true);
       });
     }, []);
 
@@ -164,6 +159,8 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
         ref={ref}
         className={cn(
           "fixed z-50",
+          "transition-transform duration-300 ease-out",
+          "transform origin-center",
           {
             "scale-90 opacity-0": !isVisible,
             "scale-100 opacity-100": isVisible,
