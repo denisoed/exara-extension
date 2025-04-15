@@ -1,4 +1,5 @@
 import { Loader2, X, Move } from "lucide-react";
+import Logo from "~/assets/logo.svg?react";
 import { forwardRef, useEffect, useState, useCallback } from "react";
 import { StorageKey, useStorage } from "@/lib/storage";
 import { Theme } from "@/types";
@@ -6,7 +7,6 @@ import { Button } from "~/components/ui/button";
 import { Message, addMessageListener, sendMessageToBackground } from "~/lib/messaging";
 import { cn } from "~/lib/utils";
 import { useTranslation } from "~/i18n/hooks";
-import { TFunction } from "i18next";
 
 interface ContentPopupProps {
   question: string;
@@ -17,11 +17,21 @@ interface ContentPopupProps {
 }
 
 enum PopupState {
+  Preview = "preview",
   Loading = "loading",
   Answer = "answer",
 }
 
-const Loading = ({ t }: { t: TFunction }) => {
+const ActionBtn = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <Button variant="outline" size="xs" className="rounded-full shadow-lg" onClick={onClick}>
+      <Logo className="size-3 text-muted-foreground" />
+    </Button>
+  );
+};
+
+const Loading = () => {
+  const { t } = useTranslation();
   return (
     <div className="flex items-center justify-center gap-2 py-2 bg-muted rounded-[8px]">
       <Loader2 className="size-4 animate-spin text-black dark:text-white" />
@@ -42,31 +52,49 @@ const Answer = ({
   );
 };
 
+const Popup = ({ state, answer, onClose, handleDragStart }: { state: PopupState, answer: string, onClose: () => void, handleDragStart: (e: React.MouseEvent) => void }) => {
+  return (
+    <div
+      className={cn(
+        "flex w-[400px] max-w-[400px] flex-col gap-2 rounded-md bg-background p-3 pt-10 shadow-lg rounded-[16px]",
+        "transition-transform duration-300 ease-out",
+        "transform origin-center",
+      )}
+    >
+      <div className="absolute right-2 top-2 flex gap-1">
+        <Button
+          variant="outline"
+          size="xs"
+          className="rounded-full cursor-move"
+          onMouseDown={handleDragStart}
+        >
+          <Move className="size-2 text-muted-foreground" />
+        </Button>
+        <Button variant="outline" size="xs" className="rounded-full" onClick={onClose}>
+          <X className="size-3 text-muted-foreground" />
+        </Button>
+      </div>
+
+      {state === PopupState.Loading && <Loading />}
+
+      {state === PopupState.Answer && (
+        <Answer 
+          answer={answer} 
+        />
+      )}
+    </div>
+  )
+}
+
 export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
   ({ question, context, x, y, onClose }, ref) => {
     const { data: theme } = useStorage(StorageKey.THEME);
-    const [state, setState] = useState<PopupState>(PopupState.Loading);
+    const [state, setState] = useState<PopupState>(PopupState.Preview);
     const [answer, setAnswer] = useState<string>("");
-    const { t } = useTranslation();
     const [position, setPosition] = useState({ x, y });
     const [isDragging, setIsDragging] = useState(false);
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
     const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-      // Trigger animation after component mount
-      requestAnimationFrame(() => {
-        setIsVisible(true);
-      });
-    }, []);
-
-    useEffect(() => {
-      sendMessageToBackground(Message.GET_SELECTION_TEXT, { question, context });
-      addMessageListener(Message.GET_ANSWER, (data) => {
-        setAnswer(data);
-        setState(PopupState.Answer);
-      });
-    }, []);
 
     const handleDragStart = useCallback((e: React.MouseEvent) => {
       setIsDragging(true);
@@ -98,6 +126,13 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
       setIsDragging(false);
     }, []);
 
+    const handleRequestAnswer = () => {
+      sendMessageToBackground(Message.GET_SELECTION_TEXT, { question, context });
+      setState(PopupState.Loading);
+    };
+
+    // ------ HOOKS ------ //
+
     useEffect(() => {
       if (isDragging) {
         window.addEventListener('mousemove', handleMouseMove);
@@ -110,13 +145,25 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
       };
     }, [isDragging, handleMouseMove, handleMouseUp]);
 
+    useEffect(() => {
+      // Trigger animation after component mount
+      requestAnimationFrame(() => {
+        setIsVisible(true);
+      });
+    }, []);
+
+    useEffect(() => {
+      addMessageListener(Message.GET_ANSWER, (data) => {
+        setAnswer(data);
+        setState(PopupState.Answer);
+      });
+    }, []);
+
     return (
       <div
         ref={ref}
         className={cn(
-          "fixed z-50 flex w-[400px] max-w-[400px] flex-col gap-2 rounded-md bg-background p-3 pt-10 shadow-lg rounded-[16px]",
-          "transition-transform duration-300 ease-out",
-          "transform origin-center",
+          "fixed z-50",
           {
             "scale-90 opacity-0": !isVisible,
             "scale-100 opacity-100": isVisible,
@@ -131,27 +178,14 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
           top: `${position.y}px`,
         }}
       >
-        <div className="absolute right-2 top-2 flex gap-1">
-          <Button
-            variant="outline"
-            size="xs"
-            className="rounded-full cursor-move"
-            onMouseDown={handleDragStart}
-          >
-            <Move className="size-2 text-muted-foreground" />
-          </Button>
-          <Button variant="outline" size="xs" className="rounded-full" onClick={onClose}>
-            <X className="size-3 text-muted-foreground" />
-          </Button>
-        </div>
-  
-        {state === PopupState.Loading && <Loading t={t} />}
-
-        {state === PopupState.Answer && (
-          <Answer 
-            answer={answer} 
+        {state === PopupState.Preview && <ActionBtn onClick={handleRequestAnswer} /> ||
+          <Popup
+            state={state}
+            answer={answer}
+            onClose={onClose}
+            handleDragStart={handleDragStart}
           />
-        )}
+        }
       </div>
     );
   },

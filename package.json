@@ -1,9 +1,9 @@
 {
-  "name": "extro",
+  "name": "deep-read",
   "version": "1.0.0",
   "description": "Open source browser extension starter kit.",
   "license": "MIT",
-  "author": "Bartosz Zagrodzki",
+  "author": "Denisoed",
   "scripts": {
     "build": "run-p build:chrome build:firefox",
     "build:chrome": "wxt zip",

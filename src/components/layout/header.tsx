@@ -1,12 +1,12 @@
-import { Bot, Settings } from "lucide-react";
+// import { Bot, Settings } from "lucide-react";
 import { ThemeSwitch } from "~/components/common/theme";
-import { buttonVariants } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
+// import { buttonVariants } from "~/components/ui/button";
+// import { cn } from "~/lib/utils";
 
 export const Header = () => {
   return (
     <header className="flex items-center justify-center gap-2">
-      <a
+      {/* <a
         href="/options.html"
         target="_blank"
         rel="noreferrer"
@@ -20,8 +20,8 @@ export const Header = () => {
       >
         <Settings className="size-5" />
         <span className="sr-only">Options</span>
-      </a>
-      <ThemeSwitch />
+      </a> */}
+      <ThemeSwitch className="absolute right-3 top-3" />
     </header>
   );
 };
