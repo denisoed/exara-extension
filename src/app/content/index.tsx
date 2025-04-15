@@ -45,17 +45,6 @@ const ContentScriptUI = () => {
     }
   }
 
-  function onClick(event: MouseEvent) {
-    if (isPopup(event.target)) {
-      return;
-    }
-
-    const selectedText = window.getSelection()?.toString().trim();
-    if (!selectedText) {
-      setPopupState(null);
-    }
-  }
-
   function onMouseUp(event: MouseEvent) {
     if (isPopup(event.target)) {
       return;
@@ -74,15 +63,23 @@ const ContentScriptUI = () => {
     }
   }
 
+  function onMouseDown(event: MouseEvent) {
+    if (isPopup(event.target)) {
+      return;
+    }
+
+    setPopupState(null);
+  }
+
   useEffect(() => {
     getLanguage();
     watch(StorageKey.LANGUAGE, getLanguage);
 
     document.addEventListener("mouseup", onMouseUp);
-    document.addEventListener("click", onClick);
+    document.addEventListener("mousedown", onMouseDown);
     return () => {
       document.removeEventListener("mouseup", onMouseUp);
-      document.removeEventListener("click", onClick);
+      document.removeEventListener("mousedown", onMouseDown);
       unwatch(StorageKey.LANGUAGE, getLanguage);
     };
   }, []);
