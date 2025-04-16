@@ -6,6 +6,7 @@ import { Theme } from "@/types";
 import { Button } from "~/components/ui/button";
 import { Message, addMessageListener, sendMessageToBackground } from "~/lib/messaging";
 import { cn } from "~/lib/utils";
+import { Textarea } from "~/components/ui/textarea";
 import { useTranslation } from "~/i18n/hooks";
 
 interface ContentPopupProps {
@@ -97,7 +98,7 @@ const Answer = ({
 
           {isExpanded && (
             <div className="space-y-2">
-              <textarea
+              <Textarea
                 value={clarificationText}
                 onChange={(e) => setClarificationText(e.target.value)}
                 className="w-full min-h-[80px] p-2 text-sm rounded-md border bg-background resize-none"

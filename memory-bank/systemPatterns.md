@@ -16,6 +16,7 @@ The extension follows a modular architecture with clear separation of concerns:
 
 2. **Core Components**
    - Browser action handler
+   - Tab management
    - Authentication system
    - Storage management
    - Message passing
@@ -41,6 +42,7 @@ The extension follows a modular architecture with clear separation of concerns:
    - Event-driven architecture
    - Message passing between components
    - Browser action event handling
+   - Tab management
 
 2. **Component Architecture**
    - React functional components
@@ -56,6 +58,7 @@ The extension follows a modular architecture with clear separation of concerns:
    - Centralized message handling
    - Cross-component communication
    - Browser action event propagation
+   - Tab event handling
 
 4. **Storage Management**
    - Type-safe storage interfaces
@@ -64,6 +67,7 @@ The extension follows a modular architecture with clear separation of concerns:
 
 5. **UI Interaction Patterns**
    - Browser action click handling
+   - Tab creation and management
    - Fixed positioning for floating elements
    - Smooth drag and drop operations
    - Viewport-aware positioning
@@ -79,29 +83,32 @@ The extension follows a modular architecture with clear separation of concerns:
    - Preview state handling
    - Error state handling
    - Browser action state management
+   - Tab state management
 
 ## Component Relationships
 ```mermaid
 graph TD
     A[Background Service Worker] --> B[Content Scripts]
     A --> C[Browser Action]
-    A --> D[Popup]
-    A --> E[Options]
-    A --> F[New Tab]
-    A --> G[Side Panel]
-    B --> H[Web Page]
+    A --> D[Tab Management]
+    A --> E[Popup]
+    A --> F[Options]
+    A --> G[New Tab]
+    A --> H[Side Panel]
+    B --> I[Web Page]
     C --> A
     D --> A
     E --> A
     F --> A
     G --> A
+    H --> A
     
     subgraph UI Components
-        I[Browser Action Popup] --> J[Preview State]
-        I --> K[Loading State]
-        I --> L[Answer State]
-        I --> M[Control Buttons]
-        I --> N[Action Button]
+        J[Browser Action Popup] --> K[Preview State]
+        J --> L[Loading State]
+        J --> M[Answer State]
+        J --> N[Control Buttons]
+        J --> O[Action Button]
     end
 ```
 
@@ -130,6 +137,8 @@ graph TD
    - GitHub Actions for CI/CD
 
 5. **Interaction Patterns**
+   - Browser action click handling
+   - Tab creation and management
    - Mouse event-based drag operations
    - Position-based offset calculations
    - Viewport boundary constraints
@@ -142,4 +151,5 @@ graph TD
    - React hooks for state
    - Event-driven state transitions
    - Loading state handling
-   - Error state management 
+   - Error state management
+   - Tab state management 
