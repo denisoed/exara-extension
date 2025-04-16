@@ -99,6 +99,11 @@ The extension follows a modular architecture with clear separation of concerns:
    - Efficient message passing for style changes
    - Optimized prompt generation
    - Context preservation across styles
+   - Persistent style storage using local storage
+   - In-memory style caching for performance
+   - Style state preservation across clarification questions
+   - Default style fallback mechanism
+   - Type-safe storage key definitions
 
 ## Component Relationships
 ```mermaid

@@ -3,6 +3,7 @@ import { browser } from "wxt/browser";
 export const StorageKey = {
   LANGUAGE: "local:language",
   SCROLL_CLOSE: "local:scroll-close",
+  EXPLANATION_STYLE: "local:explanation-style",
 } as const;
 
 export async function get<T>(key: string) {

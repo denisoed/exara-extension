@@ -2,7 +2,7 @@ import OpenAI from "openai";
 import { defineBackground } from "wxt/sandbox";
 import { Message, addMessageListener, sendMessageToActiveTab } from "~/lib/messaging";
 import { env } from "~/lib/env";
-import { get, set, StorageKey } from "~/lib/localStorage";
+import { get, set, remove, StorageKey } from "~/lib/localStorage";
 import { Language } from "@/types";
 import { LANGUAGES } from "~/data/languages";
 import { browser } from "wxt/browser";
@@ -29,7 +29,7 @@ For example, when explaining technical concepts:
 - Database can be compared to a library where books (data) are organized and stored
 - Cache can be compared to a notepad where you write down frequently used information
 Make the explanation relatable and easy to understand using such analogies.
-`.trim();
+`.trim()
 };
 
 async function setDefaultLanguage() {
@@ -37,6 +37,21 @@ async function setDefaultLanguage() {
   if (!language) {
     set(StorageKey.LANGUAGE, LANGUAGES[0]);
   }
+}
+
+async function getCurrentStyle() {
+  // Try to get from storage if not in memory
+  const savedStyle = await get<"child" | "student" | "beginner">(StorageKey.EXPLANATION_STYLE);
+  if (savedStyle) {
+    return savedStyle;
+  }
+
+  // With no style if not set
+  return "";
+}
+
+async function setCurrentStyle(style: "child" | "student" | "beginner") {
+  await set(StorageKey.EXPLANATION_STYLE, style);
 }
 
 const getDefaultInstructions = async () => {
@@ -52,6 +67,7 @@ const getDefaultInstructions = async () => {
 
 const getAnswer = async (data: { question: string, context: string }) => {
   const instructions = await getDefaultInstructions();
+  await remove(StorageKey.EXPLANATION_STYLE);
   const prompt = `
 You are an assistant that helps users understand unknown words, terms, or abbreviations found in articles.
 Task:
@@ -73,7 +89,14 @@ const getClarification = async (data: {
   context: string;
 }) => {
   const instructions = await getDefaultInstructions();
+  const currentStyle = await getCurrentStyle();
+  
+  // Include the style prompt if a style is active
+  const stylePrompt = currentStyle ? stylePrompts[currentStyle] : "";
+  
   const prompt = `
+${stylePrompt}
+
 You are a context-aware assistant continuing a conversation.
 
 Original question: "${data.originalQuestion}"
@@ -102,12 +125,15 @@ ${instructions}
   });
 };
 
-const getExplainLikeChild = async (data: { 
+const getExplainSimpler = async (data: { 
   question: string;
   context: string;
   style: "child" | "student" | "beginner";
 }) => {
   const instructions = await getDefaultInstructions();
+  
+  // Save the selected style for future use
+  await setCurrentStyle(data.style);
 
   const prompt = `
 ${stylePrompts[data.style]}
@@ -136,7 +162,7 @@ addMessageListener(Message.GET_CLARIFICATION, (data) => {
 });
 
 addMessageListener(Message.EXPLAIN_LIKE_CHILD, (data) => {
-  getExplainLikeChild(data);
+  getExplainSimpler(data);
 });
 
 const main = () => {
