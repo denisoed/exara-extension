@@ -8,7 +8,7 @@ export const Message = {
   GET_CLARIFICATION: "get-clarification",
   GET_CLARIFICATION_ANSWER: "get-clarification-answer",
   EXPLAIN_LIKE_CHILD: "explain-like-child",
-  GET_EXPLAIN_LIKE_CHILD_ANSWER: "get-explain-like-child-answer",
+  GET_EXPLAIN_SIMPLER: "get-explain-like-child-answer",
 } as const;
 
 export type Message = (typeof Message)[keyof typeof Message];
@@ -31,7 +31,7 @@ interface Messages {
     question: string;
     context: string;
   };
-  [Message.GET_EXPLAIN_LIKE_CHILD_ANSWER]: (text: string) => void;
+  [Message.GET_EXPLAIN_SIMPLER]: (text: string) => void;
 }
 
 export function sendMessageToActiveTab(message: Message, data: any) {

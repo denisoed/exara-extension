@@ -150,7 +150,7 @@ ${instructions}`.trim();
     input: prompt,
   });
 
-  sendMessageToActiveTab(Message.GET_EXPLAIN_LIKE_CHILD_ANSWER, response.output_text);
+  sendMessageToActiveTab(Message.GET_EXPLAIN_SIMPLER, response.output_text);
 };
 
 addMessageListener(Message.GET_SELECTION_TEXT, (data) => {

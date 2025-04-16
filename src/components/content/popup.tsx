@@ -130,7 +130,7 @@ const Answer = ({
                 <MessageCircleMore className="size-4 mr-2" />
                 {t("contentScript.needClarification")}
               </Button>
-              <DropdownMenu>
+              {!isExpanded && <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="outline"
@@ -152,7 +152,7 @@ const Answer = ({
                     {t("contentScript.explainStyles.beginner")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
-              </DropdownMenu>
+              </DropdownMenu>}
             </div>
 
             {isExpanded && (
@@ -329,7 +329,7 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
         setState(PopupState.Answer);
       });
 
-      addMessageListener(Message.GET_EXPLAIN_LIKE_CHILD_ANSWER, (data) => {
+      addMessageListener(Message.GET_EXPLAIN_SIMPLER, (data) => {
         setAnswer(data);
         setState(PopupState.Answer);
       });
@@ -344,7 +344,7 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
       <div
         ref={ref}
         className={cn(
-          "fixed z-50",
+          "fixed z-[999999999]",
           "transition-transform duration-300 ease-out",
           "transform origin-center",
           {
