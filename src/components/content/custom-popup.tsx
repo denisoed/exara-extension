@@ -4,6 +4,7 @@ import { StorageKey, useStorage } from "@/lib/storage";
 import { Theme } from "@/types";
 import { Button } from "~/components/ui/button";
 import { LanguageSwitcher } from "~/components/content/language-switcher";
+import { ScrollCloseSwitch } from "~/components/content/scroll-close-switch";
 import { ThemeSwitch } from "~/components/common/theme";
 import { cn } from "~/lib/utils";
 
@@ -109,6 +110,9 @@ export const CustomPopup = forwardRef<HTMLDivElement, CustomPopupProps>(
         </div>
         <div className="flex flex-col gap-2 bg-popover rounded-[8px] p-2">
           <LanguageSwitcher />
+        </div>
+        <div className="flex flex-col gap-2 bg-popover rounded-[8px] p-2">
+          <ScrollCloseSwitch />
         </div>
       </div>
     );

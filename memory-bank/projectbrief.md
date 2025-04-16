@@ -1,7 +1,7 @@
 # Project Brief
 
 ## Project Name
-Extro - Browser Extension Boilerplate
+GetMore - AI Assistant
 
 ## Core Requirements
 - Production-ready browser extension boilerplate

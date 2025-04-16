@@ -122,7 +122,7 @@ const Answer = ({
                 <Button
                   size="sm"
                   onClick={handleSubmit}
-                  className="accent-btn-bg text-white"
+                  className="bg-accent-gradient text-white"
                   disabled={!clarificationText.trim()}
                 >
                   {t("contentScript.send")}

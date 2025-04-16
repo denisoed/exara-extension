@@ -67,7 +67,7 @@ const ContentScriptUI = () => {
 
 
   async function onScroll() {    
-    const isScrollCloseEnabled = await get<boolean>(StorageKey.SCROLL_CLOSE) || true;
+    const isScrollCloseEnabled = await get<boolean>(StorageKey.SCROLL_CLOSE) || false;
     
     if (!isScrollCloseEnabled) {
       return;
@@ -141,7 +141,7 @@ export default defineContentScript({
     );
 
     const ui = await createShadowRootUi(ctx, {
-      name: "extro-ui",
+      name: "get-more-ui",
       position: "overlay",
       anchor: "body",
       onMount: (container) => {

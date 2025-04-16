@@ -1,7 +1,7 @@
 # Product Context
 
 ## Why This Project Exists
-Browser extension development often involves repetitive setup and configuration. Extro aims to eliminate this friction by providing a production-ready boilerplate that incorporates best practices and modern tooling.
+Browser extension development often involves repetitive setup and configuration. GetMore aims to eliminate this friction by providing a production-ready boilerplate that incorporates best practices and modern tooling.
 
 ## Problems Solved
 1. **Development Friction**

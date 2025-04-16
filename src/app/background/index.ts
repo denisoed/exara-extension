@@ -64,7 +64,7 @@ Clarification question: "${data.clarificationQuestion}".
 Context: ${data.context}.
 Rules:
 - If the clarifying question has nothing to do with the original question or answer or context, just say that the clarification is off-topic.
-`;
+`.trim();
 
   const response = await openai.responses.create({
     model: DEFAULT_MODEL,
