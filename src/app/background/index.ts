@@ -7,6 +7,31 @@ import { Language } from "@/types";
 import { LANGUAGES } from "~/data/languages";
 import { browser } from "wxt/browser";
 
+const openai = new OpenAI({
+  apiKey: env.VITE_OPEN_AI_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
+const DEFAULT_MODEL = "gpt-3.5-turbo";
+const stylePrompts = {
+    child: `
+You are a friendly teacher explaining complex concepts to a 5-year-old child.
+Use simple words, fun examples, and comparisons that a child would understand.
+Make it engaging and friendly.`,
+    student: `
+You are a university professor explaining concepts to a first-year student.
+Use clear academic language, provide context, and explain fundamental principles.
+Include relevant examples and analogies.`,
+    beginner: `
+You are explaining complex concepts to someone who has no prior knowledge of the topic.
+Use real-life analogies and everyday examples that anyone can relate to.
+For example, when explaining technical concepts:
+- REST API can be compared to a restaurant where the waiter (API) takes orders (requests) and brings food (responses)
+- Database can be compared to a library where books (data) are organized and stored
+- Cache can be compared to a notepad where you write down frequently used information
+Make the explanation relatable and easy to understand using such analogies.
+`.trim();
+};
+
 async function setDefaultLanguage() {
   const language = await get<Language>(StorageKey.LANGUAGE);
   if (!language) {
@@ -24,12 +49,6 @@ const getDefaultInstructions = async () => {
   - Don't ask questions, only give answers.
   `.trim();
 }
-
-const openai = new OpenAI({
-  apiKey: env.VITE_OPEN_AI_API_KEY,
-  dangerouslyAllowBrowser: true,
-});
-const DEFAULT_MODEL = "gpt-3.5-turbo";
 
 const getAnswer = async (data: { question: string, context: string }) => {
   const instructions = await getDefaultInstructions();
@@ -89,24 +108,6 @@ const getExplainLikeChild = async (data: {
   style: "child" | "student" | "beginner";
 }) => {
   const instructions = await getDefaultInstructions();
-  const stylePrompts = {
-    child: `
-You are a friendly teacher explaining complex concepts to a 5-year-old child.
-Use simple words, fun examples, and comparisons that a child would understand.
-Make it engaging and friendly.`,
-    student: `
-You are a university professor explaining concepts to a first-year student.
-Use clear academic language, provide context, and explain fundamental principles.
-Include relevant examples and analogies.`,
-    beginner: `
-You are explaining complex concepts to someone who has no prior knowledge of the topic.
-Use real-life analogies and everyday examples that anyone can relate to.
-For example, when explaining technical concepts:
-- REST API can be compared to a restaurant where the waiter (API) takes orders (requests) and brings food (responses)
-- Database can be compared to a library where books (data) are organized and stored
-- Cache can be compared to a notepad where you write down frequently used information
-Make the explanation relatable and easy to understand using such analogies.`
-  };
 
   const prompt = `
 ${stylePrompts[data.style]}
