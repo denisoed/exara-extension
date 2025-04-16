@@ -81,20 +81,22 @@ const Answer = ({
 
   return (
     <div className="flex flex-col gap-3 text-black dark:text-white rounded-[8px] bg-popover p-3">
-      {(!!answer || clarificationHistory.length) ? (
-        <div className="space-y-2">
-          <p className="text-sm">{answer}</p>
-            
-          {clarificationHistory.map((item, index) => (
-            <div key={index} className="mt-3 border-t pt-3 space-y-2">
-              <p className="text-sm text-muted-foreground italic">
-                {t("contentScript.clarificationQuestion")}: {item.question}
-              </p>
-              <p className="text-sm">{item.answer}</p>
-            </div>
-          ))}
-        </div>
-      ) : null}
+      <div className="max-h-[500px] overflow-y-auto pr-2">
+        {(!!answer || clarificationHistory.length) ? (
+          <div className="space-y-2">
+            <p className="text-sm">{answer}</p>
+              
+            {clarificationHistory.map((item, index) => (
+              <div key={index} className="mt-3 border-t pt-3 space-y-2">
+                <p className="text-sm text-muted-foreground italic">
+                  {t("contentScript.clarificationQuestion")}: {item.question}
+                </p>
+                <p className="text-sm">{item.answer}</p>
+              </div>
+            ))}
+          </div>
+        ) : null}
+      </div>
 
       {isLoading && <Loading /> ||
         canClarify && (
