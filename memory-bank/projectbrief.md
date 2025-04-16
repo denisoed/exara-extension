@@ -1,7 +1,7 @@
 # Project Brief
 
 ## Project Name
-GetMore - AI Assistant
+Exara - AI Assistant
 
 ## Core Requirements
 - Production-ready browser extension boilerplate

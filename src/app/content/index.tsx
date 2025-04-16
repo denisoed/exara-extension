@@ -141,7 +141,7 @@ export default defineContentScript({
     );
 
     const ui = await createShadowRootUi(ctx, {
-      name: "get-more-ui",
+      name: "exara-ui",
       position: "overlay",
       anchor: "body",
       onMount: (container) => {

@@ -1,1 +1,1 @@
-# GetMore - AI Assistant
+# Exara - AI Assistant

@@ -81,58 +81,58 @@ const Answer = ({
 
   return (
     <div className="flex flex-col gap-3 text-black dark:text-white rounded-[8px] bg-popover p-3">
-      <div className="max-h-[500px] overflow-y-auto pr-2">
-        {(!!answer || clarificationHistory.length) ? (
-          <div className="space-y-2">
-            <p className="text-sm">{answer}</p>
-              
-            {clarificationHistory.map((item, index) => (
-              <div key={index} className="mt-3 border-t pt-3 space-y-2">
-                <p className="text-sm text-muted-foreground italic">
-                  {t("contentScript.clarificationQuestion")}: {item.question}
-                </p>
-                <p className="text-sm">{item.answer}</p>
-              </div>
-            ))}
-          </div>
-        ) : null}
-      </div>
+      {(!!answer || clarificationHistory.length) ? (
+        <div className="max-h-[500px] overflow-y-auto pr-2">
+            <div className="space-y-2">
+              <p className="text-sm">{answer}</p>
+                
+              {clarificationHistory.map((item, index) => (
+                <div key={index} className="mt-3 border-t pt-3 space-y-2">
+                  <p className="text-sm text-muted-foreground italic">
+                    {t("contentScript.clarificationQuestion")}: {item.question}
+                  </p>
+                  <p className="text-sm">{item.answer}</p>
+                </div>
+              ))}
+            </div>
+        </div>
+      ) : null}
 
       {isLoading && <Loading /> ||
         canClarify && (
           <div className="space-y-2">
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full"
-            onClick={() => setIsExpanded(!isExpanded)}
-          >
-            {t("contentScript.needClarification")}
-          </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full"
+              onClick={() => setIsExpanded(!isExpanded)}
+            >
+              {t("contentScript.needClarification")}
+            </Button>
 
-          {isExpanded && (
-            <div className="space-y-2">
-              <Textarea
-                value={clarificationText}
-                onChange={(e) => setClarificationText(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="w-full min-h-[80px] p-2 text-sm rounded-md border bg-background resize-none"
-                placeholder={t("contentScript.typeClarification")}
-                autoFocus
-              />
-              <div className="flex justify-end">
-                <Button
-                  size="sm"
-                  onClick={handleSubmit}
-                  className="bg-accent-gradient text-white"
-                  disabled={!clarificationText.trim()}
-                >
-                  {t("contentScript.send")}
-                </Button>
+            {isExpanded && (
+              <div className="space-y-2">
+                <Textarea
+                  value={clarificationText}
+                  onChange={(e) => setClarificationText(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  className="w-full min-h-[80px] p-2 text-sm rounded-md border bg-background resize-none"
+                  placeholder={t("contentScript.typeClarification")}
+                  autoFocus
+                />
+                <div className="flex justify-end">
+                  <Button
+                    size="sm"
+                    onClick={handleSubmit}
+                    className="bg-accent-gradient text-white min-w-[100px]"
+                    disabled={!clarificationText.trim()}
+                  >
+                    {t("contentScript.send")}
+                  </Button>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
       )}
     </div>
   );

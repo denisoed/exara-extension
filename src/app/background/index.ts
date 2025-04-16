@@ -38,6 +38,7 @@ const main = () => {
 
 const openai = new OpenAI({
   apiKey: env.VITE_OPEN_AI_API_KEY,
+  dangerouslyAllowBrowser: true,
 });
 const DEFAULT_MODEL = "gpt-3.5-turbo";
 

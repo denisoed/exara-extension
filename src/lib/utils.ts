@@ -42,5 +42,5 @@ export function getPageContext() {
 }
 
 export function isPopup(target: EventTarget | null) {
-  return target instanceof HTMLElement && target.tagName === "GET-MORE-UI";
+  return target instanceof HTMLElement && target.tagName === "EXARA-UI";
 }
