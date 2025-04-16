@@ -14,6 +14,15 @@ async function setDefaultLanguage() {
   }
 }
 
+const getDefaultInstructions = async () => {
+  const language = await get<Language>(StorageKey.LANGUAGE);
+  return `
+  - Answer only in ${language.label} language.
+  - The response should consist of a maximum of 100-150 words.
+  - Provide a clear and concise clarification.
+  `.trim();
+}
+
 const main = () => {
   console.log(
     "Background service worker is running! Edit `src/app/background` and save to reload.",
@@ -31,12 +40,12 @@ const openai = new OpenAI({
 const DEFAULT_MODEL = "gpt-3.5-turbo";
 
 const getAnswer = async (data: { question: string, context: string }) => {
-  const language = await get<Language>(StorageKey.LANGUAGE);
-  const prompt = `Briefly explain (maximum 100 words) what "${data.question}" means. If it's an abbreviation, expand it. Answer only in ${language.label} language. Context: ${data.context}`;
+  const instructions = await getDefaultInstructions();
+  const prompt = `Briefly explain what "${data.question}" means. If it's an abbreviation, expand it. Context: ${data.context}`;
   const response = await openai.responses.create({
     model: DEFAULT_MODEL,
     input: prompt,
-    max_output_tokens: 150,
+    instructions,
   });
   sendMessageToActiveTab(Message.GET_ANSWER, response.output_text);
 };
@@ -47,23 +56,20 @@ const getClarification = async (data: {
   clarificationQuestion: string;
   context: string;
 }) => {
-  const language = await get<Language>(StorageKey.LANGUAGE);
+  const instructions = await getDefaultInstructions();
   const prompt = `
 Original question: "${data.originalQuestion}".
 Original answer: "${data.originalAnswer}".
 Clarification question: "${data.clarificationQuestion}".
 Context: ${data.context}.
 Rules:
-- Answer only in ${language.label} language.
-- Answer in maximum 100 words.
-- Please provide a clear and concise clarification.
-- If the clarifying question has nothing to do with the original question, just say that the clarification is off-topic.
+- If the clarifying question has nothing to do with the original question or answer or context, just say that the clarification is off-topic.
 `;
 
   const response = await openai.responses.create({
     model: DEFAULT_MODEL,
     input: prompt,
-    max_output_tokens: 150,
+    instructions,
   });
 
   sendMessageToActiveTab(Message.GET_CLARIFICATION_ANSWER, {
