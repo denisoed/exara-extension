@@ -1,4 +1,4 @@
-import { Loader2, X, Move } from "lucide-react";
+import { Loader2, X, Move, Baby, HelpCircle } from "lucide-react";
 import Logo from "~/assets/logo.svg?react";
 import { forwardRef, useEffect, useState, useCallback } from "react";
 import { StorageKey, useStorage } from "@/lib/storage";
@@ -50,12 +50,14 @@ const Answer = ({
   answer,
   isLoading,
   onClarify,
+  onExplain,
   clarificationCount,
   clarificationHistory,
 }: { 
   answer: string;
   isLoading: boolean;
   onClarify: (question: string) => void;
+  onExplain: () => void;
   clarificationCount: number;
   clarificationHistory: ClarificationHistory[];
 }) => {
@@ -72,6 +74,11 @@ const Answer = ({
     }
   };
 
+  const handleExplain = () => {
+    onExplain();
+    setIsExpanded(false);
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -80,9 +87,9 @@ const Answer = ({
   };
 
   return (
-    <div className="flex flex-col gap-3 text-black dark:text-white rounded-[8px] bg-popover p-3">
+    <div className="flex flex-col gap-2 text-black dark:text-white">
       {(!!answer || clarificationHistory.length) ? (
-        <div className="max-h-[500px] overflow-y-auto pr-2">
+        <div className="max-h-[500px] overflow-y-auto pr-2 rounded-[8px] bg-popover p-3">
             <div className="space-y-2">
               <p className="text-sm">{answer}</p>
                 
@@ -98,17 +105,29 @@ const Answer = ({
         </div>
       ) : null}
 
-      {isLoading && <Loading /> ||
+      {isLoading && <div className="rounded-[8px] bg-popover p-2"><Loading /></div> ||
         canClarify && (
-          <div className="space-y-2">
-            <Button
-              variant="outline"
-              size="sm"
-              className="w-full"
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
-              {t("contentScript.needClarification")}
-            </Button>
+          <div className="space-y-2 rounded-[8px] bg-popover p-2">
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1"
+                onClick={() => setIsExpanded(!isExpanded)}
+              >
+                <HelpCircle className="size-4 mr-1" />
+                {t("contentScript.needClarification")}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1"
+                onClick={handleExplain}
+              >
+                <Baby className="size-4 mr-1" />
+                {t("contentScript.explainLikeChild")}
+              </Button>
+            </div>
 
             {isExpanded && (
               <div className="space-y-2">
@@ -144,6 +163,7 @@ const Popup = ({
   onClose, 
   handleDragStart,
   onClarify,
+  onExplain,
   clarificationCount,
   clarificationHistory,
 }: { 
@@ -151,9 +171,10 @@ const Popup = ({
   answer: string, 
   onClose: () => void, 
   handleDragStart: (e: React.MouseEvent) => void,
-  onClarify: (question: string) => void,
-  clarificationCount: number,
-  clarificationHistory: ClarificationHistory[],
+  onClarify: (question: string) => void;
+  onExplain: () => void;
+  clarificationCount: number;
+  clarificationHistory: ClarificationHistory[];
 }) => {
   return (
     <div
@@ -179,6 +200,7 @@ const Popup = ({
         answer={answer}
         isLoading={state === PopupState.Loading}
         onClarify={onClarify}
+        onExplain={onExplain}
         clarificationCount={clarificationCount}
         clarificationHistory={clarificationHistory}
       />
@@ -204,6 +226,14 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
         originalQuestion: question,
         originalAnswer: answer,
         clarificationQuestion,
+        context,
+      });
+    };
+
+    const handleExplain = () => {
+      setState(PopupState.Loading);
+      sendMessageToBackground(Message.EXPLAIN_LIKE_CHILD, {
+        question,
         context,
       });
     };
@@ -272,6 +302,11 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
         setState(PopupState.Answer);
       });
 
+      addMessageListener(Message.GET_EXPLAIN_LIKE_CHILD_ANSWER, (data) => {
+        setAnswer(data);
+        setState(PopupState.Answer);
+      });
+
       // Trigger animation after component mount
       requestAnimationFrame(() => {
         setIsVisible(true);
@@ -306,6 +341,7 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
             onClose={onClose}
             handleDragStart={handleDragStart}
             onClarify={handleClarification}
+            onExplain={handleExplain}
             clarificationCount={clarificationCount}
             clarificationHistory={clarificationHistory}
           />

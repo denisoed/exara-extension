@@ -94,12 +94,42 @@ ${instructions}
   });
 };
 
+const getExplainLikeChild = async (data: { 
+  question: string;
+  context: string;
+}) => {
+  const instructions = await getDefaultInstructions();
+  const prompt = `
+You are a friendly teacher explaining complex concepts to a 10-year-old child.
+
+Task:
+- Explain what "${data.question}" means in the simplest possible way.
+- Use simple words and short sentences.
+- Use fun examples and comparisons that a child would understand.
+- Make it engaging and friendly.
+- If it's an abbreviation, expand it and explain it in a child-friendly way.
+- Use this context to improve accuracy: ${data.context}
+
+${instructions}`.trim();
+
+  const response = await openai.responses.create({
+    model: DEFAULT_MODEL,
+    input: prompt,
+  });
+
+  sendMessageToActiveTab(Message.GET_EXPLAIN_LIKE_CHILD_ANSWER, response.output_text);
+};
+
 addMessageListener(Message.GET_SELECTION_TEXT, (data) => {
   getAnswer(data);
 });
 
 addMessageListener(Message.GET_CLARIFICATION, (data) => {
   getClarification(data);
+});
+
+addMessageListener(Message.EXPLAIN_LIKE_CHILD, (data) => {
+  getExplainLikeChild(data);
 });
 
 export default defineBackground(main);

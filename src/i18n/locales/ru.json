@@ -12,7 +12,8 @@
     "needClarification": "Нужно уточнение",
     "typeClarification": "Введите ваш вопрос для уточнения...",
     "clarificationQuestion": "Уточнение",
-    "send": "Отправить"
+    "send": "Отправить",
+    "explainLikeChild": "Разжевать"
   },
   "popup": {
     "hello": "Привет от"
