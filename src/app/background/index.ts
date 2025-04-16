@@ -25,17 +25,6 @@ const getDefaultInstructions = async () => {
   `.trim();
 }
 
-const main = () => {
-  console.log(
-    "Background service worker is running! Edit `src/app/background` and save to reload.",
-  );
-  setDefaultLanguage();
-  
-  browser.action.onClicked.addListener(() => {
-    sendMessageToActiveTab(Message.OPEN_CUSTOM_POPUP, '');
-  });
-};
-
 const openai = new OpenAI({
   apiKey: env.VITE_OPEN_AI_API_KEY,
   dangerouslyAllowBrowser: true,
@@ -97,17 +86,34 @@ ${instructions}
 const getExplainLikeChild = async (data: { 
   question: string;
   context: string;
+  style: "child" | "student" | "beginner";
 }) => {
   const instructions = await getDefaultInstructions();
+  const stylePrompts = {
+    child: `
+You are a friendly teacher explaining complex concepts to a 5-year-old child.
+Use simple words, fun examples, and comparisons that a child would understand.
+Make it engaging and friendly.`,
+    student: `
+You are a university professor explaining concepts to a first-year student.
+Use clear academic language, provide context, and explain fundamental principles.
+Include relevant examples and analogies.`,
+    beginner: `
+You are explaining complex concepts to someone who has no prior knowledge of the topic.
+Use real-life analogies and everyday examples that anyone can relate to.
+For example, when explaining technical concepts:
+- REST API can be compared to a restaurant where the waiter (API) takes orders (requests) and brings food (responses)
+- Database can be compared to a library where books (data) are organized and stored
+- Cache can be compared to a notepad where you write down frequently used information
+Make the explanation relatable and easy to understand using such analogies.`
+  };
+
   const prompt = `
-You are a friendly teacher explaining complex concepts to a 10-year-old child.
+${stylePrompts[data.style]}
 
 Task:
-- Explain what "${data.question}" means in the simplest possible way.
-- Use simple words and short sentences.
-- Use fun examples and comparisons that a child would understand.
-- Make it engaging and friendly.
-- If it's an abbreviation, expand it and explain it in a child-friendly way.
+- Explain what "${data.question}" means.
+- If it's an abbreviation, expand it and explain it appropriately.
 - Use this context to improve accuracy: ${data.context}
 
 ${instructions}`.trim();
@@ -131,5 +137,16 @@ addMessageListener(Message.GET_CLARIFICATION, (data) => {
 addMessageListener(Message.EXPLAIN_LIKE_CHILD, (data) => {
   getExplainLikeChild(data);
 });
+
+const main = () => {
+  console.log(
+    "Background service worker is running! Edit `src/app/background` and save to reload.",
+  );
+  setDefaultLanguage();
+  
+  browser.action.onClicked.addListener(() => {
+    sendMessageToActiveTab(Message.OPEN_CUSTOM_POPUP, '');
+  });
+};
 
 export default defineBackground(main);

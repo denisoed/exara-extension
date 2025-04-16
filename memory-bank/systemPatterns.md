@@ -85,6 +85,21 @@ The extension follows a modular architecture with clear separation of concerns:
    - Browser action state management
    - Tab state management
 
+7. **Explanation System**
+   - Three-tier explanation styles (child, student, beginner)
+   - Real-life analogies for technical concepts
+   - Context-aware explanations
+   - Language-specific translations
+   - Dynamic style switching
+   - Consistent terminology across styles
+   - User-friendly interface for style selection
+   - Clear visual feedback for selected style
+   - Seamless integration with popup UI
+   - Type-safe style definitions
+   - Efficient message passing for style changes
+   - Optimized prompt generation
+   - Context preservation across styles
+
 ## Component Relationships
 ```mermaid
 graph TD

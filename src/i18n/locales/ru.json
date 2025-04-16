@@ -9,11 +9,16 @@
     "question": "Что это?",
     "loading": "Получаем ответ...",
     "close": "Закрыть",
-    "needClarification": "Нужно уточнение",
+    "needClarification": "Хочу уточнить",
     "typeClarification": "Введите ваш вопрос для уточнения...",
     "clarificationQuestion": "Уточнение",
     "send": "Отправить",
-    "explainLikeChild": "Разжевать"
+    "explainLikeChild": "Обьясни проще",
+    "explainStyles": {
+      "child": "Объясни как ребёнку",
+      "student": "Объясни как студенту",
+      "beginner": "Объясни как новичку"
+    }
   },
   "popup": {
     "hello": "Привет от"

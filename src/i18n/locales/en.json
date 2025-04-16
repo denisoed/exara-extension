@@ -9,11 +9,16 @@
     "question": "What's this?",
     "loading": "Getting answer...",
     "close": "Close",
-    "needClarification": "Need clarification",
+    "needClarification": "Need Clarification",
     "typeClarification": "Type your clarification question...",
     "clarificationQuestion": "Clarification",
     "send": "Send",
-    "explainLikeChild": "Explain like a child"
+    "explainLikeChild": "Explain Simpler",
+    "explainStyles": {
+      "child": "Explain like a child",
+      "student": "Explain like a student",
+      "beginner": "Explain like a beginner"
+    }
   },
   "popup": {
     "hello": "Hello from"

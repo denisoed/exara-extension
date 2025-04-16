@@ -1,4 +1,4 @@
-import { Loader2, X, Move, Baby, HelpCircle } from "lucide-react";
+import { Loader2, X, Move, MessageCircleMore, HelpCircle } from "lucide-react";
 import Logo from "~/assets/logo.svg?react";
 import { forwardRef, useEffect, useState, useCallback } from "react";
 import { StorageKey, useStorage } from "@/lib/storage";
@@ -8,6 +8,12 @@ import { Message, addMessageListener, sendMessageToBackground } from "~/lib/mess
 import { cn } from "~/lib/utils";
 import { Textarea } from "~/components/ui/textarea";
 import { useTranslation } from "~/i18n/hooks";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 
 interface ContentPopupProps {
   question: string;
@@ -21,6 +27,12 @@ enum PopupState {
   Preview = "preview",
   Loading = "loading",
   Answer = "answer",
+}
+
+enum ExplanationStyle {
+  CHILD = "child",
+  STUDENT = "student",
+  BEGINNER = "beginner",
 }
 
 const ActionBtn = ({ onClick }: { onClick: () => void }) => {
@@ -57,7 +69,7 @@ const Answer = ({
   answer: string;
   isLoading: boolean;
   onClarify: (question: string) => void;
-  onExplain: () => void;
+  onExplain: (style: ExplanationStyle) => void;
   clarificationCount: number;
   clarificationHistory: ClarificationHistory[];
 }) => {
@@ -74,8 +86,8 @@ const Answer = ({
     }
   };
 
-  const handleExplain = () => {
-    onExplain();
+  const handleExplain = (style: ExplanationStyle) => {
+    onExplain(style);
     setIsExpanded(false);
   };
 
@@ -115,18 +127,32 @@ const Answer = ({
                 className="flex-1"
                 onClick={() => setIsExpanded(!isExpanded)}
               >
-                <HelpCircle className="size-4 mr-1" />
+                <HelpCircle className="size-4 mr-2" />
                 {t("contentScript.needClarification")}
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1"
-                onClick={handleExplain}
-              >
-                <Baby className="size-4 mr-1" />
-                {t("contentScript.explainLikeChild")}
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                  >
+                    <MessageCircleMore className="size-4 mr-2" />
+                    {t("contentScript.explainLikeChild")}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => handleExplain(ExplanationStyle.CHILD)}>
+                    {t("contentScript.explainStyles.child")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleExplain(ExplanationStyle.STUDENT)}>
+                    {t("contentScript.explainStyles.student")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleExplain(ExplanationStyle.BEGINNER)}>
+                    {t("contentScript.explainStyles.beginner")}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
 
             {isExpanded && (
@@ -172,7 +198,7 @@ const Popup = ({
   onClose: () => void, 
   handleDragStart: (e: React.MouseEvent) => void,
   onClarify: (question: string) => void;
-  onExplain: () => void;
+  onExplain: (style: ExplanationStyle) => void;
   clarificationCount: number;
   clarificationHistory: ClarificationHistory[];
 }) => {
@@ -230,11 +256,12 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
       });
     };
 
-    const handleExplain = () => {
+    const handleExplain = (style: ExplanationStyle) => {
       setState(PopupState.Loading);
       sendMessageToBackground(Message.EXPLAIN_LIKE_CHILD, {
         question,
         context,
+        style,
       });
     };
 
