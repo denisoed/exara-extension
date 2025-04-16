@@ -72,6 +72,13 @@ const Answer = ({
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  };
+
   return (
     <div className="flex flex-col gap-3 text-black dark:text-white rounded-[8px] bg-popover p-3">
       {(!!answer || clarificationHistory.length) ? (
@@ -106,8 +113,10 @@ const Answer = ({
               <Textarea
                 value={clarificationText}
                 onChange={(e) => setClarificationText(e.target.value)}
+                onKeyDown={handleKeyDown}
                 className="w-full min-h-[80px] p-2 text-sm rounded-md border bg-background resize-none"
                 placeholder={t("contentScript.typeClarification")}
+                autoFocus
               />
               <div className="flex justify-end">
                 <Button
