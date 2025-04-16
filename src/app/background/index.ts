@@ -18,8 +18,10 @@ const getDefaultInstructions = async () => {
   const language = await get<Language>(StorageKey.LANGUAGE);
   return `
   - Answer only in ${language.label} language.
-  - The response should consist of a maximum of 100-150 words.
-  - Provide a clear and concise clarification.
+  - Limit the response to 100–150 words.
+  - Be clear, concise, and avoid filler phrases.
+  - Your explanation should be simple, yet informative.
+  - Don't ask questions, only give answers.
   `.trim();
 }
 
@@ -41,11 +43,16 @@ const DEFAULT_MODEL = "gpt-3.5-turbo";
 
 const getAnswer = async (data: { question: string, context: string }) => {
   const instructions = await getDefaultInstructions();
-  const prompt = `Briefly explain what "${data.question}" means. If it's an abbreviation, expand it. Context: ${data.context}`;
+  const prompt = `
+You are an assistant that helps users understand unknown words, terms, or abbreviations found in articles.
+Task:
+- Explain what "${data.question}" means.
+- If it's an abbreviation, expand it and explain briefly what it stands for.
+- Use this context to improve accuracy: ${data.context}
+${instructions}`.trim();
   const response = await openai.responses.create({
     model: DEFAULT_MODEL,
     input: prompt,
-    instructions,
   });
   sendMessageToActiveTab(Message.GET_ANSWER, response.output_text);
 };
@@ -58,18 +65,26 @@ const getClarification = async (data: {
 }) => {
   const instructions = await getDefaultInstructions();
   const prompt = `
-Original question: "${data.originalQuestion}".
-Original answer: "${data.originalAnswer}".
-Clarification question: "${data.clarificationQuestion}".
-Context: ${data.context}.
-Rules:
-- If the clarifying question has nothing to do with the original question or answer or context, just say that the clarification is off-topic.
+You are a context-aware assistant continuing a conversation.
+
+Original question: "${data.originalQuestion}"
+Original answer: "${data.originalAnswer}"
+Clarifying question: "${data.clarificationQuestion}"
+Full context: ${data.context}
+
+Instructions:
+- Compare the clarifying question with the original question, answer, and context.
+- If the clarifying question is logically related to the topic (even implicitly), provide a direct and specific answer to it.
+- DO NOT repeat or summarize the original answer or question.
+- DO NOT introduce new information beyond what is requested in the clarifying question.
+- If the clarifying question is completely unrelated, reply with:
+   → "Sorry, I don't know how to answer that."
+${instructions}
 `.trim();
 
   const response = await openai.responses.create({
     model: DEFAULT_MODEL,
     input: prompt,
-    instructions,
   });
 
   sendMessageToActiveTab(Message.GET_CLARIFICATION_ANSWER, {
