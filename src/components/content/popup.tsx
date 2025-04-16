@@ -34,7 +34,7 @@ const ActionBtn = ({ onClick }: { onClick: () => void }) => {
 const Loading = () => {
   const { t } = useTranslation();
   return (
-    <div className="flex items-center justify-center gap-2 py-2 bg-popover rounded-[8px]">
+    <div className="flex items-center justify-center gap-2 bg-popover rounded-[8px]">
       <Loader2 className="size-4 animate-spin text-black dark:text-white" />
       <span className="text-sm text-black dark:text-white">{t("contentScript.loading")}</span>
     </div>
@@ -48,11 +48,13 @@ interface ClarificationHistory {
 
 const Answer = ({
   answer,
+  isLoading,
   onClarify,
   clarificationCount,
   clarificationHistory,
 }: { 
   answer: string;
+  isLoading: boolean;
   onClarify: (question: string) => void;
   clarificationCount: number;
   clarificationHistory: ClarificationHistory[];
@@ -72,21 +74,24 @@ const Answer = ({
 
   return (
     <div className="flex flex-col gap-3 text-black dark:text-white rounded-[8px] bg-popover p-3">
-      <div className="space-y-2">
-        <p className="text-sm">{answer}</p>
-        
-        {clarificationHistory.map((item, index) => (
-          <div key={index} className="mt-3 border-t pt-3 space-y-2">
-            <p className="text-sm text-muted-foreground italic">
-              {t("contentScript.clarificationQuestion")}: {item.question}
-            </p>
-            <p className="text-sm">{item.answer}</p>
-          </div>
-        ))}
-      </div>
-
-      {canClarify && (
+      {(!!answer || clarificationHistory.length) ? (
         <div className="space-y-2">
+          <p className="text-sm">{answer}</p>
+            
+          {clarificationHistory.map((item, index) => (
+            <div key={index} className="mt-3 border-t pt-3 space-y-2">
+              <p className="text-sm text-muted-foreground italic">
+                {t("contentScript.clarificationQuestion")}: {item.question}
+              </p>
+              <p className="text-sm">{item.answer}</p>
+            </div>
+          ))}
+        </div>
+      ) : null}
+
+      {isLoading && <Loading /> ||
+        canClarify && (
+          <div className="space-y-2">
           <Button
             variant="outline"
             size="sm"
@@ -108,6 +113,7 @@ const Answer = ({
                 <Button
                   size="sm"
                   onClick={handleSubmit}
+                  className="accent-btn-bg text-white"
                   disabled={!clarificationText.trim()}
                 >
                   {t("contentScript.send")}
@@ -158,16 +164,13 @@ const Popup = ({
         </Button>
       </div>
 
-      {state === PopupState.Loading && <Loading />}
-
-      {state === PopupState.Answer && (
-        <Answer 
-          answer={answer}
-          onClarify={onClarify}
-          clarificationCount={clarificationCount}
-          clarificationHistory={clarificationHistory}
-        />
-      )}
+      <Answer 
+        answer={answer}
+        isLoading={state === PopupState.Loading}
+        onClarify={onClarify}
+        clarificationCount={clarificationCount}
+        clarificationHistory={clarificationHistory}
+      />
     </div>
   )
 }

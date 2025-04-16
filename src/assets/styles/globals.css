@@ -105,3 +105,10 @@
     src: url(/fonts/GeistMono-Bold.woff2) format("woff2");
   }
 }
+
+/* Custom classes */
+
+.accent-btn-bg {
+  background: #F565FF;
+  background: linear-gradient(90deg, rgba(245, 101, 255, 1) 0%, rgba(48, 131, 255, 1) 100%);
+}
