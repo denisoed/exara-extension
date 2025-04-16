@@ -8,7 +8,11 @@
   "contentScript": {
     "question": "What's this?",
     "loading": "Getting answer...",
-    "close": "Close"
+    "close": "Close",
+    "needClarification": "Need Clarification",
+    "typeClarification": "Type your clarification question...",
+    "clarificationQuestion": "Clarification",
+    "send": "Send"
   },
   "popup": {
     "hello": "Hello from"

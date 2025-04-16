@@ -5,6 +5,8 @@ export const Message = {
   GET_SELECTION_TEXT: "get-selection-text",
   GET_ANSWER: "get-answer",
   OPEN_CUSTOM_POPUP: "open-custom-popup",
+  GET_CLARIFICATION: "get-clarification",
+  GET_CLARIFICATION_ANSWER: "get-clarification-answer",
 } as const;
 
 export type Message = (typeof Message)[keyof typeof Message];
@@ -13,6 +15,16 @@ interface Messages {
   [Message.GET_SELECTION_TEXT]: (text: string, language: string) => void;
   [Message.GET_ANSWER]: (text: string) => void;
   [Message.OPEN_CUSTOM_POPUP]: () => void;
+  [Message.GET_CLARIFICATION]: {
+    originalQuestion: string;
+    originalAnswer: string;
+    clarificationQuestion: string;
+    context: string;
+  };
+  [Message.GET_CLARIFICATION_ANSWER]: {
+    clarificationQuestion: string;
+    answer: string;
+  };
 }
 
 export function sendMessageToActiveTab(message: Message, data: any) {

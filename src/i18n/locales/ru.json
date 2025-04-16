@@ -8,7 +8,11 @@
   "contentScript": {
     "question": "Что это?",
     "loading": "Получаем ответ...",
-    "close": "Закрыть"
+    "close": "Закрыть",
+    "needClarification": "Нужно уточнение",
+    "typeClarification": "Введите ваш вопрос для уточнения...",
+    "clarificationQuestion": "Уточнение",
+    "send": "Отправить"
   },
   "popup": {
     "hello": "Привет от"

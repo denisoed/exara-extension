@@ -40,19 +40,103 @@ const Loading = () => {
   );
 };
 
+interface ClarificationHistory {
+  question: string;
+  answer: string;
+}
+
 const Answer = ({
   answer,
+  onClarify,
+  clarificationCount,
+  clarificationHistory,
 }: { 
-  answer: string; 
+  answer: string;
+  onClarify: (question: string) => void;
+  clarificationCount: number;
+  clarificationHistory: ClarificationHistory[];
 }) => {
+  const { t } = useTranslation();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [clarificationText, setClarificationText] = useState("");
+  const canClarify = clarificationCount < 2;
+
+  const handleSubmit = () => {
+    if (clarificationText.trim()) {
+      onClarify(clarificationText);
+      setClarificationText("");
+      setIsExpanded(false);
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-2 text-black dark:text-white rounded-[8px] bg-popover p-3">
-      <p className="text-sm">{answer}</p>
+    <div className="flex flex-col gap-3 text-black dark:text-white rounded-[8px] bg-popover p-3">
+      <div className="space-y-2">
+        <p className="text-sm">{answer}</p>
+        
+        {clarificationHistory.map((item, index) => (
+          <div key={index} className="mt-3 border-t pt-3 space-y-2">
+            <p className="text-sm text-muted-foreground italic">
+              {t("contentScript.clarificationQuestion")}: {item.question}
+            </p>
+            <p className="text-sm">{item.answer}</p>
+          </div>
+        ))}
+      </div>
+
+      {canClarify && (
+        <div className="space-y-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {t("contentScript.needClarification")}
+          </Button>
+
+          {isExpanded && (
+            <div className="space-y-2">
+              <textarea
+                value={clarificationText}
+                onChange={(e) => setClarificationText(e.target.value)}
+                className="w-full min-h-[80px] p-2 text-sm rounded-md border bg-background resize-none"
+                placeholder={t("contentScript.typeClarification")}
+              />
+              <div className="flex justify-end">
+                <Button
+                  size="sm"
+                  onClick={handleSubmit}
+                  disabled={!clarificationText.trim()}
+                >
+                  {t("contentScript.send")}
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
-const Popup = ({ state, answer, onClose, handleDragStart }: { state: PopupState, answer: string, onClose: () => void, handleDragStart: (e: React.MouseEvent) => void }) => {
+const Popup = ({ 
+  state, 
+  answer, 
+  onClose, 
+  handleDragStart,
+  onClarify,
+  clarificationCount,
+  clarificationHistory,
+}: { 
+  state: PopupState, 
+  answer: string, 
+  onClose: () => void, 
+  handleDragStart: (e: React.MouseEvent) => void,
+  onClarify: (question: string) => void,
+  clarificationCount: number,
+  clarificationHistory: ClarificationHistory[],
+}) => {
   return (
     <div
       className={cn(
@@ -77,7 +161,10 @@ const Popup = ({ state, answer, onClose, handleDragStart }: { state: PopupState,
 
       {state === PopupState.Answer && (
         <Answer 
-          answer={answer} 
+          answer={answer}
+          onClarify={onClarify}
+          clarificationCount={clarificationCount}
+          clarificationHistory={clarificationHistory}
         />
       )}
     </div>
@@ -93,6 +180,18 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
     const [isDragging, setIsDragging] = useState(false);
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
     const [isVisible, setIsVisible] = useState(false);
+    const [clarificationCount, setClarificationCount] = useState(0);
+    const [clarificationHistory, setClarificationHistory] = useState<ClarificationHistory[]>([]);
+
+    const handleClarification = (clarificationQuestion: string) => {
+      setState(PopupState.Loading);
+      sendMessageToBackground(Message.GET_CLARIFICATION, {
+        originalQuestion: question,
+        originalAnswer: answer,
+        clarificationQuestion,
+        context,
+      });
+    };
 
     const handleDragStart = useCallback((e: React.MouseEvent) => {
       setIsDragging(true);
@@ -148,6 +247,16 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
         setAnswer(data);
         setState(PopupState.Answer);
       });
+
+      addMessageListener(Message.GET_CLARIFICATION_ANSWER, (data) => {
+        setClarificationHistory(prev => [...prev, {
+          question: data.clarificationQuestion,
+          answer: data.answer
+        }]);
+        setClarificationCount(prev => prev + 1);
+        setState(PopupState.Answer);
+      });
+
       // Trigger animation after component mount
       requestAnimationFrame(() => {
         setIsVisible(true);
@@ -181,6 +290,9 @@ export const ContentPopup = forwardRef<HTMLDivElement, ContentPopupProps>(
             answer={answer}
             onClose={onClose}
             handleDragStart={handleDragStart}
+            onClarify={handleClarification}
+            clarificationCount={clarificationCount}
+            clarificationHistory={clarificationHistory}
           />
         }
       </div>

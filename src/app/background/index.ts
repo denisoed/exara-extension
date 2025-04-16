@@ -40,8 +40,40 @@ const getAnswer = async (data: { question: string, context: string }) => {
   sendMessageToActiveTab(Message.GET_ANSWER, response.output_text);
 };
 
+const getClarification = async (data: { 
+  originalQuestion: string;
+  originalAnswer: string;
+  clarificationQuestion: string;
+  context: string;
+}) => {
+  const language = await get<Language>(StorageKey.LANGUAGE);
+  const prompt = `
+Original question: "${data.originalQuestion}"
+Original answer: "${data.originalAnswer}"
+User needs clarification: "${data.clarificationQuestion}"
+Context: ${data.context}
+
+Please provide a clear and concise clarification (maximum 100 words) in ${language.label} language.
+`;
+
+  const response = await openai.responses.create({
+    model: "gpt-3.5-turbo",
+    input: prompt,
+    max_output_tokens: 150,
+  });
+
+  sendMessageToActiveTab(Message.GET_CLARIFICATION_ANSWER, {
+    clarificationQuestion: data.clarificationQuestion,
+    answer: response.output_text
+  });
+};
+
 addMessageListener(Message.GET_SELECTION_TEXT, (data) => {
   getAnswer(data);
+});
+
+addMessageListener(Message.GET_CLARIFICATION, (data) => {
+  getClarification(data);
 });
 
 export default defineBackground(main);
