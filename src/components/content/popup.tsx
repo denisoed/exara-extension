@@ -127,7 +127,7 @@ const Answer = ({
                 className="flex-1"
                 onClick={() => setIsExpanded(!isExpanded)}
               >
-                <HelpCircle className="size-4 mr-2" />
+                <MessageCircleMore className="size-4 mr-2" />
                 {t("contentScript.needClarification")}
               </Button>
               <DropdownMenu>
@@ -137,7 +137,7 @@ const Answer = ({
                     size="sm"
                     className="flex-1"
                   >
-                    <MessageCircleMore className="size-4 mr-2" />
+                    <HelpCircle className="size-4 mr-2" />
                     {t("contentScript.explainLikeChild")}
                   </Button>
                 </DropdownMenuTrigger>
