@@ -28,12 +28,13 @@ const main = () => {
 const openai = new OpenAI({
   apiKey: env.VITE_OPEN_AI_API_KEY,
 });
+const DEFAULT_MODEL = "gpt-3.5-turbo";
 
 const getAnswer = async (data: { question: string, context: string }) => {
   const language = await get<Language>(StorageKey.LANGUAGE);
-  const prompt = `Briefly explain (maximum 100 words) what "${data.question}" means. If it's an abbreviation, expand it. Answer in ${language.label} language. Context: ${data.context}`;
+  const prompt = `Briefly explain (maximum 100 words) what "${data.question}" means. If it's an abbreviation, expand it. Answer only in ${language.label} language. Context: ${data.context}`;
   const response = await openai.responses.create({
-    model: "gpt-3.5-turbo",
+    model: DEFAULT_MODEL,
     input: prompt,
     max_output_tokens: 150,
   });
@@ -48,16 +49,19 @@ const getClarification = async (data: {
 }) => {
   const language = await get<Language>(StorageKey.LANGUAGE);
   const prompt = `
-Original question: "${data.originalQuestion}"
-Original answer: "${data.originalAnswer}"
-User needs clarification: "${data.clarificationQuestion}"
-Context: ${data.context}
-
-Please provide a clear and concise clarification (maximum 100 words) in ${language.label} language.
+Original question: "${data.originalQuestion}".
+Original answer: "${data.originalAnswer}".
+Clarification question: "${data.clarificationQuestion}".
+Context: ${data.context}.
+Rules:
+- Answer only in ${language.label} language.
+- Answer in maximum 100 words.
+- Please provide a clear and concise clarification.
+- If the clarifying question has nothing to do with the original question, just say that the clarification is off-topic.
 `;
 
   const response = await openai.responses.create({
-    model: "gpt-3.5-turbo",
+    model: DEFAULT_MODEL,
     input: prompt,
     max_output_tokens: 150,
   });
