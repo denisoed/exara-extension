@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { createShadowRootUi } from "wxt/client";
 import { defineContentScript } from "wxt/sandbox";
-import { ContentPopup } from "~/components/content/popup";
+import { FloatingPopup } from "@/components/content/floating-popup";
 import { CustomPopup } from "~/components/content/custom-popup";
 import { I18nextProvider } from "react-i18next";
 import i18n from "~/i18n";
@@ -112,7 +112,7 @@ const ContentScriptUI = () => {
 
   return (
     <I18nextProvider i18n={i18n}>
-      {popupState && (<ContentPopup
+      {popupState && (<FloatingPopup
         question={popupState.text}
         context={popupState.context}
         x={popupState.x}
