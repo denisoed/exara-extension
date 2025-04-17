@@ -1,15 +1,15 @@
-import { useTranslation } from '~/i18n/hooks';
+import { ChevronDown } from "lucide-react";
+import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { Button } from "~/components/ui/button";
-import { ChevronDown } from "lucide-react";
-import { Language } from "~/types";
-import { set, StorageKey } from "~/lib/localStorage";
 import { LANGUAGES } from "~/data/languages";
+import { useTranslation } from "~/i18n/hooks";
+import { StorageKey, set } from "~/lib/localStorage";
+import type { Language } from "~/types";
 
 export function LanguageSwitcher() {
   const { changeLanguage, currentLanguage, t } = useTranslation();
@@ -19,7 +19,9 @@ export function LanguageSwitcher() {
     set(StorageKey.LANGUAGE, lang);
   };
 
-  const currentLanguageLabel = LANGUAGES.find(lang => lang.value === currentLanguage)?.label || "Select language";
+  const currentLanguageLabel =
+    LANGUAGES.find((lang) => lang.value === currentLanguage)?.label ||
+    "Select language";
 
   return (
     <div className="space-y-2 w-full">
@@ -29,12 +31,19 @@ export function LanguageSwitcher() {
       <div className="w-full">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-full justify-between" id="language">
+            <Button
+              variant="outline"
+              className="w-full justify-between"
+              id="language"
+            >
               {currentLanguageLabel}
               <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="w-[--radix-popper-anchor-width]">
+          <DropdownMenuContent
+            align="start"
+            className="w-[--radix-popper-anchor-width]"
+          >
             {LANGUAGES.map((lang) => (
               <DropdownMenuItem
                 key={lang.value}

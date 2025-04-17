@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { Switch } from "~/components/ui/switch";
-import { get, set, StorageKey } from "~/lib/localStorage";
 import { useEffect } from "react";
+import { Switch } from "~/components/ui/switch";
 import { useTranslation } from "~/i18n/hooks";
+import { StorageKey, get, set } from "~/lib/localStorage";
 
 export function ScrollCloseSwitch() {
   const { t } = useTranslation();
-  const [isScrollCloseEnabled, setIsScrollCloseEnabled] = useState<boolean>(false);
+  const [isScrollCloseEnabled, setIsScrollCloseEnabled] =
+    useState<boolean>(false);
 
   useEffect(() => {
     get<boolean>(StorageKey.SCROLL_CLOSE).then((value) => {

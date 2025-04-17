@@ -37,7 +37,9 @@ export function getSelection() {
 
 export function getPageContext() {
   const pageTitle = document.title;
-  const pageDescription = document.querySelector('meta[name="description"]')?.getAttribute("content");
+  const pageDescription = document
+    .querySelector('meta[name="description"]')
+    ?.getAttribute("content");
   return { pageTitle, pageDescription };
 }
 

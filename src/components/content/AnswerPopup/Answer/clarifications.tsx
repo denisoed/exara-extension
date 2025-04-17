@@ -1,7 +1,9 @@
-import { ClarificationHistory } from "@/types";
+import type { ClarificationHistory } from "@/types";
 import { useTranslation } from "react-i18next";
 
-export const Clarifications = ({ clarificationHistory }: { clarificationHistory: ClarificationHistory[] }) => {
+export const Clarifications = ({
+  clarificationHistory,
+}: { clarificationHistory: ClarificationHistory[] }) => {
   const { t } = useTranslation();
   return (
     <>

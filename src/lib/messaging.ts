@@ -47,7 +47,7 @@ export function sendMessageToActiveTab(message: Message, data: any) {
   });
 }
 
-export function sendMessageToBackground(message: Message, data: any) {  
+export function sendMessageToBackground(message: Message, data: any) {
   chrome.runtime.sendMessage({
     type: message,
     data: data,

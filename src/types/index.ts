@@ -20,16 +20,16 @@ export type Language = {
 export interface ClarificationHistory {
   question: string;
   answer: string;
-};
+}
 
 export enum FloatingPopupState {
   Preview = "preview",
   Loading = "loading",
   Answer = "answer",
-};
+}
 
 export enum ExplanationStyle {
   CHILD = "child",
   BEGINNER = "beginner",
   STUDENT = "student",
-};
+}

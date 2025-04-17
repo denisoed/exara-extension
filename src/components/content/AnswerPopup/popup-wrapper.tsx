@@ -1,14 +1,14 @@
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { X, Move } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Move, X } from "lucide-react";
 
 export const PopupWrapper = ({
-  onClose, 
+  onClose,
   handleDragStart,
   children,
-}: { 
-  onClose: () => void, 
-  handleDragStart: (e: React.MouseEvent) => void,
+}: {
+  onClose: () => void;
+  handleDragStart: (e: React.MouseEvent) => void;
   children: React.ReactNode;
 }) => {
   return (
@@ -26,12 +26,16 @@ export const PopupWrapper = ({
         >
           <Move className="size-2 text-muted-foreground" />
         </Button>
-        <Button variant="outline" size="xs" className="rounded-full" onClick={onClose}>
+        <Button
+          variant="outline"
+          size="xs"
+          className="rounded-full"
+          onClick={onClose}
+        >
           <X className="size-3 text-muted-foreground" />
         </Button>
       </div>
       {children}
     </div>
-  )
-}
-
+  );
+};

@@ -109,8 +109,12 @@
 /* Custom classes */
 
 .bg-accent-gradient {
-  background: #F565FF;
-  background: linear-gradient(90deg, rgba(245, 101, 255, 1) 0%, rgba(48, 131, 255, 1) 100%);
+  background: #f565ff;
+  background: linear-gradient(
+    90deg,
+    rgba(245, 101, 255, 1) 0%,
+    rgba(48, 131, 255, 1) 100%
+  );
 }
 
 /* Custom scrollbar styles */

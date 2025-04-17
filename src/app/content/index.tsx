@@ -1,16 +1,16 @@
+import { FloatingPopup } from "@/components/content/floating-popup";
+import type { Language } from "@/types";
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
+import { I18nextProvider } from "react-i18next";
 import { createShadowRootUi } from "wxt/client";
 import { defineContentScript } from "wxt/sandbox";
-import { FloatingPopup } from "@/components/content/floating-popup";
 import { CustomPopup } from "~/components/content/custom-popup";
-import { I18nextProvider } from "react-i18next";
 import i18n from "~/i18n";
 import { useTranslation } from "~/i18n/hooks";
-import { getSelection, getPageContext, isPopup } from "~/lib/utils";
-import { get, StorageKey, watch, unwatch } from "~/lib/localStorage";
-import { Language } from "@/types";
-import { addMessageListener, Message } from "~/lib/messaging";
+import { StorageKey, get, unwatch, watch } from "~/lib/localStorage";
+import { Message, addMessageListener } from "~/lib/messaging";
+import { getPageContext, getSelection, isPopup } from "~/lib/utils";
 import "~/assets/styles/globals.css";
 
 interface PopupState {
@@ -29,9 +29,10 @@ const ContentScriptUI = () => {
   const SCROLL_THRESHOLD = 50; // pixels
   let lastScrollY = window.scrollY;
   const [popupState, setPopupState] = useState<PopupState | null>(null);
-  const [customPopupState, setCustomPopupState] = useState<CustomPopupState | null>(null);
+  const [customPopupState, setCustomPopupState] =
+    useState<CustomPopupState | null>(null);
   const { changeLanguage } = useTranslation();
-  
+
   async function getLanguage() {
     const language = await get<Language>(StorageKey.LANGUAGE);
     if (language) {
@@ -65,17 +66,17 @@ const ContentScriptUI = () => {
     setPopupState(null);
   }
 
+  async function onScroll() {
+    const isScrollCloseEnabled =
+      (await get<boolean>(StorageKey.SCROLL_CLOSE)) || false;
 
-  async function onScroll() {    
-    const isScrollCloseEnabled = await get<boolean>(StorageKey.SCROLL_CLOSE) || false;
-    
     if (!isScrollCloseEnabled) {
       return;
     }
 
     const currentScrollY = window.scrollY;
     const scrollDiff = Math.abs(currentScrollY - lastScrollY);
-    
+
     if (scrollDiff > SCROLL_THRESHOLD) {
       setPopupState(null);
       lastScrollY = currentScrollY;
@@ -112,11 +113,12 @@ const ContentScriptUI = () => {
 
   return (
     <I18nextProvider i18n={i18n}>
-      {popupState && (<FloatingPopup
-        question={popupState.text}
-        context={popupState.context}
-        x={popupState.x}
-        y={popupState.y}
+      {popupState && (
+        <FloatingPopup
+          question={popupState.text}
+          context={popupState.context}
+          x={popupState.x}
+          y={popupState.y}
           onClose={() => setPopupState(null)}
         />
       )}

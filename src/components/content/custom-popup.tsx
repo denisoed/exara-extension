@@ -1,11 +1,11 @@
-import { X, Move } from "lucide-react";
-import { forwardRef, useEffect, useState, useCallback } from "react";
 import { StorageKey, useStorage } from "@/lib/storage";
 import { Theme } from "@/types";
-import { Button } from "~/components/ui/button";
+import { Move, X } from "lucide-react";
+import { forwardRef, useCallback, useEffect, useState } from "react";
+import { ThemeSwitch } from "~/components/common/theme";
 import { LanguageSwitcher } from "~/components/content/language-switcher";
 import { ScrollCloseSwitch } from "~/components/content/scroll-close-switch";
-import { ThemeSwitch } from "~/components/common/theme";
+import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
 interface CustomPopupProps {
@@ -22,31 +22,37 @@ export const CustomPopup = forwardRef<HTMLDivElement, CustomPopupProps>(
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
     const [isVisible, setIsVisible] = useState(false);
 
-    const handleDragStart = useCallback((e: React.MouseEvent) => {
-      setIsDragging(true);
-      // Calculate offset based on the difference between mouse position and popup position
-      setDragOffset({
-        x: e.clientX - position.x,
-        y: e.clientY - position.y,
-      });
-    }, [position]);
+    const handleDragStart = useCallback(
+      (e: React.MouseEvent) => {
+        setIsDragging(true);
+        // Calculate offset based on the difference between mouse position and popup position
+        setDragOffset({
+          x: e.clientX - position.x,
+          y: e.clientY - position.y,
+        });
+      },
+      [position],
+    );
 
-    const handleMouseMove = useCallback((e: MouseEvent) => {
-      if (!isDragging) return;
+    const handleMouseMove = useCallback(
+      (e: MouseEvent) => {
+        if (!isDragging) return;
 
-      // Calculate new position based on mouse position and offset
-      const newX = e.clientX - dragOffset.x;
-      const newY = e.clientY - dragOffset.y;
+        // Calculate new position based on mouse position and offset
+        const newX = e.clientX - dragOffset.x;
+        const newY = e.clientY - dragOffset.y;
 
-      // Ensure popup stays within viewport
-      const maxX = window.innerWidth - 400; // 400px is the popup width
-      const maxY = window.innerHeight - 200; // Approximate popup height
+        // Ensure popup stays within viewport
+        const maxX = window.innerWidth - 400; // 400px is the popup width
+        const maxY = window.innerHeight - 200; // Approximate popup height
 
-      setPosition({
-        x: Math.min(Math.max(0, newX), maxX),
-        y: Math.min(Math.max(0, newY), maxY),
-      });
-    }, [isDragging, dragOffset]);
+        setPosition({
+          x: Math.min(Math.max(0, newX), maxX),
+          y: Math.min(Math.max(0, newY), maxY),
+        });
+      },
+      [isDragging, dragOffset],
+    );
 
     const handleMouseUp = useCallback(() => {
       setIsDragging(false);
@@ -56,13 +62,13 @@ export const CustomPopup = forwardRef<HTMLDivElement, CustomPopupProps>(
 
     useEffect(() => {
       if (isDragging) {
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseup', handleMouseUp);
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mouseup", handleMouseUp);
       }
 
       return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
       };
     }, [isDragging, handleMouseMove, handleMouseUp]);
 
@@ -104,7 +110,12 @@ export const CustomPopup = forwardRef<HTMLDivElement, CustomPopupProps>(
           >
             <Move className="size-2 text-muted-foreground" />
           </Button>
-          <Button variant="outline" size="xs" className="rounded-full" onClick={onClose}>
+          <Button
+            variant="outline"
+            size="xs"
+            className="rounded-full"
+            onClick={onClose}
+          >
             <X className="size-3 text-muted-foreground" />
           </Button>
         </div>

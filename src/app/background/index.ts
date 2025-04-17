@@ -1,11 +1,15 @@
+import type { Language } from "@/types";
 import OpenAI from "openai";
-import { defineBackground } from "wxt/sandbox";
-import { Message, addMessageListener, sendMessageToActiveTab } from "~/lib/messaging";
-import { env } from "~/lib/env";
-import { get, set, remove, StorageKey } from "~/lib/localStorage";
-import { Language } from "@/types";
-import { LANGUAGES } from "~/data/languages";
 import { browser } from "wxt/browser";
+import { defineBackground } from "wxt/sandbox";
+import { LANGUAGES } from "~/data/languages";
+import { env } from "~/lib/env";
+import { StorageKey, get, remove, set } from "~/lib/localStorage";
+import {
+  Message,
+  addMessageListener,
+  sendMessageToActiveTab,
+} from "~/lib/messaging";
 
 const openai = new OpenAI({
   apiKey: env.VITE_OPEN_AI_API_KEY,
@@ -13,15 +17,15 @@ const openai = new OpenAI({
 });
 const DEFAULT_MODEL = "gpt-3.5-turbo";
 const stylePrompts = {
-    child: `
+  child: `
 You are a friendly teacher explaining complex concepts to a 5-year-old child.
 Use simple words, fun examples, and comparisons that a child would understand.
 Make it engaging and friendly.`,
-    student: `
+  student: `
 You are a university professor explaining concepts to a first-year student.
 Use clear academic language, provide context, and explain fundamental principles.
 Include relevant examples and analogies.`,
-    beginner: `
+  beginner: `
 You are explaining complex concepts to someone who has no prior knowledge of the topic.
 Always use real-life analogies and everyday examples that anyone can relate to.
 For example, when explaining technical concepts:
@@ -29,7 +33,7 @@ For example, when explaining technical concepts:
 - Database can be compared to a library where books (data) are organized and stored
 - Cache can be compared to a notepad where you write down frequently used information
 Make the explanation relatable and easy to understand using such analogies.
-`.trim()
+`.trim(),
 };
 
 async function setDefaultLanguage() {
@@ -41,7 +45,9 @@ async function setDefaultLanguage() {
 
 async function getCurrentStyle() {
   // Try to get from storage if not in memory
-  const savedStyle = await get<"child" | "student" | "beginner">(StorageKey.EXPLANATION_STYLE);
+  const savedStyle = await get<"child" | "student" | "beginner">(
+    StorageKey.EXPLANATION_STYLE,
+  );
   if (savedStyle) {
     return savedStyle;
   }
@@ -63,9 +69,9 @@ const getDefaultInstructions = async () => {
   - Your explanation should be simple, yet informative.
   - Don't ask questions, only give answers.
   `.trim();
-}
+};
 
-const getAnswer = async (data: { question: string, context: string }) => {
+const getAnswer = async (data: { question: string; context: string }) => {
   const instructions = await getDefaultInstructions();
   await remove(StorageKey.EXPLANATION_STYLE);
   const prompt = `
@@ -82,7 +88,7 @@ ${instructions}`.trim();
   sendMessageToActiveTab(Message.GET_ANSWER, response.output_text);
 };
 
-const getClarification = async (data: { 
+const getClarification = async (data: {
   originalQuestion: string;
   originalAnswer: string;
   clarificationQuestion: string;
@@ -90,10 +96,10 @@ const getClarification = async (data: {
 }) => {
   const instructions = await getDefaultInstructions();
   const currentStyle = await getCurrentStyle();
-  
+
   // Include the style prompt if a style is active
   const stylePrompt = currentStyle ? stylePrompts[currentStyle] : "";
-  
+
   const prompt = `
 ${stylePrompt}
 
@@ -121,17 +127,17 @@ ${instructions}
 
   sendMessageToActiveTab(Message.GET_CLARIFICATION_ANSWER, {
     clarificationQuestion: data.clarificationQuestion,
-    answer: response.output_text
+    answer: response.output_text,
   });
 };
 
-const getExplainSimpler = async (data: { 
+const getExplainSimpler = async (data: {
   question: string;
   context: string;
   style: "child" | "student" | "beginner";
 }) => {
   const instructions = await getDefaultInstructions();
-  
+
   // Save the selected style for future use
   await setCurrentStyle(data.style);
 
@@ -170,9 +176,9 @@ const main = () => {
     "Background service worker is running! Edit `src/app/background` and save to reload.",
   );
   setDefaultLanguage();
-  
+
   browser.action.onClicked.addListener(() => {
-    sendMessageToActiveTab(Message.OPEN_CUSTOM_POPUP, '');
+    sendMessageToActiveTab(Message.OPEN_CUSTOM_POPUP, "");
   });
 };
 

@@ -1,9 +1,9 @@
-import { ExplanationStyle, ClarificationHistory } from "@/types";
+import type { ClarificationHistory, ExplanationStyle } from "@/types";
 import { useState } from "react";
-import { Loading } from "~/components/content/AnswerPopup/loading";
+import { Clarifications } from "~/components/content/AnswerPopup/Answer/clarifications";
 import { Controls } from "~/components/content/AnswerPopup/Answer/controls";
 import { Form } from "~/components/content/AnswerPopup/Answer/form";
-import { Clarifications } from "~/components/content/AnswerPopup/Answer/clarifications";
+import { Loading } from "~/components/content/AnswerPopup/loading";
 
 export const Answer = ({
   answer,
@@ -12,7 +12,7 @@ export const Answer = ({
   onExplain,
   clarificationCount,
   clarificationHistory,
-}: { 
+}: {
   answer: string;
   isLoading: boolean;
   onClarify: (question: string) => void;
@@ -38,7 +38,7 @@ export const Answer = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSubmit();
     }
@@ -46,17 +46,21 @@ export const Answer = ({
 
   return (
     <div className="flex flex-col gap-2 text-black dark:text-white">
-      {(!!answer || clarificationHistory.length) ? (
+      {!!answer || clarificationHistory.length ? (
         <div className="max-h-[500px] overflow-y-auto pr-2 rounded-[8px] bg-popover p-3">
-            <div className="space-y-2">
-              <p className="text-sm">{answer}</p>
-              <Clarifications clarificationHistory={clarificationHistory} />
-            </div>
+          <div className="space-y-2">
+            <p className="text-sm">{answer}</p>
+            <Clarifications clarificationHistory={clarificationHistory} />
+          </div>
         </div>
       ) : null}
 
-      {isLoading && <div className="rounded-[8px] bg-popover p-2"><Loading /></div> ||
-        canClarify && (
+      {(isLoading && (
+        <div className="rounded-[8px] bg-popover p-2">
+          <Loading />
+        </div>
+      )) ||
+        (canClarify && (
           <div className="space-y-2 rounded-[8px] bg-popover p-2">
             <Controls
               isExpanded={isExpanded}
@@ -73,7 +77,7 @@ export const Answer = ({
               />
             )}
           </div>
-      )}
+        ))}
     </div>
   );
 };

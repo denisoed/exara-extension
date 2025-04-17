@@ -1,8 +1,8 @@
 import typography from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
 import animate from "tailwindcss-animate";
-import { fontFamily } from "tailwindcss/defaultTheme";
 import remToPx from "tailwindcss-rem-to-px";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
   darkMode: ["class"],

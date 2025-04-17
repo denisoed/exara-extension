@@ -1,10 +1,10 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+import i18n from "i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+import { initReactI18next } from "react-i18next";
 
 // Import translations
-import en from '~/i18n/locales/en.json';
-import ru from '~/i18n/locales/ru.json';
+import en from "~/i18n/locales/en.json";
+import ru from "~/i18n/locales/ru.json";
 
 const resources = {
   en: {
@@ -16,8 +16,8 @@ const resources = {
 };
 
 // Set default language if not set
-if (!localStorage.getItem('i18nextLng')) {
-  localStorage.setItem('i18nextLng', 'en');
+if (!localStorage.getItem("i18nextLng")) {
+  localStorage.setItem("i18nextLng", "en");
 }
 
 i18n
@@ -25,8 +25,8 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'en',
-    debug: process.env.NODE_ENV === 'development',
+    fallbackLng: "en",
+    debug: process.env.NODE_ENV === "development",
     interpolation: {
       escapeValue: false, // React already escapes values
     },

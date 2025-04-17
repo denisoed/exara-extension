@@ -1,11 +1,20 @@
-import { forwardRef, useEffect, useState, useCallback } from "react";
 import { StorageKey, useStorage } from "@/lib/storage";
-import { Message, addMessageListener, sendMessageToBackground } from "~/lib/messaging";
-import { cn } from "~/lib/utils";
-import { FloatingPopupState, ExplanationStyle, ClarificationHistory, Theme } from "~/types";
+import { forwardRef, useCallback, useEffect, useState } from "react";
 import { Answer } from "~/components/content/AnswerPopup/Answer";
 import { ActionBtn } from "~/components/content/AnswerPopup/action-btn";
 import { PopupWrapper } from "~/components/content/AnswerPopup/popup-wrapper";
+import {
+  Message,
+  addMessageListener,
+  sendMessageToBackground,
+} from "~/lib/messaging";
+import { cn } from "~/lib/utils";
+import {
+  type ClarificationHistory,
+  type ExplanationStyle,
+  FloatingPopupState,
+  Theme,
+} from "~/types";
 
 interface FloatingPopupProps {
   question: string;
@@ -18,14 +27,18 @@ interface FloatingPopupProps {
 export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
   ({ question, context, x, y, onClose }, ref) => {
     const { data: theme } = useStorage(StorageKey.THEME);
-    const [state, setState] = useState<FloatingPopupState>(FloatingPopupState.Preview);
+    const [state, setState] = useState<FloatingPopupState>(
+      FloatingPopupState.Preview,
+    );
     const [answer, setAnswer] = useState<string>("");
     const [position, setPosition] = useState({ x, y });
     const [isDragging, setIsDragging] = useState(false);
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
     const [isVisible, setIsVisible] = useState(false);
     const [clarificationCount, setClarificationCount] = useState(0);
-    const [clarificationHistory, setClarificationHistory] = useState<ClarificationHistory[]>([]);
+    const [clarificationHistory, setClarificationHistory] = useState<
+      ClarificationHistory[]
+    >([]);
 
     const handleClarification = (clarificationQuestion: string) => {
       setState(FloatingPopupState.Loading);
@@ -46,38 +59,47 @@ export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
       });
     };
 
-    const handleDragStart = useCallback((e: React.MouseEvent) => {
-      setIsDragging(true);
-      // Calculate offset based on the difference between mouse position and popup position
-      setDragOffset({
-        x: e.clientX - position.x,
-        y: e.clientY - position.y,
-      });
-    }, [position]);
+    const handleDragStart = useCallback(
+      (e: React.MouseEvent) => {
+        setIsDragging(true);
+        // Calculate offset based on the difference between mouse position and popup position
+        setDragOffset({
+          x: e.clientX - position.x,
+          y: e.clientY - position.y,
+        });
+      },
+      [position],
+    );
 
-    const handleMouseMove = useCallback((e: MouseEvent) => {
-      if (!isDragging) return;
+    const handleMouseMove = useCallback(
+      (e: MouseEvent) => {
+        if (!isDragging) return;
 
-      // Calculate new position based on mouse position and offset
-      const newX = e.clientX - dragOffset.x;
-      const newY = e.clientY - dragOffset.y;
+        // Calculate new position based on mouse position and offset
+        const newX = e.clientX - dragOffset.x;
+        const newY = e.clientY - dragOffset.y;
 
-      // Ensure popup stays within viewport
-      const maxX = window.innerWidth - 400; // 400px is the popup width
-      const maxY = window.innerHeight - 200; // Approximate popup height
+        // Ensure popup stays within viewport
+        const maxX = window.innerWidth - 400; // 400px is the popup width
+        const maxY = window.innerHeight - 200; // Approximate popup height
 
-      setPosition({
-        x: Math.min(Math.max(0, newX), maxX),
-        y: Math.min(Math.max(0, newY), maxY),
-      });
-    }, [isDragging, dragOffset]);
+        setPosition({
+          x: Math.min(Math.max(0, newX), maxX),
+          y: Math.min(Math.max(0, newY), maxY),
+        });
+      },
+      [isDragging, dragOffset],
+    );
 
     const handleMouseUp = useCallback(() => {
       setIsDragging(false);
     }, []);
 
     const handleRequestAnswer = () => {
-      sendMessageToBackground(Message.GET_SELECTION_TEXT, { question, context });
+      sendMessageToBackground(Message.GET_SELECTION_TEXT, {
+        question,
+        context,
+      });
       setState(FloatingPopupState.Loading);
     };
 
@@ -85,13 +107,13 @@ export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
 
     useEffect(() => {
       if (isDragging) {
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseup', handleMouseUp);
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mouseup", handleMouseUp);
       }
 
       return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
       };
     }, [isDragging, handleMouseMove, handleMouseUp]);
 
@@ -102,11 +124,14 @@ export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
       });
 
       addMessageListener(Message.GET_CLARIFICATION_ANSWER, (data) => {
-        setClarificationHistory(prev => [...prev, {
-          question: data.clarificationQuestion,
-          answer: data.answer
-        }]);
-        setClarificationCount(prev => prev + 1);
+        setClarificationHistory((prev) => [
+          ...prev,
+          {
+            question: data.clarificationQuestion,
+            answer: data.answer,
+          },
+        ]);
+        setClarificationCount((prev) => prev + 1);
         setState(FloatingPopupState.Answer);
       });
 
@@ -142,11 +167,10 @@ export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
           top: `${position.y}px`,
         }}
       >
-        {state === FloatingPopupState.Preview && <ActionBtn onClick={handleRequestAnswer} /> ||
-          <PopupWrapper
-            onClose={onClose}
-            handleDragStart={handleDragStart}
-          >
+        {(state === FloatingPopupState.Preview && (
+          <ActionBtn onClick={handleRequestAnswer} />
+        )) || (
+          <PopupWrapper onClose={onClose} handleDragStart={handleDragStart}>
             <Answer
               answer={answer}
               isLoading={state === FloatingPopupState.Loading}
@@ -156,7 +180,7 @@ export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
               clarificationHistory={clarificationHistory}
             />
           </PopupWrapper>
-        }
+        )}
       </div>
     );
   },
