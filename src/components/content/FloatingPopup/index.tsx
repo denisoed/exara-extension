@@ -1,8 +1,8 @@
+import { Answer } from "@/components/content/FloatingPopup/Answer";
+import { ActionBtn } from "@/components/content/FloatingPopup/action-btn";
+import { PopupWrapper } from "@/components/content/FloatingPopup/popup-wrapper";
 import { StorageKey, useStorage } from "@/lib/storage";
 import { forwardRef, useCallback, useEffect, useState } from "react";
-import { Answer } from "~/components/content/AnswerPopup/Answer";
-import { ActionBtn } from "~/components/content/AnswerPopup/action-btn";
-import { PopupWrapper } from "~/components/content/AnswerPopup/popup-wrapper";
 import {
   Message,
   addMessageListener,

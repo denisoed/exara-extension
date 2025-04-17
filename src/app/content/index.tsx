@@ -1,4 +1,4 @@
-import { FloatingPopup } from "@/components/content/floating-popup";
+import { FloatingPopup } from "@/components/content/FloatingPopup";
 import type { Language } from "@/types";
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";

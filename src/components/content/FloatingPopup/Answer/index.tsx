@@ -1,9 +1,9 @@
 import type { ClarificationHistory, ExplanationStyle } from "@/types";
 import { useState } from "react";
-import { Clarifications } from "~/components/content/AnswerPopup/Answer/clarifications";
-import { Controls } from "~/components/content/AnswerPopup/Answer/controls";
-import { Form } from "~/components/content/AnswerPopup/Answer/form";
-import { Loading } from "~/components/content/AnswerPopup/loading";
+import { Clarifications } from "~/components/content/FloatingPopup/Answer/clarifications";
+import { Controls } from "~/components/content/FloatingPopup/Answer/controls";
+import { Form } from "~/components/content/FloatingPopup/Answer/form";
+import { Loading } from "~/components/content/FloatingPopup/loading";
 
 export const Answer = ({
   answer,
