@@ -23,7 +23,7 @@ Use clear academic language, provide context, and explain fundamental principles
 Include relevant examples and analogies.`,
     beginner: `
 You are explaining complex concepts to someone who has no prior knowledge of the topic.
-Use real-life analogies and everyday examples that anyone can relate to.
+Always use real-life analogies and everyday examples that anyone can relate to.
 For example, when explaining technical concepts:
 - REST API can be compared to a restaurant where the waiter (API) takes orders (requests) and brings food (responses)
 - Database can be compared to a library where books (data) are organized and stored

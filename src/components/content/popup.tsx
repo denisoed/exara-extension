@@ -31,8 +31,8 @@ enum PopupState {
 
 enum ExplanationStyle {
   CHILD = "child",
-  STUDENT = "student",
   BEGINNER = "beginner",
+  STUDENT = "student",
 }
 
 const ActionBtn = ({ onClick }: { onClick: () => void }) => {
@@ -142,15 +142,11 @@ const Answer = ({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem onClick={() => handleExplain(ExplanationStyle.CHILD)}>
-                    {t("contentScript.explainStyles.child")}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleExplain(ExplanationStyle.STUDENT)}>
-                    {t("contentScript.explainStyles.student")}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleExplain(ExplanationStyle.BEGINNER)}>
-                    {t("contentScript.explainStyles.beginner")}
-                  </DropdownMenuItem>
+                  {Array.from(Object.values(ExplanationStyle)).map((style) => (
+                    <DropdownMenuItem key={style} onClick={() => handleExplain(style)}>
+                      {t(`contentScript.explainStyles.${style}`)}
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenuContent>
               </DropdownMenu>}
             </div>

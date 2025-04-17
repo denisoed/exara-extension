@@ -77,7 +77,7 @@ export const CustomPopup = forwardRef<HTMLDivElement, CustomPopupProps>(
       <div
         ref={ref}
         className={cn(
-          "fixed z-50 flex w-[400px] max-w-[400px] flex-col gap-2 rounded-md bg-background p-3 pt-10 shadow-lg rounded-[16px] text-base text-foreground",
+          "fixed z-[999999999] flex w-[400px] max-w-[400px] flex-col gap-2 rounded-md bg-background p-3 pt-10 shadow-lg rounded-[16px] text-base text-foreground",
           "transition-transform duration-300 ease-out",
           "transform origin-center",
           {
