@@ -52,6 +52,8 @@ export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
 
     const handleExplain = (style: ExplanationStyle) => {
       setState(FloatingPopupState.Loading);
+      setClarificationHistory([]);
+      setClarificationCount(0);
       sendMessageToBackground(Message.EXPLAIN_LIKE_CHILD, {
         question,
         context,
