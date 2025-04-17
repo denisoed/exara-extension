@@ -2,7 +2,7 @@
 
 import { Moon, Sun } from "lucide-react";
 import { memo } from "react";
-import { browser } from "wxt/browser";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -21,6 +21,7 @@ type ThemeSwitchProps = {
 
 export const ThemeSwitch = memo<ThemeSwitchProps>(({ className }) => {
   const { set: setTheme } = useStorage(StorageKey.THEME);
+  const { t } = useTranslation();
 
   return (
     <DropdownMenu>
@@ -28,7 +29,7 @@ export const ThemeSwitch = memo<ThemeSwitchProps>(({ className }) => {
         <Button
           variant="outline"
           size="xs"
-          className={cn("rounded-full", className)}
+          className={cn("rounded-full bg-accent", className)}
         >
           <Sun className="size-2 text-muted-foreground scale-100 dark:scale-0" />
           <Moon className="absolute size-2 text-muted-foreground scale-0 dark:scale-100" />
@@ -38,7 +39,7 @@ export const ThemeSwitch = memo<ThemeSwitchProps>(({ className }) => {
       <DropdownMenuContent align="end">
         {Object.values(Theme).map((theme) => (
           <DropdownMenuItem key={theme} onClick={() => setTheme(theme)}>
-            {browser.i18n.getMessage(theme)}
+            {t(`theme.${theme}`)}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

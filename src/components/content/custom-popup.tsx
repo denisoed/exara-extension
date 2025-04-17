@@ -105,7 +105,7 @@ export const CustomPopup = forwardRef<HTMLDivElement, CustomPopupProps>(
           <Button
             variant="outline"
             size="xs"
-            className="rounded-full cursor-move"
+            className="rounded-full cursor-move bg-accent"
             onMouseDown={handleDragStart}
           >
             <Move className="size-2 text-muted-foreground" />
@@ -113,7 +113,7 @@ export const CustomPopup = forwardRef<HTMLDivElement, CustomPopupProps>(
           <Button
             variant="outline"
             size="xs"
-            className="rounded-full"
+            className="rounded-full bg-accent"
             onClick={onClose}
           >
             <X className="size-3 text-muted-foreground" />

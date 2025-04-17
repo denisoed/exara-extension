@@ -20,7 +20,9 @@
       "beginner": "Explain like a beginner"
     }
   },
-  "popup": {
-    "hello": "Hello from"
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
   }
 }

@@ -25,7 +25,7 @@ export const Controls = ({
       <Button
         variant="outline"
         size="sm"
-        className="flex-1"
+        className="flex-1 bg-accent"
         onClick={handleClarification}
       >
         <MessageCircleMore className="size-4 mr-2" />
@@ -34,7 +34,7 @@ export const Controls = ({
       {!isExpanded && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="flex-1">
+            <Button variant="outline" size="sm" className="flex-1 bg-accent">
               <HelpCircle className="size-4 mr-2" />
               {t("contentScript.explainLikeChild")}
             </Button>
