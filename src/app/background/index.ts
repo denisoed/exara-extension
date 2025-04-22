@@ -79,7 +79,8 @@ You are an assistant that helps users understand unknown words, terms, or abbrev
 Task:
 - Explain what "${data.question}" means.
 - If it's an abbreviation, expand it and explain briefly what it stands for.
-- Use this context to improve accuracy: ${data.context}
+- Use the following context to improve accuracy, but DO NOT mention or refer to this context in your explanation: ${data.context}
+- Focus only on explaining the term/word/abbreviation directly without mentioning where this information comes from.
 ${instructions}`.trim();
   const response = await openai.responses.create({
     model: DEFAULT_MODEL,
@@ -147,7 +148,8 @@ ${stylePrompts[data.style]}
 Task:
 - Explain what "${data.question}" means.
 - If it's an abbreviation, expand it and explain it appropriately.
-- Use this context to improve accuracy: ${data.context}
+- Use the following context to improve accuracy, but DO NOT mention or refer to this context in your explanation: ${data.context}
+- Focus only on explaining the term/word/abbreviation directly without mentioning where this information comes from.
 
 ${instructions}`.trim();
 
