@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "Kapat"
+  },
   "optionsPage": {
     "title": "Seçenekler",
     "appLanguageLabel": "Uygulama dili",

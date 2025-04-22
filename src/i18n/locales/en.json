@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "Close"
+  },
   "optionsPage": {
     "title": "Options",
     "appLanguageLabel": "App language",

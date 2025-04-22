@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "Đóng"
+  },
   "optionsPage": {
     "title": "Tùy chọn",
     "appLanguageLabel": "Ngôn ngữ ứng dụng",

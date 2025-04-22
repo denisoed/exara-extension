@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "닫기"
+  },
   "optionsPage": {
     "title": "옵션",
     "appLanguageLabel": "앱 언어",

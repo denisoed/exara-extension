@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { HelpCircle, MessageCircleMore } from "lucide-react";
+import { HelpCircle, MessageCircleMore, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { ExplanationStyle } from "~/types";
 
@@ -28,8 +28,12 @@ export const Controls = ({
         className="flex-1 bg-accent"
         onClick={handleClarification}
       >
-        <MessageCircleMore className="size-4 mr-2" />
-        {t("contentScript.needClarification")}
+        {isExpanded ? (
+          <X className="size-4 mr-2" />
+        ) : (
+          <MessageCircleMore className="size-4 mr-2" />
+        )}
+        {isExpanded ? t("common.close") : t("contentScript.needClarification")}
       </Button>
       {!isExpanded && (
         <DropdownMenu>

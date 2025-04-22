@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "बंद करें"
+  },
   "optionsPage": {
     "title": "विकल्प",
     "appLanguageLabel": "ऐप भाषा",

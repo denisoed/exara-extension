@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "إغلاق"
+  },
   "optionsPage": {
     "title": "خيارات",
     "appLanguageLabel": "لغة التطبيق",

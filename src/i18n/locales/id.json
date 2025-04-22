@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "Tutup"
+  },
   "optionsPage": {
     "title": "Opsi",
     "appLanguageLabel": "Bahasa aplikasi",

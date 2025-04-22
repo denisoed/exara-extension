@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "关闭"
+  },
   "optionsPage": {
     "title": "选项",
     "appLanguageLabel": "应用语言",

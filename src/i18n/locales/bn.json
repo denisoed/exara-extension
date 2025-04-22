@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "বন্ধ করুন"
+  },
   "optionsPage": {
     "title": "বিকল্পসমূহ",
     "appLanguageLabel": "অ্যাপ ভাষা",
