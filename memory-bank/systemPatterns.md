@@ -24,6 +24,7 @@ The extension follows a modular architecture with clear separation of concerns:
    - State management
    - Internationalization
    - Analytics
+   - Explanation style system
 
 3. **UI Components**
    - Browser action popup
@@ -35,6 +36,8 @@ The extension follows a modular architecture with clear separation of concerns:
    - Drag handle
    - Loading states
    - Preview states
+   - Explanation style selector
+   - Clarification interface
 
 ## Design Patterns
 1. **Service Worker Pattern**
@@ -52,6 +55,7 @@ The extension follows a modular architecture with clear separation of concerns:
    - Callback memoization for performance
    - Component composition
    - State machine pattern for UI states
+   - Controlled form components
 
 3. **Message Passing**
    - Type-safe message interfaces
@@ -59,11 +63,15 @@ The extension follows a modular architecture with clear separation of concerns:
    - Cross-component communication
    - Browser action event propagation
    - Tab event handling
+   - Content script messaging
 
 4. **Storage Management**
    - Type-safe storage interfaces
    - Encrypted storage for sensitive data
    - Synchronized storage across components
+   - Local storage for user preferences
+   - Storage change listeners
+   - Default value fallbacks
 
 5. **UI Interaction Patterns**
    - Browser action click handling
@@ -75,6 +83,7 @@ The extension follows a modular architecture with clear separation of concerns:
    - Responsive layout adjustments
    - State-based transitions
    - Smooth animations
+   - Dropdown menu interactions
 
 6. **State Management**
    - Enum-based state machine
@@ -84,9 +93,10 @@ The extension follows a modular architecture with clear separation of concerns:
    - Error state handling
    - Browser action state management
    - Tab state management
+   - User preference state
 
 7. **Explanation System**
-   - Three-tier explanation styles (child, student, beginner)
+   - Four-tier explanation styles (child, student, beginner, analogy)
    - Real-life analogies for technical concepts
    - Context-aware explanations
    - Language-specific translations
@@ -95,7 +105,7 @@ The extension follows a modular architecture with clear separation of concerns:
    - User-friendly interface for style selection
    - Clear visual feedback for selected style
    - Seamless integration with popup UI
-   - Type-safe style definitions
+   - Type-safe style definitions with enums
    - Efficient message passing for style changes
    - Optimized prompt generation
    - Context preservation across styles
@@ -104,6 +114,8 @@ The extension follows a modular architecture with clear separation of concerns:
    - Style state preservation across clarification questions
    - Default style fallback mechanism
    - Type-safe storage key definitions
+   - Style-specific prompt templates
+   - Style persistence across sessions
 
 ## Component Relationships
 ```mermaid
@@ -129,6 +141,8 @@ graph TD
         J --> M[Answer State]
         J --> N[Control Buttons]
         J --> O[Action Button]
+        M --> P[Explanation Style Selector]
+        M --> Q[Clarification Interface]
     end
 ```
 
@@ -150,6 +164,7 @@ graph TD
    - Fixed positioning strategy
    - Drag and drop implementation
    - Animation system
+   - Dropdown menus for user selections
 
 4. **Development Tools**
    - Biome for linting
@@ -165,6 +180,7 @@ graph TD
    - Smooth movement transitions
    - State-based animations
    - Component composition
+   - Dropdown selection for explanation styles
 
 6. **State Management**
    - Enum-based state machine
@@ -172,4 +188,24 @@ graph TD
    - Event-driven state transitions
    - Loading state handling
    - Error state management
-   - Tab state management 
+   - Tab state management
+   - User preference state management
+
+7. **Storage Strategy**
+   - Local storage for user preferences
+   - Chrome storage API for persistence
+   - Type-safe storage keys
+   - Storage change listeners
+   - Default value fallbacks
+   - Session-based caching
+
+8. **Explanation System Design**
+   - Style-based prompt templates
+   - Context-aware explanations
+   - User-selectable explanation styles
+   - Four distinct explanation modes
+   - Persistent style preferences
+   - Optimized message handling
+   - Translation support for all styles
+   - Real-life analogies for technical concepts
+   - Multi-level explanation complexity 
