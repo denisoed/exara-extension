@@ -1,0 +1,28 @@
+{
+  "optionsPage": {
+    "title": "خيارات",
+    "appLanguageLabel": "لغة التطبيق",
+    "answerLanguageLabel": "لغة الإجابة",
+    "scrollCloseLabel": "إغلاق النافذة عند التمرير"
+  },
+  "contentScript": {
+    "question": "ما هذا؟",
+    "loading": "جاري الحصول على الإجابة...",
+    "close": "إغلاق",
+    "needClarification": "بحاجة إلى توضيح",
+    "typeClarification": "اكتب سؤال التوضيح الخاص بك...",
+    "clarificationQuestion": "توضيح",
+    "send": "إرسال",
+    "explainLikeChild": "اشرح بطريقة أبسط",
+    "explainStyles": {
+      "child": "اشرح كما لطفل",
+      "student": "اشرح كما لطالب",
+      "beginner": "اشرح كما لمبتدئ"
+    }
+  },
+  "theme": {
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام"
+  }
+} 

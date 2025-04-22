@@ -1,0 +1,28 @@
+{
+  "optionsPage": {
+    "title": "Tùy chọn",
+    "appLanguageLabel": "Ngôn ngữ ứng dụng",
+    "answerLanguageLabel": "Ngôn ngữ trả lời",
+    "scrollCloseLabel": "Đóng cửa sổ khi cuộn"
+  },
+  "contentScript": {
+    "question": "Đây là gì?",
+    "loading": "Đang lấy câu trả lời...",
+    "close": "Đóng",
+    "needClarification": "Cần làm rõ",
+    "typeClarification": "Nhập câu hỏi làm rõ của bạn...",
+    "clarificationQuestion": "Làm rõ",
+    "send": "Gửi",
+    "explainLikeChild": "Giải thích đơn giản hơn",
+    "explainStyles": {
+      "child": "Giải thích như cho trẻ em",
+      "student": "Giải thích như cho học sinh",
+      "beginner": "Giải thích như cho người mới bắt đầu"
+    }
+  },
+  "theme": {
+    "light": "Sáng",
+    "dark": "Tối",
+    "system": "Hệ thống"
+  }
+} 

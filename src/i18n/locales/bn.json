@@ -1,0 +1,28 @@
+{
+  "optionsPage": {
+    "title": "বিকল্পসমূহ",
+    "appLanguageLabel": "অ্যাপ ভাষা",
+    "answerLanguageLabel": "উত্তরের ভাষা",
+    "scrollCloseLabel": "স্ক্রোল করলে পপআপ বন্ধ করুন"
+  },
+  "contentScript": {
+    "question": "এটা কী?",
+    "loading": "উত্তর পাচ্ছি...",
+    "close": "বন্ধ করুন",
+    "needClarification": "ব্যাখ্যা প্রয়োজন",
+    "typeClarification": "আপনার ব্যাখ্যামূলক প্রশ্ন টাইপ করুন...",
+    "clarificationQuestion": "ব্যাখ্যা",
+    "send": "পাঠান",
+    "explainLikeChild": "সহজভাবে ব্যাখ্যা করুন",
+    "explainStyles": {
+      "child": "একটি শিশুর মতো ব্যাখ্যা করুন",
+      "student": "একজন ছাত্রের মতো ব্যাখ্যা করুন",
+      "beginner": "একজন নতুন শিক্ষার্থীর মতো ব্যাখ্যা করুন"
+    }
+  },
+  "theme": {
+    "light": "হালকা",
+    "dark": "গাঢ়",
+    "system": "সিস্টেম"
+  }
+} 

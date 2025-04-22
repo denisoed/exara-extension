@@ -1,0 +1,28 @@
+{
+  "optionsPage": {
+    "title": "Opções",
+    "appLanguageLabel": "Idioma do aplicativo",
+    "answerLanguageLabel": "Idioma da resposta",
+    "scrollCloseLabel": "Fechar popup ao rolar"
+  },
+  "contentScript": {
+    "question": "O que é isso?",
+    "loading": "Obtendo resposta...",
+    "close": "Fechar",
+    "needClarification": "Preciso de esclarecimento",
+    "typeClarification": "Digite sua pergunta de esclarecimento...",
+    "clarificationQuestion": "Esclarecimento",
+    "send": "Enviar",
+    "explainLikeChild": "Explicar mais simples",
+    "explainStyles": {
+      "child": "Explicar como para uma criança",
+      "student": "Explicar como para um estudante",
+      "beginner": "Explicar como para um iniciante"
+    }
+  },
+  "theme": {
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema"
+  }
+} 

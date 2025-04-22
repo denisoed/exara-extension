@@ -1,0 +1,28 @@
+{
+  "optionsPage": {
+    "title": "Opsi",
+    "appLanguageLabel": "Bahasa aplikasi",
+    "answerLanguageLabel": "Bahasa jawaban",
+    "scrollCloseLabel": "Tutup popup saat menggulir"
+  },
+  "contentScript": {
+    "question": "Apa ini?",
+    "loading": "Mendapatkan jawaban...",
+    "close": "Tutup",
+    "needClarification": "Perlu Klarifikasi",
+    "typeClarification": "Ketik pertanyaan klarifikasi Anda...",
+    "clarificationQuestion": "Klarifikasi",
+    "send": "Kirim",
+    "explainLikeChild": "Jelaskan Lebih Sederhana",
+    "explainStyles": {
+      "child": "Jelaskan seperti kepada anak kecil",
+      "student": "Jelaskan seperti kepada pelajar",
+      "beginner": "Jelaskan seperti kepada pemula"
+    }
+  },
+  "theme": {
+    "light": "Terang",
+    "dark": "Gelap",
+    "system": "Sistem"
+  }
+} 

@@ -1,0 +1,28 @@
+{
+  "optionsPage": {
+    "title": "选项",
+    "appLanguageLabel": "应用语言",
+    "answerLanguageLabel": "回答语言",
+    "scrollCloseLabel": "滚动时关闭弹窗"
+  },
+  "contentScript": {
+    "question": "这是什么？",
+    "loading": "获取答案中...",
+    "close": "关闭",
+    "needClarification": "需要澄清",
+    "typeClarification": "输入您的澄清问题...",
+    "clarificationQuestion": "澄清",
+    "send": "发送",
+    "explainLikeChild": "简化解释",
+    "explainStyles": {
+      "child": "像解释给孩子",
+      "student": "像解释给学生",
+      "beginner": "像解释给初学者"
+    }
+  },
+  "theme": {
+    "light": "浅色",
+    "dark": "深色",
+    "system": "系统"
+  }
+} 

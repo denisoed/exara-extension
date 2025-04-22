@@ -1,0 +1,28 @@
+{
+  "optionsPage": {
+    "title": "Optionen",
+    "appLanguageLabel": "App-Sprache",
+    "answerLanguageLabel": "Antwortsprache",
+    "scrollCloseLabel": "Popup beim Scrollen schließen"
+  },
+  "contentScript": {
+    "question": "Was ist das?",
+    "loading": "Antwort wird abgerufen...",
+    "close": "Schließen",
+    "needClarification": "Klärung benötigt",
+    "typeClarification": "Geben Sie Ihre Klärungsfrage ein...",
+    "clarificationQuestion": "Klärung",
+    "send": "Senden",
+    "explainLikeChild": "Einfacher erklären",
+    "explainStyles": {
+      "child": "Wie einem Kind erklären",
+      "student": "Wie einem Studenten erklären",
+      "beginner": "Wie einem Anfänger erklären"
+    }
+  },
+  "theme": {
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System"
+  }
+} 

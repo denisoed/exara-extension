@@ -1,0 +1,28 @@
+{
+  "optionsPage": {
+    "title": "विकल्प",
+    "appLanguageLabel": "ऐप भाषा",
+    "answerLanguageLabel": "उत्तर भाषा",
+    "scrollCloseLabel": "स्क्रॉल पर पॉपअप बंद करें"
+  },
+  "contentScript": {
+    "question": "यह क्या है?",
+    "loading": "उत्तर प्राप्त कर रहे हैं...",
+    "close": "बंद करें",
+    "needClarification": "स्पष्टीकरण चाहिए",
+    "typeClarification": "अपना स्पष्टीकरण प्रश्न लिखें...",
+    "clarificationQuestion": "स्पष्टीकरण",
+    "send": "भेजें",
+    "explainLikeChild": "सरल समझाएँ",
+    "explainStyles": {
+      "child": "बच्चे को समझाएँ",
+      "student": "छात्र को समझाएँ",
+      "beginner": "शुरुआती को समझाएँ"
+    }
+  },
+  "theme": {
+    "light": "हल्का",
+    "dark": "गहरा",
+    "system": "सिस्टम"
+  }
+} 

@@ -1,0 +1,28 @@
+{
+  "optionsPage": {
+    "title": "옵션",
+    "appLanguageLabel": "앱 언어",
+    "answerLanguageLabel": "답변 언어",
+    "scrollCloseLabel": "스크롤 시 팝업 닫기"
+  },
+  "contentScript": {
+    "question": "이게 뭐죠?",
+    "loading": "답변을 가져오는 중...",
+    "close": "닫기",
+    "needClarification": "명확한 설명 필요",
+    "typeClarification": "명확한 설명을 위한 질문을 입력하세요...",
+    "clarificationQuestion": "명확한 설명",
+    "send": "보내기",
+    "explainLikeChild": "더 쉽게 설명",
+    "explainStyles": {
+      "child": "아이에게 설명하듯이",
+      "student": "학생에게 설명하듯이",
+      "beginner": "초보자에게 설명하듯이"
+    }
+  },
+  "theme": {
+    "light": "라이트",
+    "dark": "다크",
+    "system": "시스템"
+  }
+} 

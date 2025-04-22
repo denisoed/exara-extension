@@ -1,0 +1,28 @@
+{
+  "optionsPage": {
+    "title": "Opzioni",
+    "appLanguageLabel": "Lingua dell'app",
+    "answerLanguageLabel": "Lingua della risposta",
+    "scrollCloseLabel": "Chiudi popup durante lo scorrimento"
+  },
+  "contentScript": {
+    "question": "Cos'è questo?",
+    "loading": "Ottenendo risposta...",
+    "close": "Chiudi",
+    "needClarification": "Serve un chiarimento",
+    "typeClarification": "Digita la tua domanda di chiarimento...",
+    "clarificationQuestion": "Chiarimento",
+    "send": "Invia",
+    "explainLikeChild": "Spiega più semplicemente",
+    "explainStyles": {
+      "child": "Spiega come a un bambino",
+      "student": "Spiega come a uno studente",
+      "beginner": "Spiega come a un principiante"
+    }
+  },
+  "theme": {
+    "light": "Chiaro",
+    "dark": "Scuro",
+    "system": "Sistema"
+  }
+} 

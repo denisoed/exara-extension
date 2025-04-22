@@ -1,0 +1,28 @@
+{
+  "optionsPage": {
+    "title": "Seçenekler",
+    "appLanguageLabel": "Uygulama dili",
+    "answerLanguageLabel": "Cevap dili",
+    "scrollCloseLabel": "Kaydırma sırasında açılır pencereyi kapat"
+  },
+  "contentScript": {
+    "question": "Bu nedir?",
+    "loading": "Cevap alınıyor...",
+    "close": "Kapat",
+    "needClarification": "Açıklama Gerekli",
+    "typeClarification": "Açıklama sorunuzu yazın...",
+    "clarificationQuestion": "Açıklama",
+    "send": "Gönder",
+    "explainLikeChild": "Daha Basit Açıkla",
+    "explainStyles": {
+      "child": "Bir çocuğa açıklar gibi",
+      "student": "Bir öğrenciye açıklar gibi",
+      "beginner": "Bir başlangıç seviyesindekine açıklar gibi"
+    }
+  },
+  "theme": {
+    "light": "Açık",
+    "dark": "Koyu",
+    "system": "Sistem"
+  }
+} 
