@@ -146,6 +146,12 @@ export default defineContentScript({
       name: "exara-ui",
       position: "overlay",
       anchor: "body",
+      mode: "closed",
+      css: `
+        :host {
+          visibility: visible !important;
+        }
+      `,
       onMount: (container) => {
         const app = document.createElement("div");
         container.append(app);
