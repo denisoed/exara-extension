@@ -17,7 +17,8 @@
     "explainStyles": {
       "child": "اشرح كما لطفل",
       "student": "اشرح كما لطالب",
-      "beginner": "اشرح كما لمبتدئ"
+      "beginner": "اشرح كما لمبتدئ",
+      "analogy": "اشرح بالتشبيهات"
     }
   },
   "theme": {

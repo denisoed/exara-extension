@@ -17,7 +17,8 @@
     "explainStyles": {
       "child": "Expliquer comme à un enfant",
       "student": "Expliquer comme à un étudiant",
-      "beginner": "Expliquer comme à un débutant"
+      "beginner": "Expliquer comme à un débutant",
+      "analogy": "Expliquer avec des analogies"
     }
   },
   "theme": {

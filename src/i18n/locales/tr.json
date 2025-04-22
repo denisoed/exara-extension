@@ -17,7 +17,8 @@
     "explainStyles": {
       "child": "Bir çocuğa açıklar gibi",
       "student": "Bir öğrenciye açıklar gibi",
-      "beginner": "Bir başlangıç seviyesindekine açıklar gibi"
+      "beginner": "Bir acemiye açıklar gibi",
+      "analogy": "Benzetmelerle açıkla"
     }
   },
   "theme": {

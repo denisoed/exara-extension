@@ -15,9 +15,10 @@
     "send": "发送",
     "explainLikeChild": "简化解释",
     "explainStyles": {
-      "child": "像解释给孩子",
-      "student": "像解释给学生",
-      "beginner": "像解释给初学者"
+      "child": "像对孩子解释",
+      "student": "像对学生解释",
+      "beginner": "像对初学者解释",
+      "analogy": "用比喻解释"
     }
   },
   "theme": {

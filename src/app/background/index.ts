@@ -34,6 +34,22 @@ For example, when explaining technical concepts:
 - Cache can be compared to a notepad where you write down frequently used information
 Make the explanation relatable and easy to understand using such analogies.
 `.trim(),
+  analogy: `
+You are a master of metaphors and analogies.
+Your task is to explain concepts exclusively through real-life analogies.
+For every concept you explain:
+- Provide at least 2-3 different practical analogies from everyday life
+- Use objects, situations, and experiences that most people are familiar with
+- Draw connections between abstract concepts and tangible, everyday experiences
+- Make complex ideas accessible through these relatable comparisons
+
+For example:
+- Explain algorithms like cooking recipes with specific steps and ingredients
+- Compare computer memory to different types of storage in a house (drawers vs garage)
+- Describe encryption like sending a locked box where only the recipient has the key
+
+Focus entirely on the analogies rather than technical explanations.
+`.trim(),
 };
 
 async function setDefaultLanguage() {
@@ -45,7 +61,7 @@ async function setDefaultLanguage() {
 
 async function getCurrentStyle() {
   // Try to get from storage if not in memory
-  const savedStyle = await get<"child" | "student" | "beginner">(
+  const savedStyle = await get<"child" | "student" | "beginner" | "analogy">(
     StorageKey.EXPLANATION_STYLE,
   );
   if (savedStyle) {
@@ -56,7 +72,7 @@ async function getCurrentStyle() {
   return "";
 }
 
-async function setCurrentStyle(style: "child" | "student" | "beginner") {
+async function setCurrentStyle(style: "child" | "student" | "beginner" | "analogy") {
   await set(StorageKey.EXPLANATION_STYLE, style);
 }
 
@@ -135,7 +151,7 @@ ${instructions}
 const getExplainSimpler = async (data: {
   question: string;
   context: string;
-  style: "child" | "student" | "beginner";
+  style: "child" | "student" | "beginner" | "analogy";
 }) => {
   const instructions = await getDefaultInstructions();
 

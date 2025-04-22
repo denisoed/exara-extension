@@ -32,4 +32,5 @@ export enum ExplanationStyle {
   CHILD = "child",
   BEGINNER = "beginner",
   STUDENT = "student",
+  ANALOGY = "analogy",
 }

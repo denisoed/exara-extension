@@ -17,7 +17,8 @@
     "explainStyles": {
       "child": "아이에게 설명하듯이",
       "student": "학생에게 설명하듯이",
-      "beginner": "초보자에게 설명하듯이"
+      "beginner": "초보자에게 설명하듯이",
+      "analogy": "비유로 설명하기"
     }
   },
   "theme": {
