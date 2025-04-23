@@ -23,7 +23,7 @@ export const ThemeSwitch = memo<ThemeSwitchProps>(({ className }) => {
   const { t } = useTranslation();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"

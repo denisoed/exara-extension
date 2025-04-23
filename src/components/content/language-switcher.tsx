@@ -29,7 +29,7 @@ export function LanguageSwitcher() {
         {t("optionsPage.appLanguageLabel")}
       </label>
       <div className="w-full">
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"

@@ -112,14 +112,8 @@ const getClarification = async (data: {
   context: string;
 }) => {
   const instructions = await getDefaultInstructions();
-  const currentStyle = await getCurrentStyle();
-
-  // Include the style prompt if a style is active
-  const stylePrompt = currentStyle ? stylePrompts[currentStyle] : "";
 
   const prompt = `
-${stylePrompt}
-
 You are a context-aware assistant continuing a conversation.
 
 Original question: "${data.originalQuestion}"

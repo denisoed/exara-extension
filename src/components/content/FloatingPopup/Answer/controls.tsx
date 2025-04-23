@@ -36,7 +36,7 @@ export const Controls = ({
         {isExpanded ? t("common.close") : t("contentScript.needClarification")}
       </Button>
       {!isExpanded && (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="flex-1 bg-accent">
               <HelpCircle className="size-4 mr-2" />
