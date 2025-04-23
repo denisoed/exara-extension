@@ -1,5 +1,6 @@
 import { FloatingPopup } from "@/components/content/FloatingPopup";
 import type { Language } from "@/types";
+import { Theme } from "@/types";
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { I18nextProvider } from "react-i18next";
@@ -11,6 +12,8 @@ import { useTranslation } from "~/i18n/hooks";
 import { StorageKey, get, unwatch, watch } from "~/lib/localStorage";
 import { Message, addMessageListener } from "~/lib/messaging";
 import { getPageContext, getSelection, isPopup } from "~/lib/utils";
+import { cn } from "~/lib/utils";
+
 import "~/assets/styles/globals.css";
 
 interface PopupState {
@@ -29,6 +32,7 @@ const ContentScriptUI = () => {
   const SCROLL_THRESHOLD = 50; // pixels
   let lastScrollY = window.scrollY;
   const [popupState, setPopupState] = useState<PopupState | null>(null);
+  const [theme, setTheme] = useState<Theme | null>(null);
   const [customPopupState, setCustomPopupState] =
     useState<CustomPopupState | null>(null);
   const { changeLanguage } = useTranslation();
@@ -37,6 +41,13 @@ const ContentScriptUI = () => {
     const language = await get<Language>(StorageKey.LANGUAGE);
     if (language) {
       changeLanguage(language.value);
+    }
+  }
+
+  async function getTheme() {
+    const theme = await get<Theme>(StorageKey.THEME);
+    if (theme) {
+      setTheme(theme);
     }
   }
 
@@ -96,7 +107,9 @@ const ContentScriptUI = () => {
 
   useEffect(() => {
     getLanguage();
+    getTheme();
     watch(StorageKey.LANGUAGE, getLanguage);
+    watch(StorageKey.THEME, getTheme);
     addMessageListener(Message.OPEN_CUSTOM_POPUP, onOpenCustomPopup);
 
     window.addEventListener("scroll", onScroll);
@@ -108,27 +121,40 @@ const ContentScriptUI = () => {
       document.removeEventListener("mouseup", onMouseUp);
       document.removeEventListener("mousedown", onMouseDown);
       unwatch(StorageKey.LANGUAGE, getLanguage);
+      unwatch(StorageKey.THEME, getTheme);
     };
   }, []);
 
   return (
     <I18nextProvider i18n={i18n}>
-      {popupState && (
-        <FloatingPopup
-          question={popupState.text}
-          context={popupState.context}
-          x={popupState.x}
-          y={popupState.y}
-          onClose={() => setPopupState(null)}
-        />
-      )}
-      {customPopupState && (
-        <CustomPopup
-          x={customPopupState.x}
-          y={customPopupState.y}
-          onClose={() => setCustomPopupState(null)}
-        />
-      )}
+      <div
+        className={cn(
+          "content-script-ui",
+          {
+            dark:
+              theme === Theme.DARK ||
+              (theme === Theme.SYSTEM &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches),
+          },
+        )}
+      >
+        {popupState && (
+          <FloatingPopup
+            question={popupState.text}
+            context={popupState.context}
+            x={popupState.x}
+            y={popupState.y}
+            onClose={() => setPopupState(null)}
+          />
+        )}
+        {customPopupState && (
+          <CustomPopup
+            x={customPopupState.x}
+            y={customPopupState.y}
+            onClose={() => setCustomPopupState(null)}
+          />
+        )}
+      </div>
     </I18nextProvider>
   );
 };

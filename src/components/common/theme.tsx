@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { StorageKey, useStorage } from "~/lib/storage";
+import { StorageKey, set } from "~/lib/localStorage";
 import { cn } from "~/lib/utils";
 import { Theme } from "~/types";
 
@@ -20,7 +20,6 @@ type ThemeSwitchProps = {
 };
 
 export const ThemeSwitch = memo<ThemeSwitchProps>(({ className }) => {
-  const { set: setTheme } = useStorage(StorageKey.THEME);
   const { t } = useTranslation();
 
   return (
@@ -38,7 +37,7 @@ export const ThemeSwitch = memo<ThemeSwitchProps>(({ className }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {Object.values(Theme).map((theme) => (
-          <DropdownMenuItem key={theme} onClick={() => setTheme(theme)}>
+          <DropdownMenuItem key={theme} onClick={() => set(StorageKey.THEME, theme)}>
             {t(`theme.${theme}`)}
           </DropdownMenuItem>
         ))}

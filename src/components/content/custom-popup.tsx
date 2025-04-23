@@ -1,5 +1,3 @@
-import { StorageKey, useStorage } from "@/lib/storage";
-import { Theme } from "@/types";
 import { Move, X } from "lucide-react";
 import { forwardRef, useCallback, useEffect, useState } from "react";
 import { ThemeSwitch } from "~/components/common/theme";
@@ -16,7 +14,6 @@ interface CustomPopupProps {
 
 export const CustomPopup = forwardRef<HTMLDivElement, CustomPopupProps>(
   ({ x, y, onClose }, ref) => {
-    const { data: theme } = useStorage(StorageKey.THEME);
     const [position, setPosition] = useState({ x, y });
     const [isDragging, setIsDragging] = useState(false);
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -89,10 +86,6 @@ export const CustomPopup = forwardRef<HTMLDivElement, CustomPopupProps>(
           {
             "translate-y-[-100px] opacity-0": !isVisible,
             "translate-y-0 opacity-100": isVisible,
-            dark:
-              theme === Theme.DARK ||
-              (theme === Theme.SYSTEM &&
-                window.matchMedia("(prefers-color-scheme: dark)").matches),
           },
         )}
         style={{

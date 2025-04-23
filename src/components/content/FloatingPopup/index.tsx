@@ -1,7 +1,6 @@
 import { Answer } from "@/components/content/FloatingPopup/Answer";
 import { ActionBtn } from "@/components/content/FloatingPopup/action-btn";
-import { PopupWrapper } from "@/components/content/FloatingPopup/popup-wrapper";
-import { StorageKey, useStorage } from "@/lib/storage";
+import { PopupWrapper } from "@/components/content/FloatingPopup/popup-wrapper";;
 import { forwardRef, useCallback, useEffect, useState } from "react";
 import {
   Message,
@@ -13,7 +12,6 @@ import {
   type ClarificationHistory,
   type ExplanationStyle,
   FloatingPopupState,
-  Theme,
 } from "~/types";
 
 interface FloatingPopupProps {
@@ -26,7 +24,6 @@ interface FloatingPopupProps {
 
 export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
   ({ question, context, x, y, onClose }, ref) => {
-    const { data: theme } = useStorage(StorageKey.THEME);
     const [state, setState] = useState<FloatingPopupState>(
       FloatingPopupState.Preview,
     );
@@ -158,10 +155,6 @@ export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
           {
             "scale-90 opacity-0": !isVisible,
             "scale-100 opacity-100": isVisible,
-            dark:
-              theme === Theme.DARK ||
-              (theme === Theme.SYSTEM &&
-                window.matchMedia("(prefers-color-scheme: dark)").matches),
           },
         )}
         style={{

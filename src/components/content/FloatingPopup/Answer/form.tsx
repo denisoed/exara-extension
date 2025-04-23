@@ -28,7 +28,7 @@ export const Form = ({
         <Button
           size="sm"
           onClick={handleSubmit}
-          className="bg-primary text-white min-w-[100px] disabled:bg-accent disabled:cursor-not-allowed"
+          className="bg-primary text-white min-w-[100px] disabled:bg-primary disabled:cursor-not-allowed"
           disabled={!clarificationText.trim()}
         >
           {t("contentScript.send")}
