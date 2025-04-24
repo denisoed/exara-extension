@@ -37,7 +37,10 @@ export const ThemeSwitch = memo<ThemeSwitchProps>(({ className }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {Object.values(Theme).map((theme) => (
-          <DropdownMenuItem key={theme} onClick={() => set(StorageKey.THEME, theme)}>
+          <DropdownMenuItem
+            key={theme}
+            onClick={() => set(StorageKey.THEME, theme)}
+          >
             {t(`theme.${theme}`)}
           </DropdownMenuItem>
         ))}

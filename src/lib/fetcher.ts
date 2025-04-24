@@ -1,4 +1,4 @@
-import { OpenAIResponse } from "@/types";
+import type { OpenAIResponse } from "@/types";
 import { env } from "~/lib/env";
 
 async function post<T>(url: string, data: any): Promise<T> {

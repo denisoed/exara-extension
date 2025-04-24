@@ -2,8 +2,8 @@ import type { Language } from "@/types";
 import { browser } from "wxt/browser";
 import { defineBackground } from "wxt/sandbox";
 import { LANGUAGES } from "~/data/languages";
-import { StorageKey, get, remove, set } from "~/lib/localStorage";
 import { fetchToOpenAI } from "~/lib/fetcher";
+import { StorageKey, get, remove, set } from "~/lib/localStorage";
 import {
   Message,
   addMessageListener,
@@ -66,7 +66,9 @@ async function getCurrentStyle() {
   return "";
 }
 
-async function setCurrentStyle(style: "child" | "student" | "beginner" | "analogy") {
+async function setCurrentStyle(
+  style: "child" | "student" | "beginner" | "analogy",
+) {
   await set(StorageKey.EXPLANATION_STYLE, style);
 }
 

@@ -128,15 +128,12 @@ const ContentScriptUI = () => {
   return (
     <I18nextProvider i18n={i18n}>
       <div
-        className={cn(
-          "content-script-ui",
-          {
-            dark:
-              theme === Theme.DARK ||
-              (theme === Theme.SYSTEM &&
-                window.matchMedia("(prefers-color-scheme: dark)").matches),
-          },
-        )}
+        className={cn("content-script-ui", {
+          dark:
+            theme === Theme.DARK ||
+            (theme === Theme.SYSTEM &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches),
+        })}
       >
         {popupState && (
           <FloatingPopup

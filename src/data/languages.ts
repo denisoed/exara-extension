@@ -16,5 +16,5 @@ export const LANGUAGES: Language[] = [
   { value: "tr", label: "Türkçe" },
   { value: "ko", label: "한국어" },
   { value: "vi", label: "Tiếng Việt" },
-  { value: "it", label: "Italiano" }
+  { value: "it", label: "Italiano" },
 ];

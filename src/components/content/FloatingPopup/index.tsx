@@ -1,6 +1,6 @@
 import { Answer } from "@/components/content/FloatingPopup/Answer";
 import { ActionBtn } from "@/components/content/FloatingPopup/action-btn";
-import { PopupWrapper } from "@/components/content/FloatingPopup/popup-wrapper";;
+import { PopupWrapper } from "@/components/content/FloatingPopup/popup-wrapper";
 import { forwardRef, useCallback, useEffect, useState } from "react";
 import {
   Message,

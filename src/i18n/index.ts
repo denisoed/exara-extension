@@ -2,23 +2,23 @@ import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 
-// Import translations
-import en from "~/i18n/locales/en.json";
-import ru from "~/i18n/locales/ru.json";
-import zh from "~/i18n/locales/zh.json";
-import es from "~/i18n/locales/es.json";
-import hi from "~/i18n/locales/hi.json";
 import ar from "~/i18n/locales/ar.json";
 import bn from "~/i18n/locales/bn.json";
-import pt from "~/i18n/locales/pt.json";
-import id from "~/i18n/locales/id.json";
-import fr from "~/i18n/locales/fr.json";
 import de from "~/i18n/locales/de.json";
-import ja from "~/i18n/locales/ja.json";
-import tr from "~/i18n/locales/tr.json";
-import ko from "~/i18n/locales/ko.json";
-import vi from "~/i18n/locales/vi.json";
+// Import translations
+import en from "~/i18n/locales/en.json";
+import es from "~/i18n/locales/es.json";
+import fr from "~/i18n/locales/fr.json";
+import hi from "~/i18n/locales/hi.json";
+import id from "~/i18n/locales/id.json";
 import it from "~/i18n/locales/it.json";
+import ja from "~/i18n/locales/ja.json";
+import ko from "~/i18n/locales/ko.json";
+import pt from "~/i18n/locales/pt.json";
+import ru from "~/i18n/locales/ru.json";
+import tr from "~/i18n/locales/tr.json";
+import vi from "~/i18n/locales/vi.json";
+import zh from "~/i18n/locales/zh.json";
 
 const resources = {
   en: {
