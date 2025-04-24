@@ -6,7 +6,7 @@ export default defineConfig({
     name: "__MSG_extensionName__",
     description: "__MSG_extensionDescription__",
     default_locale: "en",
-    permissions: ["storage", "sidePanel", "scripting", "action"],
+    permissions: ["storage", "sidePanel", "scripting"],
     host_permissions: ["<all_urls>"],
     action: {},
     page_action: {},

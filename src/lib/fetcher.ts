@@ -1,7 +1,10 @@
 import type { OpenAIResponse } from "@/types";
 import { env } from "~/lib/env";
 
-async function post<T>(url: string, data: any): Promise<T> {
+async function post<T>(
+  url: string,
+  data: Record<string, string | number | boolean | object>,
+): Promise<T> {
   const response = await fetch(`${env.VITE_API_URL}${url}`, {
     method: "POST",
     body: JSON.stringify(data),

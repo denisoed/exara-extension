@@ -32,7 +32,7 @@ const ContentScriptUI = () => {
   const SCROLL_THRESHOLD = 50; // pixels
   let lastScrollY = window.scrollY;
   const [popupState, setPopupState] = useState<PopupState | null>(null);
-  const [theme, setTheme] = useState<Theme | null>(null);
+  const [theme, setTheme] = useState<Theme>(Theme.DARK);
   const [customPopupState, setCustomPopupState] =
     useState<CustomPopupState | null>(null);
   const { changeLanguage } = useTranslation();

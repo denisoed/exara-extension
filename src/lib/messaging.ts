@@ -1,7 +1,6 @@
 import { defineExtensionMessaging } from "@webext-core/messaging";
 
 export const Message = {
-  USER: "user",
   GET_SELECTION_TEXT: "get-selection-text",
   GET_ANSWER: "get-answer",
   OPEN_CUSTOM_POPUP: "open-custom-popup",
@@ -34,20 +33,24 @@ interface Messages {
   [Message.GET_EXPLAIN_SIMPLER]: (text: string) => void;
 }
 
-export function sendMessageToActiveTab(message: Message, data: any) {
+interface MessageData {
+  [key: string]: string | number | boolean | object;
+}
+
+export function sendMessageToActiveTab(message: Message, data: MessageData) {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    tabs.forEach((tab) => {
+    for (const tab of tabs) {
       if (tab.id) {
         chrome.tabs.sendMessage(tab.id, {
           type: message,
           data: data,
         });
       }
-    });
+    }
   });
 }
 
-export function sendMessageToBackground(message: Message, data: any) {
+export function sendMessageToBackground(message: Message, data: MessageData) {
   chrome.runtime.sendMessage({
     type: message,
     data: data,
@@ -56,7 +59,7 @@ export function sendMessageToBackground(message: Message, data: any) {
 
 export function addMessageListener(
   message: Message,
-  callback: (data: any) => void,
+  callback: (data: MessageData) => void,
 ) {
   chrome.runtime.onMessage.addListener((msg) => {
     if (msg.type === message) {
