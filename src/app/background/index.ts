@@ -1,21 +1,15 @@
 import type { Language } from "@/types";
-import OpenAI from "openai";
 import { browser } from "wxt/browser";
 import { defineBackground } from "wxt/sandbox";
 import { LANGUAGES } from "~/data/languages";
-import { env } from "~/lib/env";
 import { StorageKey, get, remove, set } from "~/lib/localStorage";
+import { fetchToOpenAI } from "~/lib/fetcher";
 import {
   Message,
   addMessageListener,
   sendMessageToActiveTab,
 } from "~/lib/messaging";
 
-const openai = new OpenAI({
-  apiKey: env.VITE_OPEN_AI_API_KEY,
-  dangerouslyAllowBrowser: true,
-});
-const DEFAULT_MODEL = "gpt-3.5-turbo";
 const stylePrompts = {
   child: `
 You are a friendly teacher explaining complex concepts to a 5-year-old child.
@@ -98,11 +92,8 @@ Task:
 - Use the following context to improve accuracy, but DO NOT mention or refer to this context in your explanation: ${data.context}
 - Focus only on explaining the term/word/abbreviation directly without mentioning where this information comes from.
 ${instructions}`.trim();
-  const response = await openai.responses.create({
-    model: DEFAULT_MODEL,
-    input: prompt,
-  });
-  sendMessageToActiveTab(Message.GET_ANSWER, response.output_text);
+  const response = await fetchToOpenAI(prompt);
+  sendMessageToActiveTab(Message.GET_ANSWER, response.content);
 };
 
 const getClarification = async (data: {
@@ -131,14 +122,10 @@ Instructions:
 ${instructions}
 `.trim();
 
-  const response = await openai.responses.create({
-    model: DEFAULT_MODEL,
-    input: prompt,
-  });
-
+  const response = await fetchToOpenAI(prompt);
   sendMessageToActiveTab(Message.GET_CLARIFICATION_ANSWER, {
     clarificationQuestion: data.clarificationQuestion,
-    answer: response.output_text,
+    answer: response.content,
   });
 };
 
@@ -163,12 +150,9 @@ Task:
 
 ${instructions}`.trim();
 
-  const response = await openai.responses.create({
-    model: DEFAULT_MODEL,
-    input: prompt,
-  });
+  const response = await fetchToOpenAI(prompt);
 
-  sendMessageToActiveTab(Message.GET_EXPLAIN_SIMPLER, response.output_text);
+  sendMessageToActiveTab(Message.GET_EXPLAIN_SIMPLER, response.content);
 };
 
 addMessageListener(Message.GET_SELECTION_TEXT, (data) => {

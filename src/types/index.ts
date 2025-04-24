@@ -34,3 +34,12 @@ export enum ExplanationStyle {
   STUDENT = "student",
   ANALOGY = "analogy",
 }
+
+export type OpenAIResponse = {
+  content: string;
+  usage: {
+    prompt_tokens: number;
+    completion_tokens: number;
+    total_tokens: number;
+  };
+};
