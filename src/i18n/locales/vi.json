@@ -2,6 +2,14 @@
   "common": {
     "close": "Đóng"
   },
+  "components": {
+    "tokenInput": {
+      "label": "Token API",
+      "placeholder": "Nhập token API",
+      "save": "Lưu",
+      "saved": "Đã lưu token"
+    }
+  },
   "optionsPage": {
     "title": "Tùy chọn",
     "appLanguageLabel": "Ngôn ngữ ứng dụng",
@@ -21,7 +29,7 @@
       "child": "Giải thích như cho trẻ em",
       "student": "Giải thích như cho học sinh",
       "beginner": "Giải thích như cho người mới bắt đầu",
-      "analogy": "Giải thích bằng ẩn dụ"
+      "analogy": "Giải thích bằng phép so sánh"
     }
   },
   "theme": {

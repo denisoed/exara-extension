@@ -2,6 +2,14 @@
   "common": {
     "close": "बंद करें"
   },
+  "components": {
+    "tokenInput": {
+      "label": "API टोकन",
+      "placeholder": "API टोकन दर्ज करें",
+      "save": "सहेजें",
+      "saved": "टोकन सहेजा गया"
+    }
+  },
   "optionsPage": {
     "title": "विकल्प",
     "appLanguageLabel": "ऐप भाषा",
@@ -13,19 +21,19 @@
     "loading": "उत्तर प्राप्त कर रहे हैं...",
     "close": "बंद करें",
     "needClarification": "स्पष्टीकरण चाहिए",
-    "typeClarification": "अपना स्पष्टीकरण प्रश्न लिखें...",
+    "typeClarification": "अपना स्पष्टीकरण प्रश्न टाइप करें...",
     "clarificationQuestion": "स्पष्टीकरण",
     "send": "भेजें",
-    "explainLikeChild": "सरल समझाएँ",
+    "explainLikeChild": "सरल व्याख्या",
     "explainStyles": {
       "child": "बच्चे की तरह समझाएं",
       "student": "छात्र की तरह समझाएं",
-      "beginner": "नौसिखिए की तरह समझाएं",
+      "beginner": "शुरुआती की तरह समझाएं",
       "analogy": "उदाहरणों के साथ समझाएं"
     }
   },
   "theme": {
-    "light": "हल्का",
+    "light": "उजला",
     "dark": "गहरा",
     "system": "सिस्टम"
   }

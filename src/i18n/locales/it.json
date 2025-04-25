@@ -2,17 +2,25 @@
   "common": {
     "close": "Chiudi"
   },
+  "components": {
+    "tokenInput": {
+      "label": "Token API",
+      "placeholder": "Inserisci token API",
+      "save": "Salva",
+      "saved": "Token salvato"
+    }
+  },
   "optionsPage": {
     "title": "Opzioni",
     "appLanguageLabel": "Lingua dell'app",
-    "answerLanguageLabel": "Lingua della risposta",
+    "answerLanguageLabel": "Lingua delle risposte",
     "scrollCloseLabel": "Chiudi popup durante lo scorrimento"
   },
   "contentScript": {
     "question": "Cos'è questo?",
     "loading": "Ottenendo risposta...",
     "close": "Chiudi",
-    "needClarification": "Serve un chiarimento",
+    "needClarification": "Serve chiarimento",
     "typeClarification": "Digita la tua domanda di chiarimento...",
     "clarificationQuestion": "Chiarimento",
     "send": "Invia",

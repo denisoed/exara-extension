@@ -2,6 +2,14 @@
   "common": {
     "close": "Fechar"
   },
+  "components": {
+    "tokenInput": {
+      "label": "Token API",
+      "placeholder": "Insira o token API",
+      "save": "Salvar",
+      "saved": "Token salvo"
+    }
+  },
   "optionsPage": {
     "title": "Opções",
     "appLanguageLabel": "Idioma do aplicativo",
@@ -16,7 +24,7 @@
     "typeClarification": "Digite sua pergunta de esclarecimento...",
     "clarificationQuestion": "Esclarecimento",
     "send": "Enviar",
-    "explainLikeChild": "Explicar mais simples",
+    "explainLikeChild": "Explicar mais simplesmente",
     "explainStyles": {
       "child": "Explicar como para uma criança",
       "student": "Explicar como para um estudante",

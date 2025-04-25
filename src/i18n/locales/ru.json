@@ -2,31 +2,39 @@
   "common": {
     "close": "Закрыть"
   },
+  "components": {
+    "tokenInput": {
+      "label": "API Токен",
+      "placeholder": "Введите API токен",
+      "save": "Сохранить",
+      "saved": "Токен сохранен"
+    }
+  },
   "optionsPage": {
     "title": "Настройки",
     "appLanguageLabel": "Язык приложения",
-    "answerLanguageLabel": "Язык ответов",
-    "scrollCloseLabel": "Закрывать попап при скролле"
+    "answerLanguageLabel": "Язык ответа",
+    "scrollCloseLabel": "Закрывать попап при прокрутке"
   },
   "contentScript": {
     "question": "Что это?",
-    "loading": "Получаем ответ...",
+    "loading": "Получение ответа...",
     "close": "Закрыть",
-    "needClarification": "Хочу уточнить",
-    "typeClarification": "Введите ваш вопрос для уточнения...",
+    "needClarification": "Нужно уточнение",
+    "typeClarification": "Введите ваш уточняющий вопрос...",
     "clarificationQuestion": "Уточнение",
     "send": "Отправить",
-    "explainLikeChild": "Обьясни проще",
+    "explainLikeChild": "Объяснить проще",
     "explainStyles": {
-      "child": "Объясни как ребёнку",
-      "student": "Объясни как студенту",
-      "beginner": "Объясни как новичку",
-      "analogy": "Объясни на аналогиях"
+      "child": "Объяснить как ребенку",
+      "student": "Объяснить как студенту",
+      "beginner": "Объяснить как новичку",
+      "analogy": "Объяснить с аналогиями"
     }
   },
   "theme": {
     "light": "Светлая",
-    "dark": "Тёмная",
+    "dark": "Темная",
     "system": "Системная"
   }
 }

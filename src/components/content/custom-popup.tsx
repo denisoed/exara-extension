@@ -3,6 +3,7 @@ import { forwardRef, useCallback, useEffect, useState } from "react";
 import { ThemeSwitch } from "~/components/common/theme";
 import { LanguageSwitcher } from "~/components/content/language-switcher";
 import { ScrollCloseSwitch } from "~/components/content/scroll-close-switch";
+import { TokenInput } from "~/components/content/TokenInput";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
@@ -121,6 +122,9 @@ export const CustomPopup = forwardRef<HTMLDivElement, CustomPopupProps>(
         </div>
         <div className="flex flex-col gap-2 bg-popover rounded-[8px] p-2">
           <ScrollCloseSwitch />
+        </div>
+        <div className="flex flex-col gap-2 bg-popover rounded-[8px] p-2">
+          <TokenInput />
         </div>
       </div>
     );

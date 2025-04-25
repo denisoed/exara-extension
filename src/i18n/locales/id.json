@@ -2,6 +2,14 @@
   "common": {
     "close": "Tutup"
   },
+  "components": {
+    "tokenInput": {
+      "label": "Token API",
+      "placeholder": "Masukkan token API",
+      "save": "Simpan",
+      "saved": "Token tersimpan"
+    }
+  },
   "optionsPage": {
     "title": "Opsi",
     "appLanguageLabel": "Bahasa aplikasi",
@@ -18,9 +26,9 @@
     "send": "Kirim",
     "explainLikeChild": "Jelaskan Lebih Sederhana",
     "explainStyles": {
-      "child": "Jelaskan seperti anak kecil",
-      "student": "Jelaskan seperti mahasiswa",
-      "beginner": "Jelaskan seperti pemula",
+      "child": "Jelaskan seperti kepada anak-anak",
+      "student": "Jelaskan seperti kepada pelajar",
+      "beginner": "Jelaskan seperti kepada pemula",
       "analogy": "Jelaskan dengan analogi"
     }
   },

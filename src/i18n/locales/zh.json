@@ -2,6 +2,14 @@
   "common": {
     "close": "关闭"
   },
+  "components": {
+    "tokenInput": {
+      "label": "API 令牌",
+      "placeholder": "输入 API 令牌",
+      "save": "保存",
+      "saved": "令牌已保存"
+    }
+  },
   "optionsPage": {
     "title": "选项",
     "appLanguageLabel": "应用语言",
@@ -16,12 +24,12 @@
     "typeClarification": "输入您的澄清问题...",
     "clarificationQuestion": "澄清",
     "send": "发送",
-    "explainLikeChild": "简化解释",
+    "explainLikeChild": "更简单地解释",
     "explainStyles": {
       "child": "像对孩子解释",
       "student": "像对学生解释",
       "beginner": "像对初学者解释",
-      "analogy": "用比喻解释"
+      "analogy": "用类比解释"
     }
   },
   "theme": {

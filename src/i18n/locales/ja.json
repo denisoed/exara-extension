@@ -2,6 +2,14 @@
   "common": {
     "close": "閉じる"
   },
+  "components": {
+    "tokenInput": {
+      "label": "APIトークン",
+      "placeholder": "APIトークンを入力",
+      "save": "保存",
+      "saved": "トークンが保存されました"
+    }
+  },
   "optionsPage": {
     "title": "オプション",
     "appLanguageLabel": "アプリの言語",
@@ -12,16 +20,16 @@
     "question": "これは何ですか？",
     "loading": "回答を取得中...",
     "close": "閉じる",
-    "needClarification": "詳細を確認したい",
-    "typeClarification": "確認したい質問を入力してください...",
-    "clarificationQuestion": "確認",
+    "needClarification": "明確にする必要があります",
+    "typeClarification": "明確にする質問を入力してください...",
+    "clarificationQuestion": "明確化",
     "send": "送信",
-    "explainLikeChild": "簡単に説明する",
+    "explainLikeChild": "よりシンプルに説明",
     "explainStyles": {
-      "child": "子供に説明するように",
-      "student": "学生に説明するように",
-      "beginner": "初心者に説明するように",
-      "analogy": "例えで説明する"
+      "child": "子供向けに説明",
+      "student": "学生向けに説明",
+      "beginner": "初心者向けに説明",
+      "analogy": "たとえを使って説明"
     }
   },
   "theme": {

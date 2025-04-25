@@ -5,6 +5,7 @@ export const StorageKey = {
   SCROLL_CLOSE: "local:scroll-close",
   EXPLANATION_STYLE: "local:explanation-style",
   THEME: "local:theme",
+  TOKEN: "local:token",
 } as const;
 
 export async function get<T>(key: string) {

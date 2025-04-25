@@ -2,8 +2,16 @@
   "common": {
     "close": "إغلاق"
   },
+  "components": {
+    "tokenInput": {
+      "label": "رمز API",
+      "placeholder": "أدخل رمز API",
+      "save": "حفظ",
+      "saved": "تم حفظ الرمز"
+    }
+  },
   "optionsPage": {
-    "title": "خيارات",
+    "title": "الإعدادات",
     "appLanguageLabel": "لغة التطبيق",
     "answerLanguageLabel": "لغة الإجابة",
     "scrollCloseLabel": "إغلاق النافذة عند التمرير"
@@ -16,12 +24,12 @@
     "typeClarification": "اكتب سؤال التوضيح الخاص بك...",
     "clarificationQuestion": "توضيح",
     "send": "إرسال",
-    "explainLikeChild": "اشرح بطريقة أبسط",
+    "explainLikeChild": "شرح أبسط",
     "explainStyles": {
       "child": "اشرح كما لطفل",
       "student": "اشرح كما لطالب",
       "beginner": "اشرح كما لمبتدئ",
-      "analogy": "اشرح بالتشبيهات"
+      "analogy": "اشرح بالتشابهات"
     }
   },
   "theme": {

@@ -2,6 +2,14 @@
   "common": {
     "close": "Schließen"
   },
+  "components": {
+    "tokenInput": {
+      "label": "API-Token",
+      "placeholder": "API-Token eingeben",
+      "save": "Speichern",
+      "saved": "Token gespeichert"
+    }
+  },
   "optionsPage": {
     "title": "Optionen",
     "appLanguageLabel": "App-Sprache",
