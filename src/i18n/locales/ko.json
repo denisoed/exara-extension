@@ -25,7 +25,9 @@
     "typeClarification": "명확한 설명을 위한 질문을 입력하세요...",
     "clarificationQuestion": "명확한 설명",
     "send": "보내기",
-    "explainLikeChild": "더 쉽게 설명",
+    "explainLikeChild": "더 간단히 설명",
+    "limitReached": "최대 요청 수에 도달했습니다.",
+    "resetLimit": "제한 재설정",
     "explainStyles": {
       "child": "아이에게 설명하듯이",
       "student": "학생에게 설명하듯이",

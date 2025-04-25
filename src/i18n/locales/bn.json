@@ -26,6 +26,8 @@
     "clarificationQuestion": "স্পষ্টীকরণ",
     "send": "পাঠান",
     "explainLikeChild": "সহজভাবে ব্যাখ্যা করুন",
+    "limitReached": "আপনি সর্বাধিক অনুরোধ সংখ্যায় পৌঁছেছেন।",
+    "resetLimit": "সীমা রিসেট করুন",
     "explainStyles": {
       "child": "একটি শিশুর মতো ব্যাখ্যা করুন",
       "student": "একজন ছাত্রের মতো ব্যাখ্যা করুন",

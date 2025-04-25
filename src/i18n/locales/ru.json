@@ -26,6 +26,8 @@
     "clarificationQuestion": "Уточнение",
     "send": "Отправить",
     "explainLikeChild": "Объяснить проще",
+    "limitReached": "Вы достигли максимального количества запросов.",
+    "resetLimit": "Сбросить лимит",
     "explainStyles": {
       "child": "Объяснить как ребенку",
       "student": "Объяснить как студенту",

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import type { ClarificationHistory, ExplanationStyle } from "@/types";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Clarifications } from "~/components/content/FloatingPopup/Answer/clarifications";
 import { Controls } from "~/components/content/FloatingPopup/Answer/controls";
 import { Form } from "~/components/content/FloatingPopup/Answer/form";
@@ -23,6 +24,7 @@ export const Answer = ({
   clarificationHistory: ClarificationHistory[];
   limitReached: boolean;
 }) => {
+  const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
   const [clarificationText, setClarificationText] = useState("");
   const canClarify = clarificationCount < 2;
@@ -58,14 +60,14 @@ export const Answer = ({
   if (limitReached) {
     return (
       <div className="rounded-[8px] bg-popover p-2 text-black dark:text-white">
-        <p className="text-sm text-yellow-500">You've reached the maximum number of requests.</p>
+        <p className="text-sm text-yellow-500">{t("contentScript.limitReached")}</p>
         <Button
           onClick={() => window.open("https://exara.pro/#pricing", "_blank")}
           variant="outline"
           size="sm"
           className="mt-2 w-full"
         >
-          Reset limit
+          {t("contentScript.resetLimit")}
         </Button>
       </div>
     );

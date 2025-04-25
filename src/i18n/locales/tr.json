@@ -25,7 +25,9 @@
     "typeClarification": "Açıklama sorunuzu yazın...",
     "clarificationQuestion": "Açıklama",
     "send": "Gönder",
-    "explainLikeChild": "Daha Basit Açıkla",
+    "explainLikeChild": "Daha basit açıkla",
+    "limitReached": "Maksimum istek sayısına ulaştınız.",
+    "resetLimit": "Limiti sıfırla",
     "explainStyles": {
       "child": "Bir çocuğa anlatır gibi açıkla",
       "student": "Bir öğrenciye anlatır gibi açıkla",

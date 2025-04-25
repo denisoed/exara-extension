@@ -26,6 +26,8 @@
     "clarificationQuestion": "澄清",
     "send": "发送",
     "explainLikeChild": "更简单地解释",
+    "limitReached": "您已达到最大请求数。",
+    "resetLimit": "重置限制",
     "explainStyles": {
       "child": "像对孩子解释",
       "student": "像对学生解释",

@@ -26,6 +26,8 @@
     "clarificationQuestion": "Clarification",
     "send": "Envoyer",
     "explainLikeChild": "Expliquer plus simplement",
+    "limitReached": "Vous avez atteint le nombre maximum de requêtes.",
+    "resetLimit": "Réinitialiser la limite",
     "explainStyles": {
       "child": "Expliquer comme à un enfant",
       "student": "Expliquer comme à un étudiant",

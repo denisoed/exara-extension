@@ -25,7 +25,9 @@
     "typeClarification": "Ketik pertanyaan klarifikasi Anda...",
     "clarificationQuestion": "Klarifikasi",
     "send": "Kirim",
-    "explainLikeChild": "Jelaskan Lebih Sederhana",
+    "explainLikeChild": "Jelaskan lebih sederhana",
+    "limitReached": "Anda telah mencapai jumlah permintaan maksimum.",
+    "resetLimit": "Atur ulang batas",
     "explainStyles": {
       "child": "Jelaskan seperti kepada anak-anak",
       "student": "Jelaskan seperti kepada pelajar",

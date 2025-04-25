@@ -26,6 +26,8 @@
     "clarificationQuestion": "明確化",
     "send": "送信",
     "explainLikeChild": "よりシンプルに説明",
+    "limitReached": "リクエストの最大数に達しました。",
+    "resetLimit": "制限をリセット",
     "explainStyles": {
       "child": "子供向けに説明",
       "student": "学生向けに説明",

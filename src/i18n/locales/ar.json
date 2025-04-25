@@ -26,6 +26,8 @@
     "clarificationQuestion": "توضيح",
     "send": "إرسال",
     "explainLikeChild": "شرح أبسط",
+    "limitReached": "لقد وصلت إلى الحد الأقصى من الطلبات.",
+    "resetLimit": "إعادة تعيين الحد",
     "explainStyles": {
       "child": "اشرح كما لطفل",
       "student": "اشرح كما لطالب",

@@ -26,6 +26,8 @@
     "clarificationQuestion": "Làm rõ",
     "send": "Gửi",
     "explainLikeChild": "Giải thích đơn giản hơn",
+    "limitReached": "Bạn đã đạt đến số lượng yêu cầu tối đa.",
+    "resetLimit": "Đặt lại giới hạn",
     "explainStyles": {
       "child": "Giải thích như cho trẻ em",
       "student": "Giải thích như cho học sinh",

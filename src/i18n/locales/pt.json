@@ -25,7 +25,9 @@
     "typeClarification": "Digite sua pergunta de esclarecimento...",
     "clarificationQuestion": "Esclarecimento",
     "send": "Enviar",
-    "explainLikeChild": "Explicar mais simplesmente",
+    "explainLikeChild": "Explicar mais simples",
+    "limitReached": "Você atingiu o número máximo de solicitações.",
+    "resetLimit": "Redefinir limite",
     "explainStyles": {
       "child": "Explicar como para uma criança",
       "student": "Explicar como para um estudante",
