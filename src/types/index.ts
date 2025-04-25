@@ -43,3 +43,23 @@ export type OpenAIResponse = {
     total_tokens: number;
   };
 };
+
+export interface SelectionTextMessageData {
+  question: string;
+  context: string;
+}
+
+export interface ClarificationMessageData {
+  originalQuestion: string;
+  originalAnswer: string;
+  clarificationQuestion: string;
+  context: string;
+}
+
+export interface ExplainSimplerMessageData {
+  question: string;
+  context: string;
+  style: ExplanationStyle;
+}
+
+export type MessageData = string | number | boolean | object;

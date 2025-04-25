@@ -23,15 +23,15 @@ async function post<T>(
   return response.json() as Promise<T>;
 }
 
-function fetchToOpenAI(prompt: string) {
-  return post<OpenAIResponse>("/api/openai/chat", {
+async function fetchToOpenAI(prompt: string, token?: string) {
+  return await post<OpenAIResponse>("/api/openai/chat", {
     messages: [
       {
         role: "user",
         content: prompt,
       },
     ],
-  });
+  }, token);
 }
 
 export { fetchToOpenAI };

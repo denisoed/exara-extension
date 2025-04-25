@@ -1,4 +1,11 @@
-import type { Language } from "@/types";
+import type {
+  ExplanationStyle,
+  Language,
+  MessageData,
+  SelectionTextMessageData,
+  ClarificationMessageData,
+  ExplainSimplerMessageData
+} from "@/types";
 import { browser } from "wxt/browser";
 import { defineBackground } from "wxt/sandbox";
 import { LANGUAGES } from "~/data/languages";
@@ -53,9 +60,13 @@ async function setDefaultLanguage() {
   }
 }
 
+async function getToken() {
+  return await get<string>(StorageKey.TOKEN);
+}
+
 async function getCurrentStyle() {
   // Try to get from storage if not in memory
-  const savedStyle = await get<"child" | "student" | "beginner" | "analogy">(
+  const savedStyle = await get<ExplanationStyle>(
     StorageKey.EXPLANATION_STYLE,
   );
   if (savedStyle) {
@@ -66,9 +77,7 @@ async function getCurrentStyle() {
   return "";
 }
 
-async function setCurrentStyle(
-  style: "child" | "student" | "beginner" | "analogy",
-) {
+async function setCurrentStyle(style: ExplanationStyle) {
   await set(StorageKey.EXPLANATION_STYLE, style);
 }
 
@@ -83,8 +92,9 @@ const getDefaultInstructions = async () => {
   `.trim();
 };
 
-const getAnswer = async (data: { question: string; context: string }) => {
+const getAnswer = async (data: SelectionTextMessageData) => {
   const instructions = await getDefaultInstructions();
+  const token = await getToken();
   await remove(StorageKey.EXPLANATION_STYLE);
   const prompt = `
 You are an assistant that helps users understand unknown words, terms, or abbreviations found in articles.
@@ -94,17 +104,13 @@ Task:
 - Use the following context to improve accuracy, but DO NOT mention or refer to this context in your explanation: ${data.context}
 - Focus only on explaining the term/word/abbreviation directly without mentioning where this information comes from.
 ${instructions}`.trim();
-  const response = await fetchToOpenAI(prompt);
+  const response = await fetchToOpenAI(prompt, token);
   sendMessageToActiveTab(Message.GET_ANSWER, response.content);
 };
 
-const getClarification = async (data: {
-  originalQuestion: string;
-  originalAnswer: string;
-  clarificationQuestion: string;
-  context: string;
-}) => {
+const getClarification = async (data: ClarificationMessageData) => {
   const instructions = await getDefaultInstructions();
+  const token = await getToken();
 
   const prompt = `
 You are a context-aware assistant continuing a conversation.
@@ -124,19 +130,16 @@ Instructions:
 ${instructions}
 `.trim();
 
-  const response = await fetchToOpenAI(prompt);
+  const response = await fetchToOpenAI(prompt, token);
   sendMessageToActiveTab(Message.GET_CLARIFICATION_ANSWER, {
     clarificationQuestion: data.clarificationQuestion,
     answer: response.content,
   });
 };
 
-const getExplainSimpler = async (data: {
-  question: string;
-  context: string;
-  style: "child" | "student" | "beginner" | "analogy";
-}) => {
+const getExplainSimpler = async (data: ExplainSimplerMessageData) => {
   const instructions = await getDefaultInstructions();
+  const token = await getToken();
 
   // Save the selected style for future use
   await setCurrentStyle(data.style);
@@ -152,21 +155,21 @@ Task:
 
 ${instructions}`.trim();
 
-  const response = await fetchToOpenAI(prompt);
+  const response = await fetchToOpenAI(prompt, token);
 
   sendMessageToActiveTab(Message.GET_EXPLAIN_SIMPLER, response.content);
 };
 
-addMessageListener(Message.GET_SELECTION_TEXT, (data) => {
-  getAnswer(data);
+addMessageListener(Message.GET_SELECTION_TEXT, (data: MessageData) => {
+  getAnswer(data as SelectionTextMessageData);
 });
 
-addMessageListener(Message.GET_CLARIFICATION, (data) => {
-  getClarification(data);
+addMessageListener(Message.GET_CLARIFICATION, (data: MessageData) => {
+  getClarification(data as ClarificationMessageData);
 });
 
-addMessageListener(Message.EXPLAIN_LIKE_CHILD, (data) => {
-  getExplainSimpler(data);
+addMessageListener(Message.EXPLAIN_LIKE_CHILD, (data: MessageData) => {
+  getExplainSimpler(data as ExplainSimplerMessageData);
 });
 
 const main = () => {
@@ -176,7 +179,7 @@ const main = () => {
   setDefaultLanguage();
 
   browser.action.onClicked.addListener(() => {
-    sendMessageToActiveTab(Message.OPEN_CUSTOM_POPUP, "");
+    sendMessageToActiveTab(Message.OPEN_CUSTOM_POPUP, {});
   });
 };
 

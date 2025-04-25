@@ -1,3 +1,4 @@
+import { MessageData } from "@/types";
 import { defineExtensionMessaging } from "@webext-core/messaging";
 
 export const Message = {
@@ -31,10 +32,6 @@ interface Messages {
     context: string;
   };
   [Message.GET_EXPLAIN_SIMPLER]: (text: string) => void;
-}
-
-interface MessageData {
-  [key: string]: string | number | boolean | object;
 }
 
 export function sendMessageToActiveTab(message: Message, data: MessageData) {
