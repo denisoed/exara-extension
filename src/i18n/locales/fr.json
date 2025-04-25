@@ -7,7 +7,8 @@
       "label": "Token API",
       "placeholder": "Entrez le token API",
       "save": "Enregistrer",
-      "saved": "Token enregistré"
+      "saved": "Token enregistré",
+      "tooltip": "La clé API permet de faire des requêtes vers notre service. Sans elle, les fonctionnalités seront limitées."
     }
   },
   "optionsPage": {

@@ -7,7 +7,8 @@
       "label": "API Token",
       "placeholder": "Enter API token",
       "save": "Save",
-      "saved": "Token saved"
+      "saved": "Token saved",
+      "tooltip": "The API key allows making requests to our service. Without it, functionality will be limited."
     }
   },
   "optionsPage": {

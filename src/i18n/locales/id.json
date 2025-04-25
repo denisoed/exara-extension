@@ -7,7 +7,8 @@
       "label": "Token API",
       "placeholder": "Masukkan token API",
       "save": "Simpan",
-      "saved": "Token tersimpan"
+      "saved": "Token tersimpan",
+      "tooltip": "Kunci API memungkinkan untuk melakukan permintaan ke layanan kami. Tanpa kunci ini, fungsionalitas akan terbatas."
     }
   },
   "optionsPage": {

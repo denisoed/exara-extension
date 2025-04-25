@@ -7,7 +7,8 @@
       "label": "API Tokeni",
       "placeholder": "API tokenini girin",
       "save": "Kaydet",
-      "saved": "Token kaydedildi"
+      "saved": "Token kaydedildi",
+      "tooltip": "API anahtarı, servisimize istek yapmanıza olanak tanır. Bu olmadan, işlevsellik sınırlı olacaktır."
     }
   },
   "optionsPage": {

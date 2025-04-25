@@ -7,7 +7,8 @@
       "label": "Token API",
       "placeholder": "Nhập token API",
       "save": "Lưu",
-      "saved": "Đã lưu token"
+      "saved": "Đã lưu token",
+      "tooltip": "Khóa API cho phép thực hiện các yêu cầu đến dịch vụ của chúng tôi. Không có nó, chức năng sẽ bị hạn chế."
     }
   },
   "optionsPage": {

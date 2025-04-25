@@ -7,7 +7,8 @@
       "label": "API 토큰",
       "placeholder": "API 토큰 입력",
       "save": "저장",
-      "saved": "토큰이 저장됨"
+      "saved": "토큰이 저장됨",
+      "tooltip": "API 키는 우리 서비스에 요청을 할 수 있게 해줍니다. 이것이 없으면 기능이 제한됩니다."
     }
   },
   "optionsPage": {

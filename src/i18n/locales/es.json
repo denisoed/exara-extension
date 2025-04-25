@@ -7,7 +7,8 @@
       "label": "Token API",
       "placeholder": "Introducir token API",
       "save": "Guardar",
-      "saved": "Token guardado"
+      "saved": "Token guardado",
+      "tooltip": "La clave API permite realizar solicitudes a nuestro servicio. Sin ella, la funcionalidad será limitada."
     }
   },
   "optionsPage": {

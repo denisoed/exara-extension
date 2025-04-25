@@ -7,7 +7,8 @@
       "label": "API-Token",
       "placeholder": "API-Token eingeben",
       "save": "Speichern",
-      "saved": "Token gespeichert"
+      "saved": "Token gespeichert",
+      "tooltip": "Der API-Schlüssel ermöglicht Anfragen an unseren Service. Ohne ihn ist die Funktionalität eingeschränkt."
     }
   },
   "optionsPage": {

@@ -7,7 +7,8 @@
       "label": "API 令牌",
       "placeholder": "输入 API 令牌",
       "save": "保存",
-      "saved": "令牌已保存"
+      "saved": "令牌已保存",
+      "tooltip": "API 密钥允许向我们的服务发送请求。没有它，功能将受到限制。"
     }
   },
   "optionsPage": {

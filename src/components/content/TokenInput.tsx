@@ -1,4 +1,4 @@
-import { Trash2 } from "lucide-react";
+import { Trash2, Info } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -11,6 +11,7 @@ export function TokenInput() {
   const [token, setToken] = useState("");
   const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     const loadToken = async () => {
@@ -68,9 +69,29 @@ export function TokenInput() {
 
   return (
     <div className="flex flex-col gap-2">
-      <Label htmlFor="api-token" className="text-xs text-muted-foreground">
-        {t("components.tokenInput.label")}
-      </Label>
+      <div className="flex items-center gap-1">
+        <Label htmlFor="api-token" className="text-xs text-muted-foreground">
+          {t("components.tokenInput.label")}
+        </Label>
+        <div className="relative ml-auto">
+          <Button 
+            type="button" 
+            variant="ghost" 
+            size="xs" 
+            className="h-5 w-5 p-0"
+            onClick={() => setShowTooltip(!showTooltip)}
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
+            <Info className="size-3.5 text-muted-foreground" />
+          </Button>
+          {showTooltip && (
+            <div className="absolute z-50 top-full right-0 transform mt-1 w-48 p-2 text-xs bg-popover border shadow-md rounded-md">
+              {t("components.tokenInput.tooltip")}
+            </div>
+          )}
+        </div>
+      </div>
       <div className="flex gap-2">
         <Input
           id="api-token"
