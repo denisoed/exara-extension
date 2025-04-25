@@ -105,7 +105,11 @@ Task:
 - Focus only on explaining the term/word/abbreviation directly without mentioning where this information comes from.
 ${instructions}`.trim();
   const response = await fetchToOpenAI(prompt, token);
-  sendMessageToActiveTab(Message.GET_ANSWER, response.content);
+  if (response?.status === "error") {
+    sendMessageToActiveTab(Message.LIMIT_REACHED, {});
+  } else {
+    sendMessageToActiveTab(Message.GET_ANSWER, response.content);
+  }
 };
 
 const getClarification = async (data: ClarificationMessageData) => {

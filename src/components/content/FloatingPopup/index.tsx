@@ -139,6 +139,10 @@ export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
         setState(FloatingPopupState.Answer);
       });
 
+      addMessageListener(Message.LIMIT_REACHED, () => {
+        setState(FloatingPopupState.LimitReached);
+      });
+
       // Trigger animation after component mount
       requestAnimationFrame(() => {
         setIsVisible(true);
@@ -168,6 +172,7 @@ export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
           <PopupWrapper onClose={onClose} handleDragStart={handleDragStart}>
             <Answer
               answer={answer}
+              limitReached={state === FloatingPopupState.LimitReached}
               isLoading={state === FloatingPopupState.Loading}
               onClarify={handleClarification}
               onExplain={handleExplain}

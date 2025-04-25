@@ -26,6 +26,7 @@ export enum FloatingPopupState {
   Preview = "preview",
   Loading = "loading",
   Answer = "answer",
+  LimitReached = "limit-reached",
 }
 
 export enum ExplanationStyle {
@@ -42,6 +43,8 @@ export type OpenAIResponse = {
     completion_tokens: number;
     total_tokens: number;
   };
+  status?: string;
+  message?: string;
 };
 
 export interface SelectionTextMessageData {

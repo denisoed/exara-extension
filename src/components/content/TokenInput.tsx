@@ -102,9 +102,6 @@ export function TokenInput() {
           </Button>
         )}
       </div>
-      {isSaved && token && (
-        <p className="text-xs text-primary">{t("components.tokenInput.saved")}</p>
-      )}
     </div>
   );
 } 

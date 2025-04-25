@@ -9,6 +9,7 @@ export const Message = {
   GET_CLARIFICATION_ANSWER: "get-clarification-answer",
   EXPLAIN_LIKE_CHILD: "explain-like-child",
   GET_EXPLAIN_SIMPLER: "get-explain-like-child-answer",
+  LIMIT_REACHED: "limit-reached",
 } as const;
 
 export type Message = (typeof Message)[keyof typeof Message];
@@ -32,6 +33,7 @@ interface Messages {
     context: string;
   };
   [Message.GET_EXPLAIN_SIMPLER]: (text: string) => void;
+  [Message.LIMIT_REACHED]: () => void;
 }
 
 export function sendMessageToActiveTab(message: Message, data: MessageData) {

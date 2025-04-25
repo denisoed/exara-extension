@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import type { ClarificationHistory, ExplanationStyle } from "@/types";
 import { useState } from "react";
 import { Clarifications } from "~/components/content/FloatingPopup/Answer/clarifications";
@@ -12,6 +13,7 @@ export const Answer = ({
   onExplain,
   clarificationCount,
   clarificationHistory,
+  limitReached,
 }: {
   answer: string;
   isLoading: boolean;
@@ -19,6 +21,7 @@ export const Answer = ({
   onExplain: (style: ExplanationStyle) => void;
   clarificationCount: number;
   clarificationHistory: ClarificationHistory[];
+  limitReached: boolean;
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [clarificationText, setClarificationText] = useState("");
@@ -44,6 +47,30 @@ export const Answer = ({
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="rounded-[8px] bg-popover p-2 text-black dark:text-white">
+        <Loading />
+      </div>
+    );
+  }
+
+  if (limitReached) {
+    return (
+      <div className="rounded-[8px] bg-popover p-2 text-black dark:text-white">
+        <p className="text-sm text-yellow-500">You've reached the maximum number of requests.</p>
+        <Button
+          onClick={() => window.open("https://exara.pro/#pricing", "_blank")}
+          variant="outline"
+          size="sm"
+          className="mt-2 w-full"
+        >
+          Reset limit
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-2 text-black dark:text-white">
       {!!answer || clarificationHistory.length ? (
@@ -55,15 +82,10 @@ export const Answer = ({
         </div>
       ) : null}
 
-      {(isLoading && (
-        <div className="rounded-[8px] bg-popover p-2">
-          <Loading />
-        </div>
-      )) ||
-        (canClarify && (
-          <div className="space-y-2 rounded-[8px] bg-popover p-2">
-            <Controls
-              isExpanded={isExpanded}
+      {canClarify && (
+        <div className="space-y-2 rounded-[8px] bg-popover p-2">
+          <Controls
+            isExpanded={isExpanded}
               handleClarification={() => setIsExpanded(!isExpanded)}
               handleExplain={handleExplain}
             />
@@ -77,7 +99,7 @@ export const Answer = ({
               />
             )}
           </div>
-        ))}
+        )}
     </div>
   );
 };
