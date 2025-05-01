@@ -1,10 +1,10 @@
-import { Trash2, Info } from "lucide-react";
+import { Info, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import * as localStorage from "~/lib/localStorage";
 import { useTranslation } from "~/i18n/hooks";
+import * as localStorage from "~/lib/localStorage";
 
 export function TokenInput() {
   const { t } = useTranslation();
@@ -16,7 +16,9 @@ export function TokenInput() {
   useEffect(() => {
     const loadToken = async () => {
       try {
-        const savedToken = await localStorage.get<string>(localStorage.StorageKey.TOKEN);
+        const savedToken = await localStorage.get<string>(
+          localStorage.StorageKey.TOKEN,
+        );
         if (savedToken) {
           setToken(savedToken);
           setIsSaved(true);
@@ -38,7 +40,7 @@ export function TokenInput() {
 
   const saveToken = async () => {
     if (!token.trim()) return;
-    
+
     try {
       await localStorage.set(localStorage.StorageKey.TOKEN, token.trim());
       setIsSaved(true);
@@ -64,7 +66,7 @@ export function TokenInput() {
   };
 
   if (isLoading) {
-    return <div className="h-8 animate-pulse bg-muted rounded"></div>;
+    return <div className="h-8 animate-pulse bg-muted rounded" />;
   }
 
   return (
@@ -74,10 +76,10 @@ export function TokenInput() {
           {t("components.tokenInput.label")}
         </Label>
         <div className="relative ml-auto">
-          <Button 
-            type="button" 
-            variant="ghost" 
-            size="xs" 
+          <Button
+            type="button"
+            variant="ghost"
+            size="xs"
             className="h-5 w-5 p-0"
             onClick={() => setShowTooltip(!showTooltip)}
             onMouseEnter={() => setShowTooltip(true)}
@@ -125,4 +127,4 @@ export function TokenInput() {
       </div>
     </div>
   );
-} 
+}

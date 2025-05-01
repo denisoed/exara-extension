@@ -1,4 +1,3 @@
-import { Move } from "lucide-react";
 import { forwardRef, useCallback, useEffect, useState } from "react";
 import { cn } from "~/lib/utils";
 
@@ -7,10 +6,11 @@ interface DraggleWrapperProps {
   y: number; // percentage (0-100)
   disableX?: boolean; // disable dragging along X axis
   disableY?: boolean; // disable dragging along Y axis
+  children: React.ReactNode;
 }
 
 export const DraggleWrapper = forwardRef<HTMLDivElement, DraggleWrapperProps>(
-  ({ x, y, disableX = false, disableY = false }, ref) => {
+  ({ x, y, disableX = false, disableY = false, children }, ref) => {
     const [position, setPosition] = useState({ x, y });
     const [isDragging, setIsDragging] = useState(false);
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -22,15 +22,36 @@ export const DraggleWrapper = forwardRef<HTMLDivElement, DraggleWrapperProps>(
         setIsDragging(true);
 
         // Calculate offset as difference between mouse percentage position and current element position
-        const xOffset = (e.clientX / window.innerWidth * 100) - position.x;
-        const yOffset = (e.clientY / window.innerHeight * 100) - position.y;
+        const xOffset = (e.clientX / window.innerWidth) * 100 - position.x;
+        const yOffset = (e.clientY / window.innerHeight) * 100 - position.y;
 
         setDragOffset({
           x: xOffset,
           y: yOffset,
         });
+
+        // Add drag classes to the draggable element
+        const target = e.target as HTMLElement;
+        const draggableElement = target.closest("[data-draggle-wrapper]");
+        if (draggableElement) {
+          if (disableX) draggableElement.classList.add("disable-x");
+          if (disableY) draggableElement.classList.add("disable-y");
+        }
       },
-      [position],
+      [position, disableX, disableY],
+    );
+
+    const handleChildMouseDown = useCallback(
+      (e: React.MouseEvent) => {
+        // Check if the clicked element or its parent has the data-draggle-wrapper attribute
+        const target = e.target as HTMLElement;
+        const draggableElement = target.closest("[data-draggle-wrapper]");
+
+        if (draggableElement) {
+          handleDragStart(e);
+        }
+      },
+      [handleDragStart],
     );
 
     const handleMouseMove = useCallback(
@@ -58,11 +79,18 @@ export const DraggleWrapper = forwardRef<HTMLDivElement, DraggleWrapperProps>(
 
     const handleMouseUp = useCallback(() => {
       setIsDragging(false);
+      // Remove drag classes from all draggable elements
+      document.querySelectorAll("[data-draggle-wrapper]").forEach((element) => {
+        element.classList.remove("disable-x", "disable-y");
+      });
     }, []);
 
-    // Prevent text selection during dragging
+    // Prevent text selection during dragging only on draggable elements
     const preventTextSelection = useCallback((e: Event) => {
-      e.preventDefault();
+      const target = e.target as HTMLElement;
+      if (target.closest("[data-draggle-wrapper]")) {
+        e.preventDefault();
+      }
     }, []);
 
     // ------ HOOKS ------ //
@@ -92,16 +120,12 @@ export const DraggleWrapper = forwardRef<HTMLDivElement, DraggleWrapperProps>(
       <div
         ref={ref}
         className={cn(
-          "fixed z-[999999999] flex flex-col gap-2 rounded-md bg-background shadow-lg rounded-[16px] text-base text-foreground select-none",
+          "fixed z-[999999999]",
           "transition-transform duration-300 ease-out",
           "transform origin-center",
           {
             "translate-y-[-100px] opacity-0": !isVisible,
             "translate-y-0 opacity-100": isVisible,
-            "cursor-move": !disableX && !disableY,
-            "cursor-row-resize": !disableY && disableX,
-            "cursor-col-resize": disableY && !disableX,
-            "cursor-not-allowed": disableX && disableY,
           },
         )}
         style={{
@@ -109,19 +133,9 @@ export const DraggleWrapper = forwardRef<HTMLDivElement, DraggleWrapperProps>(
           top: `${position.y}%`,
           transform: `translate(-${position.x}%, -${position.y}%)`, // This ensures the element is positioned relative to its own size
         }}
+        onMouseDown={handleChildMouseDown}
       >
-        <Move 
-          className={cn(
-            "size-4",
-            {
-              "cursor-move": !disableX && !disableY,
-              "cursor-row-resize": !disableY && disableX,
-              "cursor-col-resize": disableY && !disableX,
-              "cursor-not-allowed": disableX && disableY,
-            }
-          )} 
-          onMouseDown={handleDragStart} 
-        />
+        {children}
       </div>
     );
   },

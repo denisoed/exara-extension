@@ -60,7 +60,9 @@ export const Answer = ({
   if (limitReached) {
     return (
       <div className="rounded-[8px] bg-popover p-2 text-black dark:text-white">
-        <p className="text-sm text-yellow-500">{t("contentScript.limitReached")}</p>
+        <p className="text-sm text-yellow-500">
+          {t("contentScript.limitReached")}
+        </p>
         <Button
           onClick={() => window.open("https://exara.pro/#pricing", "_blank")}
           variant="outline"
@@ -88,20 +90,20 @@ export const Answer = ({
         <div className="space-y-2 rounded-[8px] bg-popover p-2">
           <Controls
             isExpanded={isExpanded}
-              handleClarification={() => setIsExpanded(!isExpanded)}
-              handleExplain={handleExplain}
-            />
+            handleClarification={() => setIsExpanded(!isExpanded)}
+            handleExplain={handleExplain}
+          />
 
-            {isExpanded && (
-              <Form
-                clarificationText={clarificationText}
-                setClarificationText={setClarificationText}
-                handleKeyDown={handleKeyDown}
-                handleSubmit={handleSubmit}
-              />
-            )}
-          </div>
-        )}
+          {isExpanded && (
+            <Form
+              clarificationText={clarificationText}
+              setClarificationText={setClarificationText}
+              handleKeyDown={handleKeyDown}
+              handleSubmit={handleSubmit}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 };

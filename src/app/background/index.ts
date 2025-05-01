@@ -1,10 +1,10 @@
 import type {
+  ClarificationMessageData,
+  ExplainSimplerMessageData,
   ExplanationStyle,
   Language,
   MessageData,
   SelectionTextMessageData,
-  ClarificationMessageData,
-  ExplainSimplerMessageData
 } from "@/types";
 import { browser } from "wxt/browser";
 import { defineBackground } from "wxt/sandbox";
@@ -66,9 +66,7 @@ async function getToken() {
 
 async function getCurrentStyle() {
   // Try to get from storage if not in memory
-  const savedStyle = await get<ExplanationStyle>(
-    StorageKey.EXPLANATION_STYLE,
-  );
+  const savedStyle = await get<ExplanationStyle>(StorageKey.EXPLANATION_STYLE);
   if (savedStyle) {
     return savedStyle;
   }

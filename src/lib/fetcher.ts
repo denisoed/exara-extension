@@ -9,7 +9,7 @@ async function post<T>(
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
   };
-  
+
   if (token) {
     headers["x-api-key"] = token;
   }
@@ -24,14 +24,18 @@ async function post<T>(
 }
 
 async function fetchToOpenAI(prompt: string, token?: string) {
-  return await post<OpenAIResponse>("/api/openai/chat", {
-    messages: [
-      {
-        role: "user",
-        content: prompt,
-      },
-    ],
-  }, token);
+  return await post<OpenAIResponse>(
+    "/api/openai/chat",
+    {
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+    },
+    token,
+  );
 }
 
 export { fetchToOpenAI };

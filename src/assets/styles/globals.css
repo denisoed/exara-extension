@@ -132,3 +132,22 @@
 .dark ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--muted-foreground) / 0.5);
 }
+
+/* Draggle wrapper styles */
+
+[data-draggle-wrapper] {
+  cursor: move;
+  user-select: none;
+}
+
+[data-draggle-wrapper].disable-x {
+  cursor: row-resize;
+}
+
+[data-draggle-wrapper].disable-y {
+  cursor: col-resize;
+}
+
+[data-draggle-wrapper].disable-x.disable-y {
+  cursor: not-allowed;
+}

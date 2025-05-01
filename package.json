@@ -1,7 +1,7 @@
 {
   "name": "exara",
-  "version": "1.0.0",
-  "description": "Open source browser extension starter kit.",
+  "version": "1.0.1",
+  "description": "Exara browser extension",
   "license": "MIT",
   "author": "Denisoed",
   "scripts": {

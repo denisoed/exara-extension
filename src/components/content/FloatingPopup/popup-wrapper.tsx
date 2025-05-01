@@ -4,11 +4,9 @@ import { Move, X } from "lucide-react";
 
 export const PopupWrapper = ({
   onClose,
-  handleDragStart,
   children,
 }: {
   onClose: () => void;
-  handleDragStart: (e: React.MouseEvent) => void;
   children: React.ReactNode;
 }) => {
   return (
@@ -19,14 +17,14 @@ export const PopupWrapper = ({
     >
       <div
         className="absolute left-0 right-0 top-0 h-10 cursor-move rounded-t-[16px]"
-        onMouseDown={handleDragStart}
+        data-draggle-wrapper
       />
       <div className="absolute right-2 top-2 flex gap-1">
         <Button
           variant="outline"
           size="xs"
           className="rounded-full cursor-move bg-accent"
-          onMouseDown={handleDragStart}
+          data-draggle-wrapper
         >
           <Move className="size-2 text-muted-foreground" />
         </Button>

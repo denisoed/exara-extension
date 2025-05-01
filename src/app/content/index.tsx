@@ -13,6 +13,7 @@ import { StorageKey, get, unwatch, watch } from "~/lib/localStorage";
 import { Message, addMessageListener } from "~/lib/messaging";
 import { getPageContext, getSelection, isPopup } from "~/lib/utils";
 import { cn } from "~/lib/utils";
+import { pixelsToPercentage } from "~/lib/utils/coordinates";
 
 import "~/assets/styles/globals.css";
 
@@ -60,11 +61,16 @@ const ContentScriptUI = () => {
     const context = getPageContext();
 
     if (selectedText) {
+      const coordinates = pixelsToPercentage({
+        x: event.clientX,
+        y: event.clientY,
+      });
+
       setPopupState({
         text: selectedText,
         context: `${context.pageTitle} - ${context.pageDescription}`,
-        x: event.clientX,
-        y: event.clientY,
+        x: coordinates.x,
+        y: coordinates.y,
       });
     }
   }
@@ -95,13 +101,11 @@ const ContentScriptUI = () => {
   }
 
   function onOpenCustomPopup() {
-    const windowWidth = window.innerWidth;
-    const customPopupWidth = 400;
-    const x = windowWidth - customPopupWidth - 16;
-    const y = 16;
-    setCustomPopupState({
-      x,
-      y,
+    setCustomPopupState((prev) => {
+      if (prev) return null;
+      const x = window.innerWidth - 16;
+      const y = 16;
+      return pixelsToPercentage({ x, y });
     });
   }
 

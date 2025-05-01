@@ -1,4 +1,4 @@
-import { MessageData } from "@/types";
+import type { MessageData } from "@/types";
 import { defineExtensionMessaging } from "@webext-core/messaging";
 
 export const Message = {
@@ -61,6 +61,17 @@ export function addMessageListener(
   callback: (data: MessageData) => void,
 ) {
   chrome.runtime.onMessage.addListener((msg) => {
+    if (msg.type === message) {
+      callback(msg.data);
+    }
+  });
+}
+
+export function removeMessageListener(
+  message: Message,
+  callback: (data: MessageData) => void,
+) {
+  chrome.runtime.onMessage.removeListener((msg) => {
     if (msg.type === message) {
       callback(msg.data);
     }
