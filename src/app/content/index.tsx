@@ -62,8 +62,8 @@ const ContentScriptUI = () => {
 
     if (selectedText) {
       const coordinates = pixelsToPercentage({
-        x: event.clientX,
-        y: event.clientY,
+        x: event.clientX + 20,
+        y: event.clientY + 20,
       });
 
       setPopupState({
