@@ -23,7 +23,7 @@ interface FloatingPopupProps {
 }
 
 export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
-  ({ question, context, x, y, onClose }) => {
+  ({ question, context, x, y, onClose }, ref) => {
     const [state, setState] = useState<FloatingPopupState>(
       FloatingPopupState.Preview,
     );
@@ -92,7 +92,7 @@ export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
     }, []);
 
     return (
-      <DraggleWrapper x={x} y={y}>
+      <DraggleWrapper x={x} y={y} ref={ref}>
         {(state === FloatingPopupState.Preview && (
           <ActionBtn onClick={handleRequestAnswer} />
         )) || (

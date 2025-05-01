@@ -14,10 +14,10 @@ interface CustomPopupProps {
 }
 
 export const CustomPopup = forwardRef<HTMLDivElement, CustomPopupProps>(
-  ({ x, y, onClose }) => {
+  ({ x, y, onClose }, ref) => {
 
     return (
-      <DraggleWrapper x={x} y={y}>
+      <DraggleWrapper x={x} y={y} ref={ref}>
         <div className="flex w-[400px] max-w-[400px] flex-col gap-2 rounded-md bg-background p-3 pt-10 shadow-lg rounded-[16px] text-base text-foreground">
           <div
             className="absolute left-0 right-0 top-0 h-10 cursor-move rounded-t-[16px]"
