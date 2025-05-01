@@ -1,63 +1,49 @@
 # Active Context
 
 ## Current Focus
-- Browser action click event debugging and improvement
-- Extension manifest V3 compliance verification
-- Background service worker event registration optimization
-- Extension permissions verification
-- Chrome API integration testing
-- Explanation style improvements and user feedback
-- Refining style persistence implementation
+- Implementing and refining draggable UI components
+- Coordinate system optimization (pixels to percentage conversion)
+- Event delegation for drag operations
+- Text selection and cursor behavior improvements
+- Message listener optimization
+- State management in event handlers
 
 ## Recent Changes
-- Updated browser action configuration in manifest
-- Implemented direct chrome.action API usage for Manifest V3 compliance
-- Added tab creation and message passing on browser action click
-- Configured extension permissions (storage, sidePanel, scripting, action)
-- Enhanced error handling for message passing
-- Replaced "expert" explanation style with "beginner" style
-- Added "analogy" style with real-life metaphors for technical concepts
-- Updated translations for all explanation styles in language files
-- Modified popup component to handle style selection via dropdown
-- Implemented persistent storage for selected explanation style using StorageKey
-- Added style preservation across user sessions and clarification questions
+- Created DraggleWrapper component with percentage-based positioning
+- Implemented coordinate conversion utility functions
+- Added support for axis-specific drag locking
+- Improved text selection handling in draggable components
+- Optimized cursor feedback for drag operations
+- Enhanced event delegation with data-draggle-wrapper attribute
+- Fixed message listener accumulation issues
+- Implemented useRef for stable event handler references
 
 ## Next Steps
-1. Complete browser action click event debugging
-2. Add comprehensive logging for extension behavior
-3. Test extension permissions in different browsing contexts
-4. Improve error handling for API failures
-5. Enhance user experience with smoother transitions
-6. Gather user feedback on explanation styles effectiveness
-7. Optimize performance for style switching
-8. Ensure consistent translations across all languages
-9. Document browser action implementation patterns
+1. Test DraggleWrapper component in different contexts
+2. Verify coordinate conversion accuracy
+3. Optimize drag performance
+4. Enhance accessibility for draggable elements
+5. Document drag and drop patterns
+6. Review event listener cleanup
+7. Test state preservation across drag operations
+8. Verify cursor behavior in all states
 
 ## Active Decisions
-- Using WXT as the extension framework for development
-- TypeScript for strict type safety throughout codebase
-- React for UI components with functional patterns
-- Bun as package manager for faster dependency handling
-- shadcn/ui for component library with Tailwind integration
-- Tailwind for styling with custom theme support
-- Biome for linting and formatting consistency
-- Direct chrome.action API usage for browser action
-- Manifest V3 compliance for future compatibility
-- TypeScript enums for explanation styles
-- Three-tier explanation system (child, student, beginner) plus analogy style
-- Persistent explanation style selection with localStorage
-- Style preservation across user sessions
+- Using percentage-based positioning for better responsiveness
+- Implementing event delegation for drag handles
+- Using data attributes for drag target identification
+- Separating cursor styles from main component
+- Using useRef for stable event handler references
+- Implementing coordinate conversion utilities
+- Maintaining text selection functionality
+- Supporting axis-specific drag locking
 
 ## Considerations
-- Manifest V3 service worker limitations
-- Extension permissions scope optimization
-- Background service worker lifecycle management
-- Cross-browser compatibility challenges
-- Error handling strategies for API failures
-- Performance optimization for content script injection
-- User experience improvements
-- Explanation style effectiveness for different user demographics
-- Translation accuracy and cultural considerations
-- Security best practices for extension development
-- Performance impact of style switching
-- Memory usage optimization
+- Browser compatibility for drag operations
+- Performance impact of coordinate conversions
+- Accessibility requirements for draggable elements
+- Touch device support
+- Event listener cleanup optimization
+- State management patterns in event handlers
+- Memory usage in drag operations
+- User experience on different screen sizes

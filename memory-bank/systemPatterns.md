@@ -24,7 +24,8 @@ The extension follows a modular architecture with clear separation of concerns:
    - State management
    - Internationalization
    - Analytics
-   - Explanation style system
+   - Coordinate system
+   - Drag and drop system
 
 3. **UI Components**
    - Browser action popup
@@ -33,11 +34,136 @@ The extension follows a modular architecture with clear separation of concerns:
    - Action button
    - Content display
    - Control buttons
-   - Drag handle
+   - DraggleWrapper
    - Loading states
    - Preview states
-   - Explanation style selector
-   - Clarification interface
+   - Coordinate converters
+   - Drag handles
+
+## Design Patterns
+
+1. **Drag and Drop System**
+   - Event delegation using data attributes
+   - Percentage-based positioning
+   - Coordinate conversion utilities
+   - Axis-specific locking
+   - Cursor state management
+   - Text selection control
+   - Event listener optimization
+   - useRef for stable references
+   - Viewport boundary handling
+
+2. **Component Architecture**
+   - React functional components
+   - Hooks for state management
+   - Custom hooks for extension-specific logic
+   - Forward refs for DOM manipulation
+   - Callback memoization for performance
+   - Component composition
+   - State machine pattern for UI states
+   - Controlled form components
+   - Event delegation patterns
+
+3. **Message Passing**
+   - Type-safe message interfaces
+   - Centralized message handling
+   - Cross-component communication
+   - Event handler reference management
+   - Stable event listeners
+   - Memory leak prevention
+   - Event cleanup patterns
+
+4. **Coordinate System**
+   - Pixel to percentage conversion
+   - Viewport-relative positioning
+   - Boundary constraints
+   - Responsive positioning
+   - Screen size adaptation
+   - Position calculation utilities
+   - Coordinate type definitions
+
+5. **UI Interaction Patterns**
+   - Data attribute-based event delegation
+   - Selective text selection
+   - Dynamic cursor styles
+   - Drag handle identification
+   - Smooth animations
+   - Position constraints
+   - Axis locking
+   - Event bubbling control
+
+6. **State Management**
+   - Component-level state
+   - Drag operation state
+   - Position state
+   - Cursor state
+   - Selection state
+   - Reference management
+   - Event handler state
+   - Cleanup patterns
+
+## Component Relationships
+```mermaid
+graph TD
+    A[DraggleWrapper] --> B[Event Delegation]
+    A --> C[Coordinate System]
+    A --> D[State Management]
+    B --> E[Data Attributes]
+    C --> F[Position Calculation]
+    D --> G[Event Handlers]
+    
+    subgraph Drag System
+        H[Drag Handles] --> I[Event Listeners]
+        I --> J[Position Updates]
+        J --> K[Coordinate Conversion]
+        K --> L[Viewport Constraints]
+    end
+```
+
+## Key Technical Decisions
+
+1. **Drag and Drop Implementation**
+   - Event delegation with data-draggle-wrapper
+   - Percentage-based positioning
+   - Coordinate conversion utilities
+   - Axis locking support
+   - Cursor state management
+   - Text selection control
+   - Event listener optimization
+
+2. **Component Design**
+   - Forward refs for DOM access
+   - Callback memoization
+   - State isolation
+   - Event delegation
+   - Position management
+   - Style separation
+   - Accessibility support
+
+3. **Event Management**
+   - Stable handler references
+   - Cleanup optimization
+   - Memory leak prevention
+   - Event delegation
+   - Bubbling control
+   - State preservation
+
+4. **Position System**
+   - Viewport percentage calculation
+   - Boundary enforcement
+   - Coordinate conversion
+   - Responsive adaptation
+   - Position utilities
+   - Type definitions
+
+5. **User Interaction**
+   - Selective text selection
+   - Dynamic cursors
+   - Drag handles
+   - Smooth transitions
+   - Position constraints
+   - Accessibility
+   - Touch support
 
 ## Design Patterns
 1. **Service Worker Pattern**
