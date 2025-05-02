@@ -6,14 +6,19 @@ import { cn } from "@/lib/utils";
 import { isExaraContainer } from "@/lib/utils";
 import { set, get, StorageKey } from "@/lib/localStorage";
 
-export const PinnedBtn = forwardRef<HTMLDivElement>(
-  (_, ref) => {
+interface PinnedBtnProps {
+  opened?: boolean;
+  onClick: () => void;
+}
 
-    const [isOpen, setIsOpen] = useState(false);
+export const PinnedBtn = forwardRef<HTMLDivElement, PinnedBtnProps>(
+  ({ opened, onClick }, ref) => {
+
+    const [isOpen, setIsOpen] = useState(opened);
     const [position, setPosition] = useState({ x: 100, y: 50 });
 
     // Close the menu when clicking outside the menu
-    function handleClick(e: MouseEvent) {
+    function onGlobalClick(e: MouseEvent) {
       if (!isExaraContainer(e.target)) {
         setIsOpen(false);
       }
@@ -28,7 +33,6 @@ export const PinnedBtn = forwardRef<HTMLDivElement>(
         StorageKey.PINNED_BTN_POSITION,
       );
       if (pinnedBtnPosition) {
-        console.log(pinnedBtnPosition);
         setPosition({
           x: pinnedBtnPosition.x,
           y: pinnedBtnPosition.y,
@@ -36,14 +40,23 @@ export const PinnedBtn = forwardRef<HTMLDivElement>(
       }
     }
 
+    function handleClick() {
+      setIsOpen(true);
+      onClick();
+    }
+
     useEffect(() => {
       getPinnedBtnPosition();
-      window.addEventListener("click", handleClick);
+      window.addEventListener("click", onGlobalClick);
 
       return () => {
-        window.removeEventListener("click", handleClick);
+        window.removeEventListener("click", onGlobalClick);
       };
     }, []);
+
+    useEffect(() => {
+      setIsOpen(opened);
+    }, [opened]);
 
     return (
       <DraggleWrapper x={position.x} y={position.y} ref={ref} disableX onChange={handleChange}>
@@ -53,7 +66,7 @@ export const PinnedBtn = forwardRef<HTMLDivElement>(
             isOpen && "translate-x-0 opacity-100",
           )}
         >
-          <Logo onClick={() => setIsOpen(!isOpen)} className="size-10 py-3 text-muted-foreground" />
+          <Logo onClick={handleClick} className="size-10 py-3 text-muted-foreground" />
           <div data-draggle-wrapper className="flex items-center justify-center py-3 pr-2">
             <GripVerticalIcon className="size-3 text-muted-foreground" />
           </div>

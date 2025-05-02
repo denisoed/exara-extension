@@ -30,7 +30,7 @@ const ContentScriptUI = () => {
   const { textSelectorState, clearSelection } = useTextSelector();
 
   const [showFloatingPopup, setShowFloatingPopup] = useState<boolean>(false);
-  const [showUnderMouseBtn, setShowUnderMouseBtn] = useState<boolean>(false);
+  const [showTriggerBtn, setShowTriggerBtn] = useState<boolean>(false);
   const [theme, setTheme] = useState<Theme>(Theme.DARK);
   const [customPopupState, setCustomPopupState] = useState<CustomPopupState | null>(null);
   const [triggerPosition, setTriggerPosition] = useState<TriggerPosition>(TriggerPosition.UNDER_CURSOR);
@@ -59,22 +59,22 @@ const ContentScriptUI = () => {
   function onCloseAll() {
     clearSelection();
     setCustomPopupState(null);
-    setShowUnderMouseBtn(false);
+    setShowTriggerBtn(false);
     setShowFloatingPopup(false);
   }
 
   useEffect(() => {
     if (textSelectorState) {
-      setShowUnderMouseBtn(true);
+      setShowTriggerBtn(true);
     } else {
-      setShowUnderMouseBtn(false);
+      setShowTriggerBtn(false);
       setShowFloatingPopup(false);
     }
   }, [textSelectorState]);
 
   function onOpenFloatingPopup() {
     setShowFloatingPopup(true);
-    setShowUnderMouseBtn(false);
+    setShowTriggerBtn(false);
   }
 
   function onOpenCustomPopup() {
@@ -134,11 +134,11 @@ const ContentScriptUI = () => {
             onClose={onCloseAll}
           />
         )}
-        {triggerPosition === TriggerPosition.UNDER_CURSOR && showUnderMouseBtn && textSelectorState && (
+        {triggerPosition === TriggerPosition.UNDER_CURSOR && showTriggerBtn && textSelectorState && (
           <UnderMouseBtn x={textSelectorState.x} y={textSelectorState.y} onClick={onOpenFloatingPopup} />
         )}
         {triggerPosition === TriggerPosition.PINNED_RIGHT_SIDE && (
-          <PinnedBtn />
+          <PinnedBtn onClick={onOpenFloatingPopup} opened={showTriggerBtn} />
         )}
       </div>
     </I18nextProvider>

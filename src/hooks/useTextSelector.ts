@@ -1,4 +1,4 @@
-import { getPageContext, getSelection, isExaraContainer } from "@/lib/utils";
+import { getPageContext, isExaraContainer } from "@/lib/utils";
 import { pixelsToPercentage } from "@/lib/utils/coordinates";
 import { PopupState } from "@/types";
 import { useEffect, useState, useCallback } from "react";
@@ -10,25 +10,18 @@ export function useTextSelector() {
     setTextSelectorState(null);
   }, []);
 
-  const handleSelectionChange = useCallback(() => {
-    const selection = window.getSelection();
-    if (!selection || selection.isCollapsed) {
-      clearSelection();
-    }
-  }, [clearSelection]);
-
   const onMouseUp = useCallback((event: MouseEvent) => {
     if (isExaraContainer(event.target)) {
       return;
     }
 
-    const selectedText = getSelection();
+    const selectedText = window.getSelection()?.toString().trim();
     const context = getPageContext();
 
     if (selectedText) {
       const coordinates = pixelsToPercentage({
-        x: event.clientX,
-        y: event.clientY,
+        x: event.clientX + 20,
+        y: event.clientY + 20,
       });
 
       setTextSelectorState({
@@ -54,14 +47,12 @@ export function useTextSelector() {
   useEffect(() => {
     document.addEventListener('mouseup', onMouseUp);
     document.addEventListener('click', onDocumentClick);
-    document.addEventListener('selectionchange', handleSelectionChange);
 
     return () => {
       document.removeEventListener('mouseup', onMouseUp);
       document.removeEventListener('click', onDocumentClick);
-      document.removeEventListener('selectionchange', handleSelectionChange);
     };
-  }, [onMouseUp, onDocumentClick, handleSelectionChange]);
+  }, [onMouseUp, onDocumentClick]);
 
   return {
     textSelectorState,

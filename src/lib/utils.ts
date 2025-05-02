@@ -4,11 +4,6 @@ import type { Context } from "~/types";
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
-export function getSelection() {
-  const selectedText = window.getSelection()?.toString().trim();
-  return selectedText;
-}
-
 export function getPageContext(): Context {
   const pageTitle = document.title || "";
   const pageDescription = document
