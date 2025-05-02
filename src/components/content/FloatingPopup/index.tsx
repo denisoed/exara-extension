@@ -1,6 +1,5 @@
 import { DraggleWrapper } from "~/components/common/DraggleWrapper";
 import { Answer } from "~/components/content/FloatingPopup/Answer";
-import { ActionBtn } from "~/components/content/FloatingPopup/action-btn";
 import { PopupWrapper } from "~/components/content/FloatingPopup/popup-wrapper";
 import { forwardRef, useEffect, useState } from "react";
 import {
@@ -64,6 +63,8 @@ export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
 
     // ------ HOOKS ------ //
     useEffect(() => {
+      handleRequestAnswer();
+
       addMessageListener(Message.GET_ANSWER, (data) => {
         setAnswer(data);
         setState(FloatingPopupState.Answer);
@@ -93,21 +94,17 @@ export const FloatingPopup = forwardRef<HTMLDivElement, FloatingPopupProps>(
 
     return (
       <DraggleWrapper x={x} y={y} ref={ref}>
-        {(state === FloatingPopupState.Preview && (
-          <ActionBtn onClick={handleRequestAnswer} />
-        )) || (
-          <PopupWrapper onClose={onClose}>
-            <Answer
-              answer={answer}
-              limitReached={state === FloatingPopupState.LimitReached}
-              isLoading={state === FloatingPopupState.Loading}
-              onClarify={handleClarification}
-              onExplain={handleExplain}
-              clarificationCount={clarificationCount}
-              clarificationHistory={clarificationHistory}
-            />
-          </PopupWrapper>
-        )}
+        <PopupWrapper onClose={onClose}>
+          <Answer
+            answer={answer}
+            limitReached={state === FloatingPopupState.LimitReached}
+            isLoading={state === FloatingPopupState.Loading}
+            onClarify={handleClarification}
+            onExplain={handleExplain}
+            clarificationCount={clarificationCount}
+            clarificationHistory={clarificationHistory}
+          />
+        </PopupWrapper>
       </DraggleWrapper>
     );
   },

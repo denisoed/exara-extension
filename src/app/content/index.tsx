@@ -1,6 +1,6 @@
 import { FloatingPopup } from "@/components/content/FloatingPopup";
 import type { Language } from "@/types";
-import { Theme } from "@/types";
+import { Theme, TriggerPosition } from "@/types";
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { I18nextProvider } from "react-i18next";
@@ -10,19 +10,15 @@ import { CustomPopup } from "~/components/content/custom-popup";
 import i18n from "~/i18n";
 import { useTranslation } from "~/i18n/hooks";
 import { StorageKey, get, unwatch, watch } from "~/lib/localStorage";
-import { Message, addMessageListener } from "~/lib/messaging";
-import { getPageContext, getSelection, isPopup } from "~/lib/utils";
+import { Message, addMessageListener, removeMessageListener } from "~/lib/messaging";
 import { cn } from "~/lib/utils";
 import { pixelsToPercentage } from "~/lib/utils/coordinates";
+import { PinnedBtn } from "~/components/content/pinned-btn";
+import { UnderMouseBtn } from "~/components/content/under-mouse-btn";
+import { useTextSelector } from "~/hooks/useTextSelector";
+import { useScrollClose } from "~/hooks/useScrollClose";
 
 import "~/assets/styles/globals.css";
-
-interface PopupState {
-  text: string;
-  context: string;
-  x: number;
-  y: number;
-}
 
 interface CustomPopupState {
   x: number;
@@ -30,13 +26,14 @@ interface CustomPopupState {
 }
 
 const ContentScriptUI = () => {
-  const SCROLL_THRESHOLD = 50; // pixels
-  let lastScrollY = window.scrollY;
-  const [popupState, setPopupState] = useState<PopupState | null>(null);
-  const [theme, setTheme] = useState<Theme>(Theme.DARK);
-  const [customPopupState, setCustomPopupState] =
-    useState<CustomPopupState | null>(null);
   const { changeLanguage } = useTranslation();
+  const { textSelectorState, clearSelection } = useTextSelector();
+
+  const [showFloatingPopup, setShowFloatingPopup] = useState<boolean>(false);
+  const [showUnderMouseBtn, setShowUnderMouseBtn] = useState<boolean>(false);
+  const [theme, setTheme] = useState<Theme>(Theme.DARK);
+  const [customPopupState, setCustomPopupState] = useState<CustomPopupState | null>(null);
+  const [triggerPosition, setTriggerPosition] = useState<TriggerPosition>(TriggerPosition.UNDER_CURSOR);
 
   async function getLanguage() {
     const language = await get<Language>(StorageKey.LANGUAGE);
@@ -52,52 +49,32 @@ const ContentScriptUI = () => {
     }
   }
 
-  function onMouseUp(event: MouseEvent) {
-    if (isPopup(event.target)) {
-      return;
-    }
-
-    const selectedText = getSelection();
-    const context = getPageContext();
-
-    if (selectedText) {
-      const coordinates = pixelsToPercentage({
-        x: event.clientX + 20,
-        y: event.clientY + 20,
-      });
-
-      setPopupState({
-        text: selectedText,
-        context: `${context.pageTitle} - ${context.pageDescription}`,
-        x: coordinates.x,
-        y: coordinates.y,
-      });
+  async function getTriggerPosition() {
+    const triggerPosition = await get<TriggerPosition>(StorageKey.TRIGGER_POSITION);
+    if (triggerPosition) {
+      setTriggerPosition(triggerPosition);
     }
   }
 
-  function onMouseDown(event: MouseEvent) {
-    if (isPopup(event.target)) {
-      return;
-    }
-
-    setPopupState(null);
+  function onCloseAll() {
+    clearSelection();
+    setCustomPopupState(null);
+    setShowUnderMouseBtn(false);
+    setShowFloatingPopup(false);
   }
 
-  async function onScroll() {
-    const isScrollCloseEnabled =
-      (await get<boolean>(StorageKey.SCROLL_CLOSE)) || false;
-
-    if (!isScrollCloseEnabled) {
-      return;
+  useEffect(() => {
+    if (textSelectorState) {
+      setShowUnderMouseBtn(true);
+    } else {
+      setShowUnderMouseBtn(false);
+      setShowFloatingPopup(false);
     }
+  }, [textSelectorState]);
 
-    const currentScrollY = window.scrollY;
-    const scrollDiff = Math.abs(currentScrollY - lastScrollY);
-
-    if (scrollDiff > SCROLL_THRESHOLD) {
-      setPopupState(null);
-      lastScrollY = currentScrollY;
-    }
+  function onOpenFloatingPopup() {
+    setShowFloatingPopup(true);
+    setShowUnderMouseBtn(false);
   }
 
   function onOpenCustomPopup() {
@@ -109,23 +86,25 @@ const ContentScriptUI = () => {
     });
   }
 
+  useScrollClose({
+    onClose: onCloseAll,
+    threshold: 50,
+  });
+
   useEffect(() => {
     getLanguage();
     getTheme();
+    getTriggerPosition();
     watch(StorageKey.LANGUAGE, getLanguage);
     watch(StorageKey.THEME, getTheme);
+    watch(StorageKey.TRIGGER_POSITION, getTriggerPosition);
     addMessageListener(Message.OPEN_CUSTOM_POPUP, onOpenCustomPopup);
 
-    window.addEventListener("scroll", onScroll);
-    document.addEventListener("mouseup", onMouseUp);
-    document.addEventListener("mousedown", onMouseDown);
-
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      document.removeEventListener("mouseup", onMouseUp);
-      document.removeEventListener("mousedown", onMouseDown);
       unwatch(StorageKey.LANGUAGE, getLanguage);
       unwatch(StorageKey.THEME, getTheme);
+      unwatch(StorageKey.TRIGGER_POSITION, getTriggerPosition);
+      removeMessageListener(Message.OPEN_CUSTOM_POPUP, onOpenCustomPopup);
     };
   }, []);
 
@@ -139,21 +118,27 @@ const ContentScriptUI = () => {
               window.matchMedia("(prefers-color-scheme: dark)").matches),
         })}
       >
-        {popupState && (
-          <FloatingPopup
-            question={popupState.text}
-            context={popupState.context}
-            x={popupState.x}
-            y={popupState.y}
-            onClose={() => setPopupState(null)}
-          />
-        )}
         {customPopupState && (
           <CustomPopup
             x={customPopupState.x}
             y={customPopupState.y}
             onClose={() => setCustomPopupState(null)}
           />
+        )}
+        {showFloatingPopup && textSelectorState && (
+          <FloatingPopup
+            question={textSelectorState.text}
+            context={textSelectorState.context}
+            x={textSelectorState.x}
+            y={textSelectorState.y}
+            onClose={onCloseAll}
+          />
+        )}
+        {triggerPosition === TriggerPosition.UNDER_CURSOR && showUnderMouseBtn && textSelectorState && (
+          <UnderMouseBtn x={textSelectorState.x} y={textSelectorState.y} onClick={onOpenFloatingPopup} />
+        )}
+        {triggerPosition === TriggerPosition.PINNED_RIGHT_SIDE && (
+          <PinnedBtn />
         )}
       </div>
     </I18nextProvider>

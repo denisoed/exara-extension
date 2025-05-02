@@ -7,10 +7,11 @@ interface DraggleWrapperProps {
   disableX?: boolean; // disable dragging along X axis
   disableY?: boolean; // disable dragging along Y axis
   children: React.ReactNode;
+  onChange?: (x: number, y: number) => void;
 }
 
 export const DraggleWrapper = forwardRef<HTMLDivElement, DraggleWrapperProps>(
-  ({ x, y, disableX = false, disableY = false, children }, ref) => {
+  ({ x, y, disableX = false, disableY = false, children, onChange }, ref) => {
     const [position, setPosition] = useState({ x, y });
     const [isDragging, setIsDragging] = useState(false);
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -83,7 +84,8 @@ export const DraggleWrapper = forwardRef<HTMLDivElement, DraggleWrapperProps>(
       document.querySelectorAll("[data-draggle-wrapper]").forEach((element) => {
         element.classList.remove("disable-x", "disable-y");
       });
-    }, []);
+      onChange?.(position.x, position.y);
+    }, [onChange, position.x, position.y]);
 
     // Prevent text selection during dragging only on draggable elements
     const preventTextSelection = useCallback((e: Event) => {
@@ -115,6 +117,10 @@ export const DraggleWrapper = forwardRef<HTMLDivElement, DraggleWrapperProps>(
         setIsVisible(true);
       });
     }, []);
+
+    useEffect(() => {
+      setPosition({ x, y });
+    }, [x, y]);
 
     return (
       <div

@@ -22,6 +22,11 @@ export interface ClarificationHistory {
   answer: string;
 }
 
+export interface Context {
+  pageTitle: string;
+  pageDescription: string;
+}
+
 export enum FloatingPopupState {
   Preview = "preview",
   Loading = "loading",
@@ -34,6 +39,11 @@ export enum ExplanationStyle {
   BEGINNER = "beginner",
   STUDENT = "student",
   ANALOGY = "analogy",
+}
+
+export enum TriggerPosition {
+  UNDER_CURSOR = "under-cursor",
+  PINNED_RIGHT_SIDE = "pinned-right-side",
 }
 
 export type OpenAIResponse = {
@@ -63,6 +73,13 @@ export interface ExplainSimplerMessageData {
   question: string;
   context: string;
   style: ExplanationStyle;
+}
+
+export interface PopupState {
+  text: string;
+  context: string;
+  x: number;
+  y: number;
 }
 
 export type MessageData = string | number | boolean | object;

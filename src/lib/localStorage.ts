@@ -6,6 +6,8 @@ export const StorageKey = {
   EXPLANATION_STYLE: "local:explanation-style",
   THEME: "local:theme",
   TOKEN: "local:token",
+  TRIGGER_POSITION: "local:trigger-position",
+  PINNED_BTN_POSITION: "local:pinned-btn-position",
 } as const;
 
 export async function get<T>(key: string) {
