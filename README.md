@@ -6,10 +6,7 @@ Exara is a browser extension that transforms any website into an interactive lea
 
 ## 🎬 Demo
 
-<video width="100%" controls>
-  <source src="src/public/demo.webm" type="video/webm">
-  Your browser does not support video.
-</video>
+![Demo](src/public/demo.gif)
 
 *See how Exara helps get explanations directly on web pages*
 
